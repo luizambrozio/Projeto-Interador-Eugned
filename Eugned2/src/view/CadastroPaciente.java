@@ -26,8 +26,8 @@ import javax.swing.JTextArea;
 
 public class CadastroPaciente extends JInternalFrame {
 	private JTextField jtfNome;
-	private JTextField jtfCpf;
-	private JTextField jtfRg;
+	private JFormattedTextField jtfCpf;
+	private JFormattedTextField jtfRg;
 	private JTextField jtfEscolaridade;
 	private JFormattedTextField jtfDataNascimento;
 	private JTextField jtfRenda;
@@ -86,10 +86,22 @@ public class CadastroPaciente extends JInternalFrame {
 		jtfNome = new JTextField();
 		jtfNome.setColumns(10);
 		
-		jtfCpf = new JTextField();
+		jtfCpf = new JFormattedTextField();
+		try {
+			maskFields.maskCpf(jtfCpf);
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
+			e2.printStackTrace();
+		}
 		jtfCpf.setColumns(10);
 		
-		jtfRg = new JTextField();
+		jtfRg = new JFormattedTextField();
+		try {
+			maskFields.maskRg(jtfRg);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
+			e.printStackTrace();
+		}
 		jtfRg.setColumns(10);
 		
 		jtfEscolaridade = new JTextField();
@@ -134,28 +146,28 @@ public class CadastroPaciente extends JInternalFrame {
 		JPanel panel = new JPanel();
 		GroupLayout gl_JPcadastroPaciente = new GroupLayout(JPcadastroPaciente);
 		gl_JPcadastroPaciente.setHorizontalGroup(
-			gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_JPcadastroPaciente.createSequentialGroup()
+			gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_JPcadastroPaciente.createSequentialGroup()
+					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 							.addComponent(jlCpf)
 							.addGap(18)
-							.addComponent(jtfCpf, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jlRg)
+							.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
+							.addComponent(jlRg)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jlEscolaridade)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfEscolaridade, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, gl_JPcadastroPaciente.createSequentialGroup()
+							.addComponent(jtfEscolaridade, GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 							.addComponent(jlNome)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_JPcadastroPaciente.createSequentialGroup()
+							.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 							.addComponent(jlEstadoCivil)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(cBestatoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -167,7 +179,7 @@ public class CadastroPaciente extends JInternalFrame {
 							.addComponent(jlCor, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 							.addGap(4)
 							.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, gl_JPcadastroPaciente.createSequentialGroup()
+						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 							.addComponent(jlDataNascimento)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfDataNascimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -177,7 +189,7 @@ public class CadastroPaciente extends JInternalFrame {
 							.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(cboxGestante))
-						.addComponent(jbNovoPaciente, Alignment.LEADING))
+						.addComponent(jbNovoPaciente))
 					.addContainerGap())
 		);
 		gl_JPcadastroPaciente.setVerticalGroup(
@@ -190,11 +202,11 @@ public class CadastroPaciente extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlCpf)
-						.addComponent(jlEscolaridade)
-						.addComponent(jlRg)
 						.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jtfEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jlRg)
+						.addComponent(jlEscolaridade))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
@@ -216,7 +228,7 @@ public class CadastroPaciente extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(jbNovoPaciente)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JTextArea jspListaPaciente = new JTextArea();

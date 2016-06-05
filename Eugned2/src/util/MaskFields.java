@@ -33,6 +33,15 @@ public class MaskFields {
         mask.install(textfield);
         return mask;
     }
+    
+    public MaskFormatter maskRg(JFormattedTextField textfield) throws ParseException{
+        MaskFormatter mask = new MaskFormatter("##.###.###-#");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
+        mask.setPlaceholderCharacter('_');
+        mask.install(textfield);
+        return mask;
+    }
    
     public MaskFormatter maskMoeda(JFormattedTextField textfield) throws ParseException{
         MaskFormatter mask = new MaskFormatter("#.###.###,##");

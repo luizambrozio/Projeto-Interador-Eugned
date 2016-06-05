@@ -59,7 +59,7 @@ public class PrincipalUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 600);
+		frame.setBounds(100, 100, 1024, 1600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
