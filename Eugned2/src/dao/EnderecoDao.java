@@ -28,12 +28,13 @@ public class EnderecoDao {
 			while (rs.next()){
 				Endereco endereco = new Endereco();
 				endereco.setId( rs.getInt("id") );
-				endereco.
+				endereco.setRua(rs.getString("rua"));
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setEstado(rs.getString("estado"));
 				
-				//Endereco.setDataEndereco( rs.getDate("dataEndereco") );
-				//Endereco.setCpf( rs.getString("cpf") );
-				
-				listaEnderecos.add(Endereco);
+				listaEnderecos.add(endereco);
 			}
 			return listaEnderecos;
 		} catch (SQLException e) {
@@ -43,19 +44,23 @@ public class EnderecoDao {
 		return null;
 	}
 	
-	public List<Endereco> getListaEnderecosByNome(String nome){
-		String query = "select * from Endereco where nome like ?";
+	public List<Endereco> getListaEnderecosByRua(String rua){
+		String query = "select * from endereco where rua like ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nome);
+			pstmt.setString(1, rua);
 			ResultSet rs = pstmt.executeQuery(query);
 			while (rs.next()){
-				Endereco Endereco = new Endereco();
-				Endereco.setId( rs.getInt("id") );
-				Endereco.setDataEndereco( rs.getDate("dataEndereco") );
-				//Endereco.setCpf( rs.getString("cpf") );
+				Endereco endereco = new Endereco();
+				endereco.setId( rs.getInt("id") );
+				endereco.setRua( rs.getString("rua") );
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCep(rs.getString("cep"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setEstado(rs.getString("estado"));
 				
-				listaEnderecos.add(Endereco);
+				listaEnderecos.add(endereco);
 			}
 			return listaEnderecos;
 		} catch (SQLException e) {
@@ -64,13 +69,44 @@ public class EnderecoDao {
 		}
 		return null;
 	}
+
+	public Endereco getListaEnderecosById(int id){
+		String query = "select * from endereco where id= ?";
+		try {
+			Endereco endereco = null;
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery(query);
+			while (rs.next()){
+				endereco = new Endereco();
+				endereco.setId( rs.getInt("id") );
+				endereco.setRua( rs.getString("rua") );
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCep(rs.getString("cep"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setEstado(rs.getString("estado"));
+				
+			}
+			return endereco;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
-	public void inserir(Endereco Endereco){
-		String query = "insert into Endereco (dataEndereco) values (?)";
+	public void inserir(Endereco endereco){
+		String query = "insert into endereco (rua,numero,bairro,cep,cidade,estado) values (?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setDate(1, new java.sql.Date(Endereco.getDataEndereco().getTime()));
-			//pstmt.setInt(2, 0);
+			pstmt.setString(1, endereco.getRua());
+			pstmt.setString(2, endereco.getNumero());
+			pstmt.setString(3, endereco.getBairro());
+			pstmt.setString(4, endereco.getCep());
+			pstmt.setString(5, endereco.getCidade());
+			pstmt.setString(6, endereco.getEstado());
 			pstmt.execute();
 			con.commit();
 		} catch (SQLException e) {
@@ -79,13 +115,17 @@ public class EnderecoDao {
 		}
 	}
 	
-	public void editar(Endereco Endereco){
-		String query = "update Endereco set dataEndereco=?, idEndereco=? where id=?";
+	public void editar(Endereco endereco){
+		String query = "update Endereco set rua=?,numero=?,bairro=?,cep=?,cidade=?,estado=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setDate(1, new java.sql.Date(Endereco.getDataEndereco().getTime()));
-			pstmt.setInt(2, Endereco.getEndereco().getId());
-			pstmt.setInt(3, Endereco.getId());
+			pstmt.setString(1, endereco.getRua());
+			pstmt.setString(2, endereco.getNumero());
+			pstmt.setString(3, endereco.getBairro());
+			pstmt.setString(4, endereco.getCep());
+			pstmt.setString(5, endereco.getCidade());
+			pstmt.setString(6, endereco.getEstado());
+			pstmt.setInt(7, endereco.getId());
 			pstmt.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
@@ -97,7 +137,7 @@ public class EnderecoDao {
 	}
 	
 	public void excluir(int id){
-		String query = "delete from Endereco where id = ?";
+		String query = "delete from endereco where id = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -108,31 +148,6 @@ public class EnderecoDao {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	private static EnderecoDAO EnderecoDao;
-//	
-//	public static EnderecoDAO obterInstancia(){
-//		if ( EnderecoDao == null){
-//			EnderecoDao = new EnderecoDAO();
-//		}
-//		return EnderecoDao;
-//	}
-
-//	public ArrayList<Endereco> getListaEnderecos() {
-//		return listaEnderecos;
-//	}
 
 	public void setListaEnderecos(ArrayList<Endereco> listaEnderecos) {
 		this.listaEnderecos = listaEnderecos;
