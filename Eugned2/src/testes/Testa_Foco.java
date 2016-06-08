@@ -19,7 +19,8 @@ public class Testa_Foco {
 		
 		// Testa o DAO
 		// Inserir
-		new FocoDAO().inserir(foco);
+	//	new FocoDAO().inserir(foco);
+		System.out.println(new FocoDAO().getListaFocos());
 
 	}
 

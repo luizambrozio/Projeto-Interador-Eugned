@@ -20,7 +20,7 @@ public class FocoDAO {
 		public List<Foco> getListaFocos(){
 			try {
 				Statement stmt = con.createStatement();
-				String query = "select * from Foco";
+				String query = "select * from foco";
 				ResultSet rs = stmt.executeQuery(query);
 				while (rs.next()){
 					Foco foco = new Foco();
