@@ -15,6 +15,9 @@ public class Foco {
 	private Date dataFoco;
 	private Endereco endereco;
 	
+	
+	public Foco() {
+	}
 	public Foco(int id, Date dataFoco, Endereco endereco) {
 		super();
 		this.id = id;
