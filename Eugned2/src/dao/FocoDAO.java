@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Foco;
@@ -20,7 +21,10 @@ public class FocoDAO {
 		private ArrayList<Foco> listaFocos = new ArrayList<Foco>();
 		
 		private Connection con = ConnectionUtil.getConnection();
-		
+		/**
+		 * Carrega todos os focos do banco de dados para manipulação posterior
+		 * @return Lista de Objetos Focus
+		 */
 		public List<Foco> getListaFocos(){
 			try {
 				Statement stmt = con.createStatement();
@@ -44,11 +48,19 @@ public class FocoDAO {
 			return null;
 		}
 		
-		public List<Foco> getListaFocosByNome(String nome){
-			String query = "select * from Foco where nome like ?";
+		/**
+		 * Carrega todos os focos que ocorreram em um período
+		 * @return Lista de Objetos Focus
+		 */
+		public List<Foco> getListaFocosByData(Date dataIni, Date dataFim){
+			String query = "select * from Foco where dataFoco BETWEEN ? AND ?";
+			if(dataFim == null) {
+				dataFim = dataIni;				
+			}
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
-				pstmt.setString(1, nome);
+				pstmt.setDate(1, new java.sql.Date(dataIni.getTime()));
+				pstmt.setDate(1, new java.sql.Date(dataFim.getTime()));
 				ResultSet rs = pstmt.executeQuery(query);
 				while (rs.next()){
 					Foco foco = new Foco();
@@ -68,8 +80,12 @@ public class FocoDAO {
 			return null;
 		}
 
+		/**
+		 * Carrega um Foco pelo Id
+		 * @return Foco
+		 */		
 		public Foco getFocoById(int id){
-			String query = "select * from Foco where id = ?";
+			String query = "select * from foco where id = ?";
 			try {
 				Foco foco = null; 
 				PreparedStatement pstmt = con.prepareStatement(query);
@@ -91,9 +107,14 @@ public class FocoDAO {
 			return null;
 		}
 
-		
+		/**
+		 * Insere um registro de foco no banco de dados
+		 * Para que o foco possa ser inserido o objeto endereço já deve estar persistido no banco de dados 
+		 * @return nada
+		 */
+
 		public void inserir(Foco foco){
-			String query = "insert into foco (dataFoco) values (?)";
+			String query = "insert into foco (dataFoco,idEndereco) values (?,?)";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(foco.getDataFoco().getTime()));
@@ -106,6 +127,11 @@ public class FocoDAO {
 			}
 		}
 		
+		/**
+		 * Edita o registro do foco no banco de dados
+		 * Para que o foco possa ser inserido o objeto endereço já deve estar persistido no banco de dados 
+		 * @return nada
+		 */
 		public void editar(Foco foco){
 			String query = "update foco set dataFoco=?, idEndereco=? where id=?";
 			try {
@@ -123,6 +149,11 @@ public class FocoDAO {
 			
 		}
 		
+		/**
+		 * Exclui um foco informando o id
+		 * Para que o foco possa ser inserido o objeto endereço já deve estar persistido no banco de dados 
+		 * @return nada
+		 */
 		public void excluir(int id){
 			String query = "delete from foco where id = ?";
 			try {
@@ -136,6 +167,11 @@ public class FocoDAO {
 			}
 		}
 				
+		/**
+		 * Seta uma lista de focos para teste
+		 * @param listaFocos
+		 * @return nada
+		 */
 		public void setListaFocos(ArrayList<Foco> listaFocos) {
 			this.listaFocos = listaFocos;
 		}
