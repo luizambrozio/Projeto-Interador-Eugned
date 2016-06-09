@@ -112,6 +112,18 @@ public class PrincipalUI {
 		menuBar.add(mnRelatorios);			
 		
 		JMenuItem mntmRelatrioIncidente = new JMenuItem("Relatório Incidente");
+		mntmRelatrioIncidente.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RelatorioIncidente relatorioIncidente = new RelatorioIncidente();
+				relatorioIncidente.setFocusable(true);
+				relatorioIncidente.requestFocus();
+				frame.getContentPane().add(relatorioIncidente,0);
+				relatorioIncidente.setVisible(true);
+			}
+			
+		});
 		mnRelatorios.add(mntmRelatrioIncidente);
 		
 		JMenuItem mntmRelatorioFoco = new JMenuItem("Relatórios Focos");
