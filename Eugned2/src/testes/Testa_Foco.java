@@ -11,21 +11,17 @@ public class Testa_Foco {
 
 	public static void main(String[] args) {
 		// Testando Entidade Foco e Endereco
-		Endereco endereco = new Endereco(0, "Servidão Aldo Flores da Cunha", "359", "Rio Vermelho","88060-211" , "Florianópolis", "SC");
-		
 		EnderecoDao enderecoDao = new EnderecoDao();
-		enderecoDao.inserir(endereco);
-		System.out.println("Gravou");
+		Endereco endereco = (enderecoDao.getEnderecoById(4));
+		System.out.println("Endereço: "+endereco.getRua());
 		
 	
 //		Foco foco = new Foco();
 //		foco.setDataFoco(new java.util.Date());
 //		foco.setEndereco(endereco);
-//		System.out.println(foco.getDataFoco());
+//		System.out.println("Foco: " + foco.getDataFoco().toLocaleString() + " - " + endereco.getRua());
 		
-		// Testa o DAO
-		// Inserir
-	//	new FocoDAO().inserir(foco);
+//		new FocoDAO().inserir(foco);
 //		System.out.println(new FocoDAO().getListaFocos());
 
 	}

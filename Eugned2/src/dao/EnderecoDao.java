@@ -70,14 +70,15 @@ public class EnderecoDao {
 		return null;
 	}
 
-	public Endereco getListaEnderecosById(int id){
-		String query = "select * from endereco where id= ?";
+	public Endereco getEnderecoById(int id){
+		String query = "select * from endereco where id = ?";
 		try {
 			Endereco endereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery(query);
 			while (rs.next()){
+				System.out.println("Entrou");
 				endereco = new Endereco();
 				endereco.setId( rs.getInt("id") );
 				endereco.setRua( rs.getString("rua") );
@@ -116,7 +117,7 @@ public class EnderecoDao {
 	}
 	
 	public void editar(Endereco endereco){
-		String query = "update Endereco set rua=?,numero=?,bairro=?,cep=?,cidade=?,estado=? where id=?";
+		String query = "update endereco set rua=?,numero=?,bairro=?,cep=?,cidade=?,estado=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setString(1, endereco.getRua());

@@ -30,7 +30,9 @@ public class FocoDAO {
 					Foco foco = new Foco();
 					foco.setId( rs.getInt("id") );
 					foco.setDataFoco( rs.getDate("dataFoco") );
-					//foco.setCpf( rs.getString("cpf") );
+					// Para pegar o objeto endereco devemos recuperar o idEndereco da tabela Foco
+					// e com este id usar o EnderecoDAO e recuperar o objeto endereco a partir do id.
+					foco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 					
 					listaFocos.add(foco);
 				}
@@ -52,7 +54,9 @@ public class FocoDAO {
 					Foco foco = new Foco();
 					foco.setId( rs.getInt("id") );
 					foco.setDataFoco( rs.getDate("dataFoco") );
-					//foco.setCpf( rs.getString("cpf") );
+					// Para pegar o objeto endereco devemos recuperar o idEndereco da tabela Foco
+					// e com este id usar o EnderecoDAO e recuperar o objeto endereco a partir do id.
+					foco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 					
 					listaFocos.add(foco);
 				}
@@ -63,13 +67,37 @@ public class FocoDAO {
 			}
 			return null;
 		}
+
+		public Foco getFocoById(int id){
+			String query = "select * from Foco where id = ?";
+			try {
+				Foco foco = null; 
+				PreparedStatement pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery(query);
+				while (rs.next()){
+					foco = new Foco();
+					foco.setId( rs.getInt("id") );
+					foco.setDataFoco( rs.getDate("dataFoco") );
+					// Para pegar o objeto endereco devemos recuperar o idEndereco da tabela Foco
+					// e com este id usar o EnderecoDAO e recuperar o objeto endereco a partir do id.
+					foco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
+				}
+				return foco;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
 		
-		public void inserir(Foco Foco){
+		public void inserir(Foco foco){
 			String query = "insert into foco (dataFoco) values (?)";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
-				pstmt.setDate(1, new java.sql.Date(Foco.getDataFoco().getTime()));
-				//pstmt.setInt(2, 0);
+				pstmt.setDate(1, new java.sql.Date(foco.getDataFoco().getTime()));
+				pstmt.setInt(2,foco.getEndereco().getId() );
 				pstmt.execute();
 				con.commit();
 			} catch (SQLException e) {
@@ -78,13 +106,13 @@ public class FocoDAO {
 			}
 		}
 		
-		public void editar(Foco Foco){
-			String query = "update Foco set dataFoco=?, idEndereco=? where id=?";
+		public void editar(Foco foco){
+			String query = "update foco set dataFoco=?, idEndereco=? where id=?";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
-				pstmt.setDate(1, new java.sql.Date(Foco.getDataFoco().getTime()));
-				pstmt.setInt(2, Foco.getEndereco().getId());
-				pstmt.setInt(3, Foco.getId());
+				pstmt.setDate(1, new java.sql.Date(foco.getDataFoco().getTime()));
+				pstmt.setInt(2, foco.getEndereco().getId());
+				pstmt.setInt(3, foco.getId());
 				pstmt.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {
@@ -96,7 +124,7 @@ public class FocoDAO {
 		}
 		
 		public void excluir(int id){
-			String query = "delete from Foco where id = ?";
+			String query = "delete from foco where id = ?";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, id);
@@ -107,32 +135,7 @@ public class FocoDAO {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		private static FocoDAO FocoDao;
-	//	
-//		public static FocoDAO obterInstancia(){
-//			if ( FocoDao == null){
-//				FocoDao = new FocoDAO();
-//			}
-//			return FocoDao;
-//		}
-
-//		public ArrayList<Foco> getListaFocos() {
-//			return listaFocos;
-//		}
-
+				
 		public void setListaFocos(ArrayList<Foco> listaFocos) {
 			this.listaFocos = listaFocos;
 		}
