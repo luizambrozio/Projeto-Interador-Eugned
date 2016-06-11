@@ -8,10 +8,10 @@ public class Paciente {
 	private String nome;
 	private String cpf;
 	private String rg;
-	private String escolaridade;
-	private String estadoCivil;
-	private String sexo;
-	private String corRaca;
+	private int escolaridade;
+	private int estadoCivil;
+	private int sexo;
+	private int corRaca;
 	private Date dataNascimento;
 	private Float rendaFamiliar;
 	private Boolean gestante;
@@ -21,8 +21,8 @@ public class Paciente {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Paciente(int id, String nome, String cpf, String rg, String escolaridade, String estadoCivil, String sexo,
-			String corRaca, Date dataNascimento, Float rendaFamiliar, Boolean gestante) {
+	public Paciente(int id, String nome, String cpf, String rg, int escolaridade, int estadoCivil, int sexo,
+			int corRaca, Date dataNascimento, Float rendaFamiliar, Boolean gestante) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -69,35 +69,35 @@ public class Paciente {
 		this.rg = rg;
 	}
 
-	public String getEscolaridade() {
+	public int getEscolaridade() {
 		return escolaridade;
 	}
 
-	public void setEscolaridade(String escolaridade) {
+	public void setEscolaridade(int escolaridade) {
 		this.escolaridade = escolaridade;
 	}
 
-	public String getEstadoCivil() {
+	public int getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(int estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
-	public String getSexo() {
+	public int getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(int sexo) {
 		this.sexo = sexo;
 	}
 
-	public String getCorRaca() {
+	public int getCorRaca() {
 		return corRaca;
 	}
 
-	public void setCorRaca(String corRaca) {
+	public void setCorRaca(int corRaca) {
 		this.corRaca = corRaca;
 	}
 
