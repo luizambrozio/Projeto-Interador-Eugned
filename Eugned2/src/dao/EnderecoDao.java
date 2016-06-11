@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.JDBC4PreparedStatement;
+
 import model.Endereco;
 import util.ConnectionUtil;
 
@@ -45,11 +47,12 @@ public class EnderecoDao {
 	}
 	
 	public List<Endereco> getListaEnderecosByRua(String rua){
-		String query = "select * from endereco where rua like ?";
+		String query = "select * from endereco where rua like '	%?%'";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, rua);
-			ResultSet rs = pstmt.executeQuery(query);
+			pstmt.setString(1, "aldo");
+			System.out.println(((JDBC4PreparedStatement) pstmt).asSql());
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
 				Endereco endereco = new Endereco();
 				endereco.setId( rs.getInt("id") );
@@ -76,7 +79,7 @@ public class EnderecoDao {
 			Endereco endereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery(query);
 			while (rs.next()){
 				System.out.println("Entrou");
 				endereco = new Endereco();

@@ -35,7 +35,6 @@ public class ListaFoco extends JInternalFrame {
 			}
 		});
 	}
-
 	/**
 	 * Create the frame.
 	 */

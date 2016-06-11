@@ -13,9 +13,9 @@ public class TestaEndereco {
 		// testaInserir();
 		// testaEditar();
 		testaListaEndereco();
-		System.out.println("Excluindo");
-		testaExcluir();
-		testaListaEndereco();
+		//System.out.println("Excluindo");
+		//testaExcluir();
+		//testaListaEndereco();
 		
 	}
 	
@@ -64,7 +64,10 @@ public class TestaEndereco {
 	}
 	
 	public static void testaListaEndereco() {
-		ArrayList<Endereco> listaEnderecos = (ArrayList<Endereco>) new EnderecoDao().getListaEnderecos();
+		ArrayList<Endereco> listaEnderecos =  (ArrayList<Endereco>) new EnderecoDao().getListaEnderecosByRua("Aldo");
+		if(listaEnderecos == null) {
+			return;
+		}
 		for (Endereco endereco : listaEnderecos) {
 			System.out.println("id: " + endereco.getId()+" - "+ endereco.getRua() + ", "+
 							endereco.getNumero()+" - CEP " + endereco.getCep()+" - "+ endereco.getCidade()+
