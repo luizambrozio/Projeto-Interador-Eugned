@@ -6,6 +6,13 @@ public class PacienteEndereco {
 	private Endereco endereco;
 	private Paciente paciente;
 	
+	
+	
+	public PacienteEndereco() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public PacienteEndereco(int id, Endereco endereco, Paciente paciente) {
 		super();
 		this.id = id;

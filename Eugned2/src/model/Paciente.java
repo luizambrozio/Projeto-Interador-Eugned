@@ -8,10 +8,10 @@ public class Paciente {
 	private String nome;
 	private String cpf;
 	private String rg;
-	private String escolaridade;
-	private String estadoCivil;
-	private String sexo;
-	private String corRaca;
+	private EnumEscolaridade escolaridade;
+	private EnumEstadoCivil estadoCivil;
+	private EnumSexo sexo;
+	private EnumCorRaca corRaca;
 	private Date dataNascimento;
 	private Float rendaFamiliar;
 	private Boolean gestante;
@@ -21,8 +21,8 @@ public class Paciente {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Paciente(int id, String nome, String cpf, String rg, String escolaridade, String estadoCivil, String sexo,
-			String corRaca, Date dataNascimento, Float rendaFamiliar, Boolean gestante) {
+	public Paciente(int id, String nome, String cpf, String rg, EnumEscolaridade escolaridade, EnumEstadoCivil estadoCivil, EnumSexo sexo,
+			EnumCorRaca corRaca, Date dataNascimento, Float rendaFamiliar, Boolean gestante) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -69,35 +69,28 @@ public class Paciente {
 		this.rg = rg;
 	}
 
-	public String getEscolaridade() {
+	public EnumEscolaridade getEscolaridade() {
 		return escolaridade;
 	}
 
-	public void setEscolaridade(String escolaridade) {
+	public void setEscolaridade(EnumEscolaridade escolaridade) {
 		this.escolaridade = escolaridade;
 	}
 
-	public String getEstadoCivil() {
+	public EnumEstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(EnumEstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
-	public String getSexo() {
-		return sexo;
-	}
 
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
-
-	public String getCorRaca() {
+	public EnumCorRaca getCorRaca() {
 		return corRaca;
 	}
 
-	public void setCorRaca(String corRaca) {
+	public void setCorRaca(EnumCorRaca corRaca) {
 		this.corRaca = corRaca;
 	}
 
@@ -113,8 +106,8 @@ public class Paciente {
 		return rendaFamiliar;
 	}
 
-	public void setRendaFamiliar(Float rendaFamiliar) {
-		this.rendaFamiliar = rendaFamiliar;
+	public void setRendaFamiliar(Float i) {
+		this.rendaFamiliar = i;
 	}
 
 	public Boolean getGestante() {
@@ -124,6 +117,35 @@ public class Paciente {
 	public void setGestante(Boolean gestante) {
 		this.gestante = gestante;
 	}
+
+	public void setInt(EnumSexo enumSexo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public EnumSexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(EnumSexo sexo) {
+		this.sexo = sexo;
+	}
+
+	public void setInt(EnumEscolaridade enumEscolaridade) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setInt(EnumCorRaca enumCorRaca) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setInt(EnumEstadoCivil enumEstadoCivil) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 
 	

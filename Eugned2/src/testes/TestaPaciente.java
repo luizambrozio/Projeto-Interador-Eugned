@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dao.PacienteDAO;
+import model.EnumCorRaca;
+import model.EnumEscolaridade;
+import model.EnumEstadoCivil;
+import model.EnumSexo;
 import model.Paciente;
 
 public class TestaPaciente {
@@ -31,10 +35,10 @@ public class TestaPaciente {
 		String nome= "Luiz Ambrozio";            
 		String cpf= "056.910.029-10";        
 		String rg = "99-99-999";             
-		String escolaridade = "ensino superior";    
-		String estadoCivil = "enrolado";     
-		String sexo = "Masculino";            
-		String corRaca = "Branco";         
+		EnumEscolaridade escolaridade = EnumEscolaridade.SUPERIOR;    
+		EnumEstadoCivil estadoCivil = EnumEstadoCivil.CASADO;     
+		EnumSexo sexo = EnumSexo.MASCULINO;            
+		EnumCorRaca corRaca = EnumCorRaca.BRANCO;         
 		Date dataNascimento = new Date();    
 		Float rendaFamiliar = (float) 1.950;  
 		Boolean gestante = false;    
