@@ -1,12 +1,15 @@
 package dao;
 
+/**
+ * @author ambrozio
+ */
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.Paciente;
@@ -14,168 +17,80 @@ import util.ConnectionUtil;
 
 public class PacienteDAO {
 	
-	private ArrayList<Paciente> listaPacientes = new ArrayList<Paciente>();
+private ArrayList<Paciente> listaPacientes = new ArrayList<Paciente>();
 	
 	private Connection con = ConnectionUtil.getConnection();
-	/**
-	 * Carrega todos os Pacientes do banco de dados para manipulação posterior
-	 * @return Lista de Objetos Paciente
-	 */
+	
 	public List<Paciente> getListaPacientes(){
+		Statement stmt;
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
 			String query = "select * from paciente";
 			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()){
-				Paciente paciente = new Paciente();
+			while (rs.next()) {
+				Paciente c = new Paciente();
+				c.setNome(rs.getString("nome"));
+				c.setCpf(rs.getString("cpf"));
 				
-				paciente.setId(rs.getInt("id"));           
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(rs.getInt("escolarida"));  
-				paciente.setEstadoCivil(rs.getInt("estadoCivil"));   
-				paciente.setSexo(rs.getInt("sexo"));          
-				paciente.setCorRaca(rs.getInt("corRaca"));       
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));				
-				
-				listaPacientes.add(paciente);
+				listaPacientes.add(c);
 			}
 			return listaPacientes;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 	
-	/**
-	 * Carrega todos os Pacientes que ocorreram em um período
-	 * @return Lista de Objetos Focus
-	 */
-	public List<Paciente> getListaPacientesByNome(String nome){
-		String query = "select * from paciente where nome like '%?%'";	
-		
-		
-		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nome);
-			ResultSet rs = pstmt.executeQuery(query);
-			Paciente paciente = null;
-			while (rs.next()){
-				paciente.setId(rs.getInt("id"));           
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(rs.getInt("escolarida"));  
-				paciente.setEstadoCivil(rs.getInt("estadoCivil"));   
-				paciente.setSexo(rs.getInt("sexo"));          
-				paciente.setCorRaca(rs.getInt("corRaca"));       
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));				
-				
-				listaPacientes.add(paciente);
-			}
-			return listaPacientes;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * Carrega um Paciente pelo Id
-	 * @return Paciente
-	 */		
-	public Paciente getPacienteById(int id){
-		String query = "select * from paciente where id = ?";
-		try {
-			Paciente paciente = null; 
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery(query);
-			while (rs.next()){
-				paciente = new Paciente();
-				paciente.setId(rs.getInt("id"));           
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(rs.getInt("escolarida"));  
-				paciente.setEstadoCivil(rs.getInt("estadoCivil"));   
-				paciente.setSexo(rs.getInt("sexo"));          
-				paciente.setCorRaca(rs.getInt("corRaca"));       
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));				
-				
-				listaPacientes.add(paciente);
-			}
-			return paciente;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-
 	public void inserir(Paciente paciente){
-		
-		            
-		 
-		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar) values (?,?,?,?,?,?,?,?,?)";
+		String query = "insert into Paciente(id, nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar, gestante) values (?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
-			
-			pstmt.setString(1, paciente.getNome());
-			pstmt.setString(2, paciente.getCpf());
-			pstmt.setString(3, paciente.getRg());
-			pstmt.setInt(4, paciente.getEscolaridade());
-			pstmt.setInt(5, paciente.getEstadoCivil());
-			pstmt.setInt(6, paciente.getSexo());
-			pstmt.setInt(7, paciente.getCorRaca());
-			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());
-			
+			java.sql.PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, paciente.getId());
+			pstmt.setString(2, paciente.getNome());
+			pstmt.setString(3, paciente.getCpf());
+			pstmt.setString(4, paciente.getRg());
+			pstmt.setString(5, paciente.getEscolaridade());
+			pstmt.setString(6, paciente.getEstadoCivil());
+			pstmt.setString(7, paciente.getSexo());
+			pstmt.setString(8, paciente.getCorRaca());
+			pstmt.setDate(9, new java.sql.Date(paciente.getDataNascimento().getTime()));
+			pstmt.setFloat(10, paciente.getRendaFamiliar());
+			pstmt.setBoolean(11, paciente.getGestante());
 			pstmt.execute();
 			con.commit();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void editar(Paciente paciente){
-		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, rendaFamiliar=? where id=?";
+	public void editar (Paciente paciente){
+		String query = "update Paciente set nome=?, CPF=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setString(1, paciente.getNome());
 			pstmt.setString(2, paciente.getCpf());
-			pstmt.setString(3, paciente.getRg());
-			pstmt.setInt(4, paciente.getEscolaridade());
-			pstmt.setInt(5, paciente.getEstadoCivil());
-			pstmt.setInt(6, paciente.getSexo());
-			pstmt.setInt(7, paciente.getCorRaca());
-			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());			
-			
-			pstmt.executeUpdate();
+			pstmt.setInt(3, paciente.getId());
+			pstmt.executeUpdate();			
 			con.commit();
+			System.out.println("testedao");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println(e.toString());
 		}
-
 		
 	}
 	
-	/**
-	 * Exclui um Paciente informando o id
-	 * Para que o Paciente possa ser inserido o objeto endereço já deve estar persistido no banco de dados 
-	 * @return nada
-	 */
 	public void excluir(int id){
-		String query = "delete from Paciente where id = ?";
+		String query = "delete from paciente where id = ?";
+		PreparedStatement pstmt;
 		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
 			pstmt.execute();
 			con.commit();
@@ -183,13 +98,38 @@ public class PacienteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
+	
+
+	public List<Paciente> getListaPacientesB(){
+		String query = "select * from paciente where nome like '%?%'";
+				
+		try {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "nome");
+			ResultSet rs = pstmt.executeQuery(query);
 			
-	/**
-	 * Seta uma lista de Pacientes para teste
-	 * @param listaPacientes
-	 * @return nada
-	 */
+			while (rs.next()) {
+				Paciente c =new Paciente();
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setCpf(rs.getString("CPF"));
+				
+				listaPacientes.add(c);
+			}
+			return listaPacientes;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+
 	public void setListaPacientes(ArrayList<Paciente> listaPacientes) {
 		this.listaPacientes = listaPacientes;
 	}
