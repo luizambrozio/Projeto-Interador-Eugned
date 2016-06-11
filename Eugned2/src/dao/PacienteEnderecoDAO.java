@@ -1,5 +1,9 @@
 package dao;
 
+/**
+ * @author ambrozio
+ */
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,53 +87,41 @@ public class PacienteEnderecoDAO {
 	 * Carrega um Paciente pelo Id
 	 * @return Paciente
 	 */		
-	public Paciente getPacienteById(int id){
-		String query = "select * from paciente where id = ?";
+	
+	public PacienteEndereco getPacienteEnderecoById(int id){
+		String query = "select * from paciente_endereco where id = ?";
 		try {
-			Paciente paciente = null; 
+			PacienteEndereco pacienteEndereco = null; 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery(query);
-			while (rs.next()){
-				paciente = new Paciente();
-				paciente.setId(rs.getInt("id"));           
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolarida")]);  
-				paciente.setEstadoCivil(EnumEstadoCivil.values()[rs.getInt("estadoCivil")]);   
-				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")]);          
-				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")]);       
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));				
+			while (rs.next()){				
+				pacienteEndereco.setId(rs.getInt("id"));           
+				pacienteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
+				pacienteEndereco.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
 				
-				listaPacientes.add(paciente);
+				listaPacienteEndereco.add(pacienteEndereco);
 			}
-			return paciente;
-		} catch (SQLException e) {
+			return pacienteEndereco;
+			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+			}
 		return null;
-	}
+		}
+	
+	
 
-
-	public void inserir(Paciente paciente){
-		
-		            
+	public void inserir(PacienteEndereco pacienteEndereco){		            
 		 
-		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar) values (?,?,?,?,?,?,?,?,?)";
+		String query = "insert into paciente_endereco (idEndereco, idPaciente) values (?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
-			pstmt.setString(1, paciente.getNome());
-			pstmt.setString(2, paciente.getCpf());
-			pstmt.setString(3, paciente.getRg());
-			pstmt.setInt(4, paciente.getEscolaridade().getCodigo());
-			pstmt.setInt(5, paciente.getEstadoCivil().getCodigo());
-			pstmt.setInt(6, paciente.getSexo().getCodigo());
-			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
-			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());
+			pstmt.setInt(1, pacienteEndereco.getEndereco().getId());
+			pstmt.setInt(2, pacienteEndereco.getPaciente().getId());
+			pstmt.execute();
+			con.commit();
 			
 			pstmt.execute();
 			con.commit();
@@ -139,22 +131,16 @@ public class PacienteEnderecoDAO {
 		}
 	}
 	
-	public void editar(Paciente paciente){
-		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, rendaFamiliar=? where id=?";
+	public void editar(PacienteEndereco pacienteEndereco){
+		String query = "update paciente set idEndereco =?, idPaciente=?  where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, paciente.getNome());
-			pstmt.setString(2, paciente.getCpf());
-			pstmt.setString(3, paciente.getRg());
-			pstmt.setInt(4, paciente.getEscolaridade().getCodigo());
-			pstmt.setInt(5, paciente.getEstadoCivil().getCodigo());
-			pstmt.setInt(6, paciente.getSexo().getCodigo());
-			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
-			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());
-			
-			pstmt.executeUpdate();
+			pstmt.setInt(1, pacienteEndereco.getEndereco().getId());
+			pstmt.setInt(2, pacienteEndereco.getPaciente().getId());
+			pstmt.setInt(3, pacienteEndereco.getId());
+			pstmt.execute();
 			con.commit();
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,8 +172,8 @@ public class PacienteEnderecoDAO {
 	 * @param listaPacientes
 	 * @return nada
 	 */
-	public void setListaPacientes(ArrayList<Paciente> listaPacientes) {
-		this.listaPacientes = listaPacientes;
+	public void setListaPacientes(ArrayList<PacienteEndereco> listaPacienteEndereco) {
+		this.listaPacienteEndereco = listaPacienteEndereco;
 	}
 
 }
