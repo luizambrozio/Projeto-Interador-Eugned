@@ -8,9 +8,8 @@ import javax.swing.table.AbstractTableModel;
 public class PacienteTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
-	private static final int COL_ID = 0;
-	private static final int COL_NOME = 1;
-	private static final int COL_CPF = 2;
+	private static final int COL_NOME = 0;
+	private static final int COL_CPF = 1;
 
 	private List<Paciente> valores;       
 
@@ -28,7 +27,14 @@ public class PacienteTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 3;
+	}
+	
+	public String getColumnName(int column) {
+		//Qual � o nome das nossas colunas?
+		if (column == COL_NOME) return "Nome do Paciente";
+		if (column == COL_CPF) return "CPF";
+		return ""; //Nunca deve ocorrer
 	}
 
 	@Override
