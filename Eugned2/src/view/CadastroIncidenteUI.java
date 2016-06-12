@@ -13,7 +13,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
-public class CadastroIncidente extends JInternalFrame {
+public class CadastroIncidenteUI extends JInternalFrame {
 	private JTextField jtfBuscaNomePacienteIncidente;
 	private JTextField jtfDataIncidente;
 	private JTextField jtfDataSintoma;
@@ -25,7 +25,7 @@ public class CadastroIncidente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroIncidente frame = new CadastroIncidente();
+					CadastroIncidenteUI frame = new CadastroIncidenteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class CadastroIncidente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroIncidente() {
+	public CadastroIncidenteUI() {
 		setBounds(100, 100, 450, 348);
 		
 		JPanel jpCadastroIncidente = new JPanel();
