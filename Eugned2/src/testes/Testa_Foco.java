@@ -11,6 +11,19 @@ public class Testa_Foco {
 
 	public static void main(String[] args) {
 		// Testando Entidade Foco e Endereco
+		// testaInserir();
+		testaListar();
+
+	}
+
+	private static void testaListar() {
+	for (Foco foco : new FocoDAO().getListaFocos()) {
+		System.out.println(foco.getEndereco().getRua());
+	}
+		
+	}
+
+	private static void testaInserir() {
 		EnderecoDao enderecoDao = new EnderecoDao();
 		int id = 4;
 		Endereco endereco = (enderecoDao.getEnderecoById(id));
@@ -24,7 +37,6 @@ public class Testa_Foco {
 		
 		new FocoDAO().inserir(foco);
 		System.out.println(new FocoDAO().getListaFocos());
-
 	}
 
 }

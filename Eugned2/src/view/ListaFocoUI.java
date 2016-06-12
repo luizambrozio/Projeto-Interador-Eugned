@@ -10,15 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
-@SuppressWarnings("serial")
+import dao.FocoDAO;
+import dao.PacienteDAO;
+import model.Foco;
+import model.FocoTableModel;
+import model.PacienteTableModel;
+
 public class ListaFocoUI extends JInternalFrame {
 	
 	private JTextField jtfBuscarFocos;
+	private JTable jtListaFoco;
 
 	/**
 	 * Launch the application.
@@ -40,24 +48,24 @@ public class ListaFocoUI extends JInternalFrame {
 	 */
 	public ListaFocoUI() {
 		setClosable(true);
+		setTitle("Consulta Focos");
 		setBounds(100, 100, 600, 400);
-		System.out.println("setvisibreTrueteste");
 		
-		JPanel jpListaPacientes = new JPanel();
-		jpListaPacientes.setBorder(new TitledBorder(null, "Lista Focos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		JPanel jpListaFoco = new JPanel();
+		jpListaFoco.setBorder(new TitledBorder(null, "Lista Focos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(jpListaPacientes, GroupLayout.PREFERRED_SIZE, 568, GroupLayout.PREFERRED_SIZE)
+					.addComponent(jpListaFoco, GroupLayout.PREFERRED_SIZE, 568, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(572, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(jpListaPacientes, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+					.addComponent(jpListaFoco, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
@@ -68,68 +76,60 @@ public class ListaFocoUI extends JInternalFrame {
 		
 		JButton jbBuscar = new JButton("Buscar");
 		
-		JButton jbNovoPaciente = new JButton("Novo");
-		jbNovoPaciente.addActionListener(new ActionListener() {
+		JButton jbNovoFoco = new JButton("Novo");
+		jbNovoFoco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroPacienteUI cadPaciente = new CadastroPacienteUI();
-				cadPaciente.setFocusable(true);
-				cadPaciente.requestFocus();
-				PrincipalUI.getInstance().getFrame().add(cadPaciente, 0);
-				cadPaciente.setVisible(true);				
+				CadastroFocoUI cadFoco = new CadastroFocoUI();
+				cadFoco.setFocusable(true);
+				cadFoco.requestFocus();
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadFoco, 0);
+				cadFoco.setVisible(true);				
 			}
 		});
-		
-		JPanel panel = new JPanel();
-		
-		JTextArea textArea = new JTextArea();
-		GroupLayout gl_jpListaPacientes = new GroupLayout(jpListaPacientes);
-		gl_jpListaPacientes.setHorizontalGroup(
-			gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jpListaPacientes.createSequentialGroup()
+
+		JScrollPane jspListaFoco = new JScrollPane();
+		GroupLayout gl_jpListaFoco = new GroupLayout(jpListaFoco);
+		gl_jpListaFoco.setHorizontalGroup(
+			gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpListaFoco.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_jpListaPacientes.createSequentialGroup()
+					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jpListaFoco.createSequentialGroup()
 							.addComponent(jlPeriodo)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfBuscarFocos, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jbBuscar)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jbNovoPaciente))
-						.addGroup(gl_jpListaPacientes.createSequentialGroup()
-							.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+							.addComponent(jbNovoFoco)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_jpListaFoco.createSequentialGroup()
+							.addComponent(jspListaFoco, GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+							.addGap(21))))
 		);
-		gl_jpListaPacientes.setVerticalGroup(
-			gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jpListaPacientes.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlPeriodo)
-						.addComponent(jtfBuscarFocos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jbBuscar)
-						.addComponent(jbNovoPaciente))
-					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
-						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-		);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 550, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 250, Short.MAX_VALUE)
-		);
-		panel.setLayout(gl_panel);
-		jpListaPacientes.setLayout(gl_jpListaPacientes);
+
+		gl_jpListaFoco.setVerticalGroup(
+				gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_jpListaFoco.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.BASELINE)
+							.addComponent(jlPeriodo)
+							.addComponent(jtfBuscarFocos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(jbBuscar)
+							.addComponent(jbNovoFoco))
+						.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+						.addComponent(jspListaFoco, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+			);
+
+		//JPanel panel = new JPanel();
+		
+		jtListaFoco = new JTable();
+		jtListaFoco.setModel(
+				new FocoTableModel(new FocoDAO().getListaFocos()));
+		jspListaFoco.setViewportView(jtListaFoco);		
+		jpListaFoco.setLayout(gl_jpListaFoco);
 		getContentPane().setLayout(groupLayout);
 
 	}
-
 }
