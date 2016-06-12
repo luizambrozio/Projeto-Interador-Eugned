@@ -7,8 +7,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+
+import dao.PacienteDAO;
+import model.PacienteTableModel;
 import util.MaskFields;
 
 import javax.swing.JLabel;
@@ -34,6 +38,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 	private JFormattedTextField jtfDataNascimento;
 	private JTextField jtfRenda;
 	private MaskFields maskFields = new MaskFields();
+	private JTable jtListaPacientes;
 
 	/**
 	 * Launch the application.
@@ -149,7 +154,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI();
 				cadEndereco.setFocusable(true);
 				cadEndereco.requestFocus();
-				PrincipalUI.getInstance().getFrame().add(cadEndereco, 0);
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadEndereco, 0);
 				cadEndereco.setVisible(true);	
 				
 				
@@ -244,7 +249,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
-		JTextArea jspListaPaciente = new JTextArea();
+		JScrollPane jspListaPaciente = new JScrollPane();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -258,6 +263,13 @@ public class CadastroPacienteUI extends JInternalFrame {
 		JPcadastroPaciente.setLayout(gl_JPcadastroPaciente);
 		getContentPane().setLayout(groupLayout);
 		panel.setVisible(true);
+		
+		jtListaPacientes = new JTable();
+		jtListaPacientes.setModel(new PacienteTableModel(new PacienteDAO().getListaPacientes()));
+		jspListaPaciente.setViewportView(jtListaPacientes);
+		//jpConsultaCliente.setLayout(gl_jpConsultaCliente);
+		getContentPane().setLayout(groupLayout);
+
 
 
 	}

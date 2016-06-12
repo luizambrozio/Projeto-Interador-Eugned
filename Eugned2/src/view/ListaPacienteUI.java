@@ -131,7 +131,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		
 		jtListaPaciente = new JTable();
 		jtListaPaciente.setModel(new PacienteTableModel(new PacienteDAO().getListaPacientes()));
-		jspListaPaciente.setViewportView(jspListaPaciente);		
+		jspListaPaciente.setViewportView(jtListaPaciente);		
 		jpListaPacientes.setLayout(gl_jpListaPacientes);
 		getContentPane().setLayout(groupLayout);
 		
