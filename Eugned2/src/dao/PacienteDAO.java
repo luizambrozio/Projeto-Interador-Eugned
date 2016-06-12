@@ -36,7 +36,7 @@ public class PacienteDAO {
 				paciente.setId(rs.getInt("id"));           
 				paciente.setCpf(rs.getString("cpf"));           
 				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolarida")]);  
+				paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolaridade")]);  
 				paciente.setEstadoCivil(EnumEstadoCivil.values()[rs.getInt("estadoCivil")]);   
 				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")]);          
 				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")]);       
