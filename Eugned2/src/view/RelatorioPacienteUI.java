@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
-public class RelatorioPaciente extends JInternalFrame {
+public class RelatorioPacienteUI extends JInternalFrame {
 	private JFormattedTextField jtdataInicialP;
 	private JFormattedTextField jtdatafimP;
 	private MaskFields maskFields = new MaskFields();
@@ -31,7 +31,7 @@ public class RelatorioPaciente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RelatorioPaciente frame = new RelatorioPaciente();
+					RelatorioPacienteUI frame = new RelatorioPacienteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class RelatorioPaciente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RelatorioPaciente() {
+	public RelatorioPacienteUI() {
 		setClosable(true);
 		setBounds(100, 100, 552, 238);
 		JPanel panel = new JPanel();

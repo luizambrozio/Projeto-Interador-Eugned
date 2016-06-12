@@ -121,9 +121,7 @@ public class PacienteDAO {
 	}
 
 
-	public void inserir(Paciente paciente){
-		
-		            
+	public void inserir(Paciente paciente){		            
 		 
 		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar) values (?,?,?,?,?,?,?,?,?)";
 		try {

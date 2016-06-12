@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
 
-public class ListaIncidente extends JInternalFrame {
+public class ListaIncidenteUI extends JInternalFrame {
 	private JTextField jtfBuscaListaIncidente;
 
 	/**
@@ -24,7 +24,7 @@ public class ListaIncidente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaIncidente frame = new ListaIncidente();
+					ListaIncidenteUI frame = new ListaIncidenteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class ListaIncidente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListaIncidente() {
+	public ListaIncidenteUI() {
 		setBounds(100, 100, 450, 300);
 		
 		JPanel jpListaIncidente = new JPanel();

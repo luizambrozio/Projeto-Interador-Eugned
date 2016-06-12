@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class CadastroEndereco extends JInternalFrame {
+public class CadastroEnderecoUI extends JInternalFrame {
 	private JTextField jtfRua;
 	private JTextField jtfNum;
 	private JTextField jtfBairro;
@@ -27,7 +27,7 @@ public class CadastroEndereco extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroEndereco frame = new CadastroEndereco();
+					CadastroEnderecoUI frame = new CadastroEnderecoUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,9 +39,9 @@ public class CadastroEndereco extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroEndereco() {
+	public CadastroEnderecoUI() {
 		setBounds(100, 100, 461, 235);
-		
+		setClosable(true);
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Novo Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

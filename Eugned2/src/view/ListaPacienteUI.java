@@ -8,6 +8,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+
+import dao.PacienteDAO;
+
+import model.PacienteTableModel;
+
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,11 +26,14 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 @SuppressWarnings("serial")
-public class ListaPaciente extends JInternalFrame {
+public class ListaPacienteUI extends JInternalFrame {
 	
 	private JTextField jtfBuscarPaciente;
+	private JTable jtListaPaciente;
 
 	/**
 	 * Launch the application.
@@ -33,7 +42,7 @@ public class ListaPaciente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaPaciente frame = new ListaPaciente();
+					ListaPacienteUI frame = new ListaPacienteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +54,7 @@ public class ListaPaciente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListaPaciente() {
+	public ListaPacienteUI() {
 		setClosable(true);
 		setBounds(100, 100, 600, 400);
 		System.out.println("setvisibreTrueteste");
@@ -78,17 +87,15 @@ public class ListaPaciente extends JInternalFrame {
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroPaciente cadPaciente = new CadastroPaciente();
+				CadastroPacienteUI cadPaciente = new CadastroPacienteUI();
 				cadPaciente.setFocusable(true);
 				cadPaciente.requestFocus();
-				PrincipalUI.getInstance().getFrame().add(cadPaciente, 0);
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadPaciente, 0);
 				cadPaciente.setVisible(true);				
 			}
 		});
 		
-		JPanel panel = new JPanel();
-		
-		JTextArea textArea = new JTextArea();
+		JScrollPane jspListaPaciente = new JScrollPane();
 		GroupLayout gl_jpListaPacientes = new GroupLayout(jpListaPacientes);
 		gl_jpListaPacientes.setHorizontalGroup(
 			gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
@@ -102,12 +109,11 @@ public class ListaPaciente extends JInternalFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jbBuscar)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jbNovoPaciente))
-						.addGroup(gl_jpListaPacientes.createSequentialGroup()
-							.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+							.addComponent(jbNovoPaciente)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_jpListaPacientes.createSequentialGroup()
+							.addComponent(jspListaPaciente, GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+							.addGap(21))))
 		);
 		gl_jpListaPacientes.setVerticalGroup(
 			gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
@@ -118,25 +124,16 @@ public class ListaPaciente extends JInternalFrame {
 						.addComponent(jtfBuscarPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jbBuscar)
 						.addComponent(jbNovoPaciente))
-					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
-						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+					.addComponent(jspListaPaciente, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 550, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 250, Short.MAX_VALUE)
-		);
-		panel.setLayout(gl_panel);
+		
+		jtListaPaciente = new JTable();
+		jtListaPaciente.setModel(new PacienteTableModel(new PacienteDAO().getListaPacientes()));
+		jspListaPaciente.setViewportView(jspListaPaciente);		
 		jpListaPacientes.setLayout(gl_jpListaPacientes);
 		getContentPane().setLayout(groupLayout);
-
+		
 	}
-
 }

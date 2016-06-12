@@ -81,7 +81,7 @@ public class PrincipalUI {
 		JMenuItem mntmPaciente = new JMenuItem("Paciente");
 		mntmPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaPaciente listPaciente = new ListaPaciente();
+				ListaPacienteUI listPaciente = new ListaPacienteUI();
 				listPaciente.setFocusable(true);
 				listPaciente.requestFocus();
 				frame.getContentPane().add(listPaciente, 0);
@@ -98,7 +98,7 @@ public class PrincipalUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ListaFoco listaFoco = new ListaFoco();
+				ListaFocoUI listaFoco = new ListaFocoUI();
 				listaFoco.setFocusable(true);
 				listaFoco.requestFocus();
 				frame.getContentPane().add(listaFoco,0);
@@ -116,7 +116,7 @@ public class PrincipalUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RelatorioIncidente relatorioIncidente = new RelatorioIncidente();
+				RelatorioIncidenteUI relatorioIncidente = new RelatorioIncidenteUI();
 				relatorioIncidente.setFocusable(true);
 				relatorioIncidente.requestFocus();
 				frame.getContentPane().add(relatorioIncidente,0);
@@ -132,7 +132,7 @@ public class PrincipalUI {
 		JMenuItem mntmRelatrioPaciente = new JMenuItem("Relatório Paciente");
 		mntmRelatrioPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RelatorioPaciente relPaciente = new RelatorioPaciente();
+				RelatorioPacienteUI relPaciente = new RelatorioPacienteUI();
 				relPaciente.setFocusable(true);
 				relPaciente.requestFocus();
 				frame.getContentPane().add(relPaciente, 0);

@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 
-public class CadastroFoco extends JInternalFrame {
+public class CadastroFocoUI extends JInternalFrame {
 
 	/**
 	 * Launch the application.
@@ -13,7 +13,7 @@ public class CadastroFoco extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroFoco frame = new CadastroFoco();
+					CadastroFocoUI frame = new CadastroFocoUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -25,7 +25,7 @@ public class CadastroFoco extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroFoco() {
+	public CadastroFocoUI() {
 		setBounds(100, 100, 450, 300);
 
 	}

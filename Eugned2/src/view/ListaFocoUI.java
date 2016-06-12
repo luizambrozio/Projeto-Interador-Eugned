@@ -16,7 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class ListaFoco extends JInternalFrame {
+public class ListaFocoUI extends JInternalFrame {
 	
 	private JTextField jtfBuscarFocos;
 
@@ -27,7 +27,7 @@ public class ListaFoco extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaFoco frame = new ListaFoco();
+					ListaFocoUI frame = new ListaFocoUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class ListaFoco extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListaFoco() {
+	public ListaFocoUI() {
 		setClosable(true);
 		setBounds(100, 100, 600, 400);
 		System.out.println("setvisibreTrueteste");
@@ -71,7 +71,7 @@ public class ListaFoco extends JInternalFrame {
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroPaciente cadPaciente = new CadastroPaciente();
+				CadastroPacienteUI cadPaciente = new CadastroPacienteUI();
 				cadPaciente.setFocusable(true);
 				cadPaciente.requestFocus();
 				PrincipalUI.getInstance().getFrame().add(cadPaciente, 0);

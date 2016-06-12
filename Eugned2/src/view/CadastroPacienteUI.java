@@ -23,8 +23,10 @@ import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class CadastroPaciente extends JInternalFrame {
+public class CadastroPacienteUI extends JInternalFrame {
 	private JTextField jtfNome;
 	private JFormattedTextField jtfCpf;
 	private JFormattedTextField jtfRg;
@@ -40,7 +42,7 @@ public class CadastroPaciente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroPaciente frame = new CadastroPaciente();
+					CadastroPacienteUI frame = new CadastroPacienteUI();
 					frame.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +54,7 @@ public class CadastroPaciente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroPaciente() {
+	public CadastroPacienteUI() {
 		setClosable(true);
 		setBounds(100, 100, 800, 600);	
 		JPanel JPcadastroPaciente = new JPanel();
@@ -142,6 +144,17 @@ public class CadastroPaciente extends JInternalFrame {
 		JCheckBox cboxGestante = new JCheckBox("Gestante");
 		
 		JButton jbNovoPaciente = new JButton("Novo");
+		jbNovoPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI();
+				cadEndereco.setFocusable(true);
+				cadEndereco.requestFocus();
+				PrincipalUI.getInstance().getFrame().add(cadEndereco, 0);
+				cadEndereco.setVisible(true);	
+				
+				
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		GroupLayout gl_JPcadastroPaciente = new GroupLayout(JPcadastroPaciente);
