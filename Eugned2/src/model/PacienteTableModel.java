@@ -8,25 +8,25 @@ import javax.swing.table.AbstractTableModel;
 public class PacienteTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
-	private static final int COL_ID = 0;
-	private static final int COL_NOME = 8;
-	private static final int COL_CPF = 2;
+//	private static final int COL_ID = 3;
+	private static final int COL_NOME = 0;
+	private static final int COL_CPF = 1;
 
-	private List<Paciente> pacientes;       
+	private List<Paciente> valores;       
 
 	//Esse � um construtor, que recebe a nossa lista de produtos
-	public PacienteTableModel(List<Paciente> pacientes) {
-		this.pacientes = new ArrayList<Paciente>(pacientes);
+	public PacienteTableModel(List<Paciente> valores) {
+		this.valores = new ArrayList<Paciente>(valores);
 	}
 	
 	public PacienteTableModel() {
-		this.pacientes = new ArrayList<Paciente>();
+		this.valores = new ArrayList<Paciente>();
 	}
 
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return pacientes.size();
+		return valores.size();
 	}
 
 	@Override
@@ -44,18 +44,23 @@ public class PacienteTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getValueAt(int rowIndex, int columnIndex) { 
+		Paciente paciente = valores.get(rowIndex);
+			if (columnIndex == COL_NOME) 
+					return paciente.getNome();
+			else 
+				if (columnIndex == COL_CPF) 
+					return paciente.getCpf();
+		return ""; //Nunca deve ocorrer
 	}
 	
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Paciente paciente = pacientes.get(rowIndex);
+		Paciente paciente = valores.get(rowIndex);
 		//Vamos alterar o valor da coluna columnIndex na linha rowIndex com o valor aValue passado no par�metro.
 		//Note que vc poderia alterar 2 campos ao inv�s de um s�.
-		if (columnIndex == COL_ID)
-			paciente.setId(Integer.parseInt(aValue.toString()));
-		else 
+//		if (columnIndex == COL_ID)
+//			paciente.setId(Integer.parseInt(aValue.toString()));
+//		else 
 			if (columnIndex == COL_NOME) 
 				paciente.setNome(aValue.toString());
 			else 
@@ -75,7 +80,7 @@ public class PacienteTableModel extends AbstractTableModel {
 	//J� que esse tableModel � de clientes, vamos fazer um get que retorne um objeto cliente inteiro.
 	//Isso elimina a necessidade de chamar o getValueAt() nas telas. 
 	public Paciente get(int row) {
-		return pacientes.get(row);
+		return valores.get(row);
 	}
 }
 
