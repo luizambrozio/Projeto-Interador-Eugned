@@ -145,19 +145,20 @@ public class PacienteDAO {
 		}
 	}
 	
-	public void editar(Paciente paciente){
+	public void editar(Paciente pacienteDAO){
 		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, rendaFamiliar=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, paciente.getNome());
-			pstmt.setString(2, paciente.getCpf());
-			pstmt.setString(3, paciente.getRg());
-			pstmt.setInt(4, paciente.getEscolaridade().getCodigo());
-			pstmt.setInt(5, paciente.getEstadoCivil().getCodigo());
-			pstmt.setInt(6, paciente.getSexo().getCodigo());
-			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
-			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());
+			pstmt.setString(1, pacienteDAO.getNome());
+			pstmt.setString(2, pacienteDAO.getCpf());
+			pstmt.setString(3, pacienteDAO.getRg());
+			pstmt.setInt(4, pacienteDAO.getEscolaridade().getCodigo());
+			pstmt.setInt(5, pacienteDAO.getEstadoCivil().getCodigo());
+			pstmt.setInt(6, pacienteDAO.getSexo().getCodigo());
+			pstmt.setInt(7, pacienteDAO.getCorRaca().getCodigo());
+			pstmt.setDate(8, new java.sql.Date(pacienteDAO.getDataNascimento().getTime()));
+			pstmt.setFloat(9, pacienteDAO.getRendaFamiliar());
+			pstmt.setInt(10, pacienteDAO.getId());
 			
 			pstmt.executeUpdate();
 			con.commit();
@@ -175,7 +176,7 @@ public class PacienteDAO {
 	 * @return nada
 	 */
 	public void excluir(int id){
-		String query = "delete from Paciente where id = ?";
+		String query = "delete from paciente where id = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);

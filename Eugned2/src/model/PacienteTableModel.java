@@ -8,20 +8,25 @@ import javax.swing.table.AbstractTableModel;
 public class PacienteTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
-	private static final int COL_NOME = 0;
-	private static final int COL_CPF = 1;
+//	private static final int COL_ID = 0;
+	private static final int COL_NOME = 8;
+	private static final int COL_CPF = 2;
 
-	private List<Paciente> valores;       
+	private List<Paciente> pacientes;       
 
-	//Esse é um construtor, que recebe a nossa lista de Pacientes
-	public PacienteTableModel(List<Paciente> valores) {
-		this.valores = new ArrayList<Paciente>(valores);
+	//Esse � um construtor, que recebe a nossa lista de produtos
+	public PacienteTableModel(List<Paciente> pacientes) {
+		this.pacientes = new ArrayList<Paciente>(pacientes);
+	}
+	
+	public PacienteTableModel() {
+		this.pacientes = new ArrayList<Paciente>();
 	}
 
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return pacientes.size();
 	}
 
 	@Override
@@ -32,7 +37,8 @@ public class PacienteTableModel extends AbstractTableModel {
 	
 	public String getColumnName(int column) {
 		//Qual � o nome das nossas colunas?
-		if (column == COL_NOME) return "Nome do Paciente";
+		//if (column == COL_ID) return "ID";
+		if (column == COL_NOME) return "Nome";
 		if (column == COL_CPF) return "CPF";
 		return ""; //Nunca deve ocorrer
 	}
@@ -42,6 +48,8 @@ public class PacienteTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
 
