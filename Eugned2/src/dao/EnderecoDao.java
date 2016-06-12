@@ -74,11 +74,10 @@ public class EnderecoDao {
 	}
 
 	public Endereco getEnderecoById(int id){
-		String query = "select * from endereco where id = ?";
+		String query = "select * from endereco where id = "+id;
 		try {
 			Endereco endereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery(query);
 			while (rs.next()){
 				System.out.println("Entrou");
