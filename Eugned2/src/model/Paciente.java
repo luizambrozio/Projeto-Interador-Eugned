@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author ambrozio
+ */
+
 import java.util.Date;
 
 public class Paciente {

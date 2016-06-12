@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * @author ambrozio
+ */
+
 import java.awt.Container;
 import java.awt.EventQueue;
 
