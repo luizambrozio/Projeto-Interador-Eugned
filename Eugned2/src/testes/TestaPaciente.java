@@ -19,28 +19,28 @@ public class TestaPaciente {
 	public static void main(String[] args) {
 		
 		//testaListaPaciente();
-		// testaInserir();
+		testaInserir();
 		// testaEditar();
 		
 		testaListaPaciente();
-		System.out.println("Excluindo");
-		testaExcluir();
-		testaListaPaciente();
+		//System.out.println("Excluindo");
+		//testaExcluir();
+		//testaListaPaciente();
 		
 	}
 	
 	public static void testaInserir() {
 		
 		              
-		String nome= "Luiz Ambrozio";            
-		String cpf= "056.910.029-10";        
+		String nome= "Wagner Mattei";            
+		String cpf= "111.111.111-11";        
 		String rg = "99-99-999";             
 		EnumEscolaridade escolaridade = EnumEscolaridade.SUPERIOR;    
 		EnumEstadoCivil estadoCivil = EnumEstadoCivil.CASADO;     
 		EnumSexo sexo = EnumSexo.MASCULINO;            
 		EnumCorRaca corRaca = EnumCorRaca.BRANCO;         
 		Date dataNascimento = new Date();    
-		Float rendaFamiliar = (float) 1.950;  
+		Float rendaFamiliar = (float) 8650;  
 		Boolean gestante = false;    
 		
 		Paciente paciente = new Paciente(0, nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar, gestante);
@@ -57,10 +57,10 @@ public class TestaPaciente {
 		String nome= "Luiz Eduardo Ambrozio";            
 		String cpf= "056.910.029-10";        
 		String rg = "11-11-11-111";             
-		String escolaridade = "ensino superior";    
-		String estadoCivil = "Muito enrolado";     
-		String sexo = "Masculino";            
-		String corRaca = "Branco";         
+		EnumEscolaridade escolaridade = EnumEscolaridade.SUPERIOR;    
+		EnumEstadoCivil estadoCivil = EnumEstadoCivil.CASADO;     
+		EnumSexo sexo = EnumSexo.MASCULINO;            
+		EnumCorRaca corRaca = EnumCorRaca.BRANCO;         
 		Date dataNascimento = new Date();    
 		Float rendaFamiliar = (float) 1.950;  
 		Boolean gestante = false;
