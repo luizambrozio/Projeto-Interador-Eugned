@@ -8,7 +8,7 @@ import dao.FocoDAO;
 import exception.FocoException;
 import model.Foco;
 
-
+// teste
 public class FocoController {
 
 	public void inserir(Foco foco) throws FocoException{

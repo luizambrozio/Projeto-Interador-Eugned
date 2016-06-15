@@ -27,8 +27,8 @@ public class CadastroFocoUI extends JInternalFrame {
 	private JTextField textField_1;
 	private JTextField jtfBairroFoco;
 	private JTextField jtfCep;
-	private JTextField htfCidadeFoco;
-	private JTextField textField;
+	private JTextField jtfCidadeFoco;
+	private JTextField jtfEStadoFoco;
 
 	/**
 	 * Launch the application.
@@ -71,7 +71,7 @@ public class CadastroFocoUI extends JInternalFrame {
 		jtfRuaFoco = new JTextField();
 		jtfRuaFoco.setColumns(10);
 		
-		JLabel jlbNumero = new JLabel("Nº");
+		JLabel jlbNumeroFoco = new JLabel("Nº");
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -86,19 +86,19 @@ public class CadastroFocoUI extends JInternalFrame {
 		jtfCep = new JTextField();
 		jtfCep.setColumns(10);
 		
-		JLabel label_4 = new JLabel("Estado:");
+		JLabel jlbEstadoFoco = new JLabel("Estado:");
 		
-		JLabel label_5 = new JLabel("Cidade:");
+		JLabel jlbCidadeFoco = new JLabel("Cidade:");
 		
 		JButton button = new JButton("Salvar");
 		
 		JButton button_1 = new JButton("Cancelar");
 		
-		htfCidadeFoco = new JTextField();
-		htfCidadeFoco.setColumns(10);
+		jtfCidadeFoco = new JTextField();
+		jtfCidadeFoco.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		jtfEStadoFoco = new JTextField();
+		jtfEStadoFoco.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -107,22 +107,22 @@ public class CadastroFocoUI extends JInternalFrame {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(label_5)
+								.addComponent(jlbCidadeFoco)
 								.addComponent(jlbBairroFoco)
 								.addComponent(jlbRuaFoco))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(jtfRuaFoco, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
 								.addComponent(jtfBairroFoco, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
-								.addComponent(htfCidadeFoco, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE))
+								.addComponent(jtfCidadeFoco, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(jlbNumero)
-								.addComponent(label_4)
+								.addComponent(jlbNumeroFoco)
+								.addComponent(jlbEstadoFoco)
 								.addComponent(jlbCepFoco))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jtfEStadoFoco, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 								.addComponent(jtfCep, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
@@ -139,7 +139,7 @@ public class CadastroFocoUI extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlbRuaFoco)
 						.addComponent(jtfRuaFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jlbNumero)
+						.addComponent(jlbNumeroFoco)
 						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
@@ -149,10 +149,10 @@ public class CadastroFocoUI extends JInternalFrame {
 						.addComponent(jtfCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label_5)
-						.addComponent(label_4)
-						.addComponent(htfCidadeFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jlbCidadeFoco)
+						.addComponent(jlbEstadoFoco)
+						.addComponent(jtfCidadeFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jtfEStadoFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
