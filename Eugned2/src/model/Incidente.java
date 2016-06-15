@@ -1,4 +1,8 @@
 package model;
+/**
+ *@author Diego Leite
+ * 
+ */
 
 import java.util.Date;
 

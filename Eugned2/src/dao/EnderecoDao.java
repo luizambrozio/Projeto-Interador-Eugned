@@ -47,10 +47,9 @@ public class EnderecoDao {
 	}
 	
 	public List<Endereco> getListaEnderecosByRua(String rua){
-		String query = "select * from endereco where rua like '	%?%'";
+		String query = "select * from endereco where rua like %"+rua+"%";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, "aldo");
 			System.out.println(((JDBC4PreparedStatement) pstmt).asSql());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
@@ -101,6 +100,7 @@ public class EnderecoDao {
 
 	
 	public void inserir(Endereco endereco){
+	    System.out.println("Inserindo Endereço...");
 		String query = "insert into endereco (rua,numero,bairro,cep,cidade,estado) values (?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);

@@ -79,7 +79,7 @@ public class ListaFocoUI extends JInternalFrame {
 		JButton jbNovoFoco = new JButton("Novo");
 		jbNovoFoco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroFocoUI cadFoco = new CadastroFocoUI();
+				CadastroFocoUI cadFoco = new CadastroFocoUI(null);
 				cadFoco.setFocusable(true);
 				cadFoco.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadFoco, 0);

@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * 
+ * @author Diego Leite
+ *
+ */
 
 public class IncidenteEndereco {
 	

@@ -10,7 +10,7 @@ public class TestaEndereco {
 	public static void main(String[] args) {
 		
 		//testaListaEndereco();
-		 testaInserir();
+		 //testaInserir();
 		// testaEditar();
 		testaListaEndereco();
 		//System.out.println("Excluindo");
@@ -21,11 +21,11 @@ public class TestaEndereco {
 	
 	public static void testaInserir() {
 		
-		String rua = "R. João da Costa";
+		String rua = "R. das Flores";
 		String numero = "26";
-		String bairro = "Jardim São Miguel";
+		String bairro = "Centro";
 		String cep = "88160-000";
-		String cidade = "Biguaçu";
+		String cidade = "Florianópolis";
 		String estado = "SC";
 		
 		Endereco endereco = new Endereco(0, rua, numero, bairro,cep , cidade, estado);
@@ -65,7 +65,7 @@ public class TestaEndereco {
 	}
 	
 	public static void testaListaEndereco() {
-		ArrayList<Endereco> listaEnderecos =  (ArrayList<Endereco>) new EnderecoDao().getListaEnderecosByRua("Aldo");
+		ArrayList<Endereco> listaEnderecos =  (ArrayList<Endereco>) new EnderecoDao().getListaEnderecos();
 		if(listaEnderecos == null) {
 			return;
 		}

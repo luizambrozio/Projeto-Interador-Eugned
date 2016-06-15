@@ -14,21 +14,37 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.TitledBorder;
+
+import controller.FocoController;
+import dao.EnderecoDao;
+import dao.FocoDAO;
+import exception.FocoException;
+import model.Endereco;
+import model.Foco;
+import util.MaskFields;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.awt.event.ActionEvent;
 
 public class CadastroFocoUI extends JInternalFrame {
-	private JTextField jtfDataFoco;
+	private JFormattedTextField jtfDataFoco;
 	private JTextField jtfRuaFoco;
-	private JTextField textField_1;
+	private JTextField jtfNumeroFoco;
 	private JTextField jtfBairroFoco;
 	private JTextField jtfCep;
 	private JTextField jtfCidadeFoco;
 	private JTextField jtfEStadoFoco;
+	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
+	private MaskFields maskFields = new MaskFields();
 
 	/**
 	 * Launch the application.
@@ -37,7 +53,7 @@ public class CadastroFocoUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroFocoUI frame = new CadastroFocoUI();
+					CadastroFocoUI frame = new CadastroFocoUI(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +65,7 @@ public class CadastroFocoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroFocoUI() {
+	public CadastroFocoUI(Foco foco) {
 		setBounds(100, 100, 544, 292);
 		getContentPane().setLayout(null);
 		
@@ -60,7 +76,13 @@ public class CadastroFocoUI extends JInternalFrame {
 		
 		JLabel lblDataFoco = new JLabel("Data:");
 		
-		jtfDataFoco = new JTextField();
+		jtfDataFoco = new JFormattedTextField();
+		try {
+			maskFields.maskData(jtfDataFoco);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
+			e1.printStackTrace();
+		}
 		jtfDataFoco.setColumns(10);
 		
 		JPanel panel = new JPanel();
@@ -73,8 +95,8 @@ public class CadastroFocoUI extends JInternalFrame {
 		
 		JLabel jlbNumeroFoco = new JLabel("Nº");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		jtfNumeroFoco = new JTextField();
+		jtfNumeroFoco.setColumns(10);
 		
 		JLabel jlbBairroFoco = new JLabel("Bairro:");
 		
@@ -90,7 +112,38 @@ public class CadastroFocoUI extends JInternalFrame {
 		
 		JLabel jlbCidadeFoco = new JLabel("Cidade:");
 		
+		// Ação de Salvamaneto
 		JButton button = new JButton("Salvar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(foco == null) {
+					Foco foco2 = new Foco();
+					try {
+						foco2.setDataFoco(formatData.parse(jtfDataFoco.getText()));
+						Endereco endereco = new Endereco();
+						endereco.setRua(jtfRuaFoco.getText());
+						endereco.setNumero(jtfNumeroFoco.getText());
+						endereco.setBairro(jtfBairroFoco.getText());
+						endereco.setCep(jtfCep.getText());
+						endereco.setCidade(jtfCidadeFoco.getText());
+						endereco.setEstado(jtfEStadoFoco.getText());
+						foco2.setEndereco(endereco);
+						try {
+							new FocoController().inserir(foco2);
+							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+						} catch (FocoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						new FocoDAO().inserir(foco);
+					} catch (ParseException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage());
+					}
+					
+				}
+				
+			}
+		});
 		
 		JButton button_1 = new JButton("Cancelar");
 		
@@ -124,7 +177,7 @@ public class CadastroFocoUI extends JInternalFrame {
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(jtfEStadoFoco, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 								.addComponent(jtfCep, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(jtfNumeroFoco, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(120)
 							.addComponent(button, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
@@ -140,7 +193,7 @@ public class CadastroFocoUI extends JInternalFrame {
 						.addComponent(jlbRuaFoco)
 						.addComponent(jtfRuaFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jlbNumeroFoco)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jtfNumeroFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlbBairroFoco)
