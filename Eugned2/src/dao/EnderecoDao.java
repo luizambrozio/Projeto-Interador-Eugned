@@ -103,15 +103,21 @@ public class EnderecoDao {
 	public void inserir(Endereco endereco){
 		String query = "insert into endereco (rua,numero,bairro,cep,cidade,estado) values (?,?,?,?,?,?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, endereco.getRua());
 			pstmt.setString(2, endereco.getNumero());
 			pstmt.setString(3, endereco.getBairro());
 			pstmt.setString(4, endereco.getCep());
 			pstmt.setString(5, endereco.getCidade());
 			pstmt.setString(6, endereco.getEstado());
-			pstmt.execute();
+			pstmt.executeUpdate();
+
+			ResultSet rs = pstmt.getGeneratedKeys();
 			con.commit();
+			if (rs.next() ){
+				endereco.setId(rs.getInt(1));
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -10,7 +10,7 @@ public class TestaEndereco {
 	public static void main(String[] args) {
 		
 		//testaListaEndereco();
-		// testaInserir();
+		 testaInserir();
 		// testaEditar();
 		testaListaEndereco();
 		//System.out.println("Excluindo");
@@ -33,6 +33,7 @@ public class TestaEndereco {
 		EnderecoDao enderecoDao = new EnderecoDao();
 		enderecoDao.inserir(endereco);
 		System.out.println("Gravou");
+		System.out.println(endereco.getId());
 	
 	}
 	
