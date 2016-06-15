@@ -1,37 +1,46 @@
 package model;
 
+
 public class IncidenteEndereco {
 	
 	private int id;
-	private Incidente idIncidente;
-	private Endereco idEndereco;
+	private Incidente incidente;
+	private Endereco endereco;
 	
 	
-	public IncidenteEndereco(int id, Incidente idIncidente, Endereco idEndereco) {
+	public IncidenteEndereco() {
+	}
+	
+	public IncidenteEndereco(int id, Incidente incidente, Endereco endereco) {
 		super();
 		this.id = id;
-		this.idIncidente = idIncidente;
-		this.idEndereco = idEndereco;
+		this.incidente = incidente;
+		this.endereco = endereco;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Incidente getIdIncidente() {
-		return idIncidente;
+
+	public Incidente getIncidente() {
+		return incidente;
 	}
-	public void setIdIncidente(Incidente idIncidente) {
-		this.idIncidente = idIncidente;
+
+	public void setIncidente(Incidente incidente) {
+		this.incidente = incidente;
 	}
-	public Endereco getIdEndereco() {
-		return idEndereco;
+
+	public Endereco getEndereco() {
+		return endereco;
 	}
-	public void setIdEndereco(Endereco idEndereco) {
-		this.idEndereco = idEndereco;
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
-	
 	
 	
 

@@ -118,8 +118,8 @@ public class IncidenteDAO {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(incidente.getDataIncidente().getTime()));
 				pstmt.setDate(2, new java.sql.Date(incidente.getDataSintoma().getTime()));
-				pstmt.setString(3,incidente.getSintoma().getId() );
-				pstmt.setInt(4,new PacienteDAO().getPacienteById().getId());
+				pstmt.setString(3,incidente.getSintomas() );
+				pstmt.setInt(4,incidente.getPaciente().getId());
 				pstmt.execute();
 				con.commit();
 			} catch (SQLException e) {
@@ -139,8 +139,8 @@ public class IncidenteDAO {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(incidente.getDataIncidente().getTime()));
 				pstmt.setDate(2, new java.sql.Date(incidente.getDataSintoma().getTime()));
-				pstmt.setString(3,incidente.getSintoma().getId() );
-				pstmt.setInt(4,new PacienteDAO().getPacienteById().getId());
+				pstmt.setString(3,incidente.getSintomas() );
+				pstmt.setInt(4,incidente.getPaciente().getId());
 				pstmt.setInt(5, incidente.getId());
 				pstmt.executeUpdate();
 				con.commit();

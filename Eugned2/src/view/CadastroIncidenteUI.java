@@ -38,7 +38,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroIncidenteUI() {
-		setBounds(100, 100, 450, 348);
+		setBounds(100, 100, 554, 394);
 		
 		JPanel jpCadastroIncidente = new JPanel();
 		jpCadastroIncidente.setBorder(new TitledBorder(null, "Cadastro Incidente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -68,8 +68,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 				.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.LEADING)
-						.addComponent(jpSintomas, GroupLayout.PREFERRED_SIZE, 396, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jpEnderecoPacienteIncidente, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+						.addComponent(jpEnderecoPacienteIncidente, GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
 						.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.LEADING, false)
 							.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
 								.addComponent(jlNomePacienteIncidente)
@@ -83,7 +82,8 @@ public class CadastroIncidenteUI extends JInternalFrame {
 								.addComponent(jlDataSintoma)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(jtfDataSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGap(40))))
+								.addGap(40)))
+						.addComponent(jpSintomas, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_jpCadastroIncidente.setVerticalGroup(
@@ -102,7 +102,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 					.addGap(18)
 					.addComponent(jpEnderecoPacienteIncidente, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(jpSintomas, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+					.addComponent(jpSintomas, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		GroupLayout gl_jpSintomas = new GroupLayout(jpSintomas);

@@ -13,24 +13,25 @@ import java.util.List;
 
 import com.mysql.jdbc.JDBC4PreparedStatement;
 
-import model.incidenteEndereco;
+import model.Incidente;
+import model.IncidenteEndereco;
 import util.ConnectionUtil;
 
-public class incidenteEnderecoDao {
+public class IncidenteEnderecoDAO {
 
-	private ArrayList<incidenteEndereco> listaincidenteEnderecos = new ArrayList<incidenteEndereco>();
+	private ArrayList<IncidenteEndereco> listaincidenteEnderecos = new ArrayList<IncidenteEndereco>();
 	
 	private Connection con = ConnectionUtil.getConnection();
 	
-	public List<incidenteEndereco> getListaincidenteEnderecos(){
+	public List<IncidenteEndereco> getListaincidenteEnderecos(){
 		try {
 			Statement stmt = con.createStatement();
 			String query = "select * from incidenteEndereco";
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()){
-				incidenteEndereco incidenteEndereco = new incidenteEndereco();
+				IncidenteEndereco incidenteEndereco = new IncidenteEndereco();
 				incidenteEndereco.setId( rs.getInt("id") );
-				incidenteEndereco.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
+				incidenteEndereco.setIncidente(new IncidenteDAO().getIncidenteById(rs.getInt("idIncidente")));
 				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 				
 				listaincidenteEnderecos.add(incidenteEndereco);
@@ -43,41 +44,39 @@ public class incidenteEnderecoDao {
 		return null;
 	}
 	
-	public List<incidenteEndereco> getListaincidenteEnderecosByRua(String rua){
-		String query = "select * from incidenteEndereco where rua like '	%?%'";
+	public IncidenteEndereco getIncidenteEnderecoById(int id){
+		String query = "select * from incidente_endereco where id = ?";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, "aldo");
-			System.out.println(((JDBC4PreparedStatement) pstmt).asSql());
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()){
-				incidenteEndereco incidenteEndereco = new incidenteEndereco();
-				incidenteEndereco.setId( rs.getInt("id") );
-				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
-				
-				listaincidenteEnderecos.add(incidenteEndereco);
-			}
-			return listaincidenteEnderecos;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public incidenteEndereco getincidenteEnderecoById(int id){
-		String query = "select * from incidenteEndereco where id = ?";
-		try {
-			incidenteEndereco incidenteEndereco = null;
+			IncidenteEndereco incidenteEndereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery(query);
 			while (rs.next()){
 				System.out.println("Entrou");
-				incidenteEndereco = new incidenteEndereco();
-				incidenteEndereco.setId( rs.getInt("id") );
+				incidenteEndereco = new IncidenteEndereco();
+				incidenteEndereco.setIncidente(new IncidenteDAO().getIncidenteById( rs.getInt("idIncidente")));
 				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
-				
+			}
+			return incidenteEndereco;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+ 	}
+
+	public IncidenteEndereco getEnderecosIncidentes(Incidente incidente){
+		String query = "select * from incidente_endereco where idIncidente = ?";
+		try {
+			IncidenteEndereco incidenteEndereco = null;
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, incidente.getId());
+			ResultSet rs = pstmt.executeQuery(query);
+			while (rs.next()){
+				System.out.println("Entrou");
+				incidenteEndereco = new IncidenteEndereco();
+				incidenteEndereco.setIncidente(new IncidenteDAO().getIncidenteById( rs.getInt("idIncidente")));
+				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 			}
 			return incidenteEndereco;
 		} catch (SQLException e) {
@@ -87,13 +86,14 @@ public class incidenteEnderecoDao {
 		return null;
 	}
 
+
 	
-	public void inserir(incidenteEndereco incidenteEndereco){
-		String query = "insert into incidenteEndereco (paciente,endereco) values (?,?)";
+	public void inserir(IncidenteEndereco incidenteEndereco){
+		String query = "insert into incidente_endereco (idIncidente,idEndereco) values (?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1,new PacienteDAO().getPacienteById().getId());
-			pstmt.setInt(2,new EnderecoDAO().getEnderecoById().getId());
+			pstmt.setInt(1,incidenteEndereco.getIncidente().getId());
+			pstmt.setInt(2,incidenteEndereco.getEndereco().getId());
 			pstmt.execute();
 			con.commit();
 		} catch (SQLException e) {
@@ -102,12 +102,12 @@ public class incidenteEnderecoDao {
 		}
 	}
 	
-	public void editar(incidenteEndereco incidenteEndereco){
-		String query = "update incidenteEndereco set paciente=?,endereco=?, where id=?";
+	public void editar(IncidenteEndereco incidenteEndereco){
+		String query = "update incidente_endereco set idIncidente=?,idEndereco=?, where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1,new PacienteDAO().getPacienteById().getId());
-			pstmt.setInt(2,new EnderecoDAO().getEnderecoById().getId());
+			pstmt.setInt(1,incidenteEndereco.getIncidente().getId());
+			pstmt.setInt(2,incidenteEndereco.getEndereco().getId());
 			pstmt.setInt(3, incidenteEndereco.getId());
 			pstmt.executeUpdate();
 			con.commit();
@@ -115,12 +115,10 @@ public class incidenteEnderecoDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
 	
 	public void excluir(int id){
-		String query = "delete from incidenteEndereco where id = ?";
+		String query = "delete from incidente_endereco where id = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -132,7 +130,7 @@ public class incidenteEnderecoDao {
 		}
 	}
 
-	public void setListaincidenteEnderecos(ArrayList<incidenteEndereco> listaincidenteEnderecos) {
+	public void setListaincidenteEnderecos(ArrayList<IncidenteEndereco> listaincidenteEnderecos) {
 		this.listaincidenteEnderecos = listaincidenteEnderecos;
 	}	
 }

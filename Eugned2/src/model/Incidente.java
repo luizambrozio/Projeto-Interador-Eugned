@@ -5,19 +5,22 @@ import java.util.Date;
 public class Incidente {
 	
 	private int id;
-	private Paciente idPaciente;
+	private Paciente paciente;
 	private Date dataIncidente;
 	private Date dataSintoma;
-	private String simtomas;
+	private String sintomas;
 	
-	public Incidente(int id, Paciente idPaciente, Date dataIncidente,
-			Date dataSintoma, String simtomas) {
+	public Incidente(int id, Paciente paciente, Date dataIncidente,
+			Date dataSintoma, String sintomas) {
 		super();
 		this.id = id;
-		this.idPaciente = idPaciente;
+		this.paciente = paciente;
 		this.dataIncidente = dataIncidente;
 		this.dataSintoma = dataSintoma;
-		this.simtomas = simtomas;
+		this.sintomas = sintomas;
+	}
+	public Incidente() {
+		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
@@ -25,12 +28,14 @@ public class Incidente {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Paciente getIdPaciente() {
-		return idPaciente;
+
+	public Paciente getPaciente() {
+		return paciente;
 	}
-	public void setIdPaciente(Paciente idPaciente) {
-		this.idPaciente = idPaciente;
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
+
 	public Date getDataIncidente() {
 		return dataIncidente;
 	}
@@ -43,11 +48,11 @@ public class Incidente {
 	public void setDataSintoma(Date dataSintoma) {
 		this.dataSintoma = dataSintoma;
 	}
-	public String getSimtomas() {
-		return simtomas;
+	public String getSintomas() {
+		return sintomas;
 	}
-	public void setSimtomas(String simtomas) {
-		this.simtomas = simtomas;
+	public void setSintomas(String sintomas) {
+		this.sintomas = sintomas;
 	}
 	
 	
