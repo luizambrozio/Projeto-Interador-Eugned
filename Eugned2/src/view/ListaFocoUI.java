@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -34,6 +36,7 @@ public class ListaFocoUI extends JInternalFrame {
 	
 	private static ListaFocoUI instancia;
 	private JFormattedTextField jtfDataIniFocos;
+	private JFormattedTextField jtfDataFim; 
 	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
 	private MaskFields maskFields = new MaskFields();
 	private JTable jtListaFoco;
@@ -98,7 +101,23 @@ public class ListaFocoUI extends JInternalFrame {
 		}
 		jtfDataIniFocos.setColumns(10);
 		
+		JLabel lblAt = new JLabel("até");
+		
+		jtfDataFim = new JFormattedTextField();
+		try {
+			maskFields.maskData(jtfDataFim);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
+			e1.printStackTrace();
+		}
+		jtfDataFim.setColumns(10);
+		
 		JButton jbBuscar = new JButton("Buscar");
+		jbBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atualizaLista();
+			}
+		});
 		
 		JButton jbNovoFoco = new JButton("Novo");
 		jbNovoFoco.addActionListener(new ActionListener() {
@@ -113,16 +132,6 @@ public class ListaFocoUI extends JInternalFrame {
 
 		JScrollPane jspListaFoco = new JScrollPane();
 		
-		JLabel lblAt = new JLabel("até");
-		
-		JFormattedTextField jtfDataFim = new JFormattedTextField();
-		try {
-			maskFields.maskData(jtfDataFim);
-		} catch (ParseException e1) {
-			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
-			e1.printStackTrace();
-		}
-		jtfDataFim.setColumns(10);
 		
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
@@ -159,9 +168,10 @@ public class ListaFocoUI extends JInternalFrame {
 
 					new FocoController().excluir(f.getId());
 					JOptionPane.showMessageDialog(null, "Foco excluído com sucesso");
-					jtListaFoco.setModel(
-							new FocoTableModel(
-									new FocoController().getListaFocos()));
+					atualizaLista();
+					//jtListaFoco.setModel(
+					//		new FocoTableModel(
+					//				new FocoController().getListaFocos()));
 				} catch (FocoException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -169,25 +179,36 @@ public class ListaFocoUI extends JInternalFrame {
 				
 			}
 		});
+		
+		JButton jbtLimparFiltro = new JButton("Limpar");
+		jbtLimparFiltro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jtfDataIniFocos.setText("");
+				jtfDataFim.setText("");
+				atualizaLista();
+			}
+		});
 		GroupLayout gl_jpListaFoco = new GroupLayout(jpListaFoco);
 		gl_jpListaFoco.setHorizontalGroup(
 			gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpListaFoco.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_jpListaFoco.createSequentialGroup()
+					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_jpListaFoco.createSequentialGroup()
 							.addComponent(jlPeriodo)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfDataIniFocos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblAt, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(1)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-							.addGap(47)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jbBuscar)
-							.addGap(70))
-						.addGroup(Alignment.TRAILING, gl_jpListaFoco.createSequentialGroup()
-							.addComponent(jspListaFoco, GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbtLimparFiltro, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addGap(35))
+						.addGroup(gl_jpListaFoco.createSequentialGroup()
+							.addComponent(jspListaFoco, GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
 							.addGap(21))
 						.addGroup(gl_jpListaFoco.createSequentialGroup()
 							.addComponent(jbNovoFoco, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
@@ -200,27 +221,39 @@ public class ListaFocoUI extends JInternalFrame {
 		gl_jpListaFoco.setVerticalGroup(
 			gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpListaFoco.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlPeriodo)
-						.addComponent(jtfDataIniFocos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jbBuscar)
-						.addComponent(lblAt)
-						.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addComponent(jspListaFoco, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jbNovoFoco)
-						.addComponent(btnEditar)
-						.addComponent(btnExcluir))
+					.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jpListaFoco.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_jpListaFoco.createSequentialGroup()
+									.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.BASELINE)
+											.addComponent(jtfDataFim, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(jbBuscar)
+											.addComponent(jbtLimparFiltro))
+										.addComponent(jtfDataIniFocos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGap(9))
+								.addGroup(gl_jpListaFoco.createSequentialGroup()
+									.addComponent(jlPeriodo)
+									.addGap(11)))
+							.addComponent(jspListaFoco, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_jpListaFoco.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jbNovoFoco)
+								.addComponent(btnEditar)
+								.addComponent(btnExcluir)))
+						.addGroup(gl_jpListaFoco.createSequentialGroup()
+							.addGap(17)
+							.addComponent(lblAt)))
 					.addGap(8))
 		);
 
 		//JPanel panel = new JPanel();
 		
 		jtListaFoco = new JTable();
-		jtListaFoco.setModel(
-				new FocoTableModel(new FocoDAO().getListaFocos()));
+		atualizaLista();
+		//jtListaFoco.setModel(
+		//		new FocoTableModel(new FocoDAO().getListaFocos()));
 		jspListaFoco.setViewportView(jtListaFoco);		
 		jpListaFoco.setLayout(gl_jpListaFoco);
 		getContentPane().setLayout(groupLayout);
@@ -228,8 +261,24 @@ public class ListaFocoUI extends JInternalFrame {
 	}
 
 	public void atualizaLista() {
-		jtListaFoco.setModel(
-				new FocoTableModel(
-						new FocoController().getListaFocos()));		
+		System.out.println(jtfDataIniFocos.getText());
+		if(jtfDataIniFocos.getText().equals("__/__/____") || jtfDataFim.getText().equals("__/__/____")) {
+			jtListaFoco.setModel(
+					new FocoTableModel(
+							new FocoController().getListaFocos()));		
+		} else {
+			Date dataIni;
+			Date dataFim;
+			try {
+				dataIni = new SimpleDateFormat("dd/MM/yyyy").parse(jtfDataIniFocos.getText());
+				dataFim = new SimpleDateFormat("dd/MM/yyyy").parse(jtfDataFim.getText());
+				jtListaFoco.setModel(
+						new FocoTableModel(
+								new FocoController().getListaFocosByData(dataIni, dataFim)));
+			} catch (ParseException | FocoException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 }

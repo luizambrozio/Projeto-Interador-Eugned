@@ -91,27 +91,25 @@ public class PacienteDAO {
 	 * @return Paciente
 	 */		
 	public Paciente getPacienteById(int id){
-		String query = "select * from paciente where id = ?";
+		String query = "select * from paciente where id = ?" ;
 		try {
 			Paciente paciente = null; 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery(query);
-			while (rs.next()){
-				paciente = new Paciente();
-				paciente.setId(rs.getInt("id"));
-				paciente.setNome(rs.getString("nome"));
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolaridade")-1]);  
-				paciente.setEstadoCivil(EnumEstadoCivil.values()[rs.getInt("estadoCivil")-1]);   
-				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
-				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));					
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			paciente = new Paciente();
+			paciente.setId(rs.getInt("id"));
+			paciente.setNome(rs.getString("nome"));
+			paciente.setCpf(rs.getString("cpf"));           
+			paciente.setRg(rs.getString("rg"));            
+			paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolaridade")-1]);  
+			paciente.setEstadoCivil(EnumEstadoCivil.values()[rs.getInt("estadoCivil")-1]);   
+			paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
+			paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
+			paciente.setDataNascimento(rs.getDate("dataNascimento"));  
+			paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));					
 				
-				listaPacientes.add(paciente);
-			}
 			return paciente;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

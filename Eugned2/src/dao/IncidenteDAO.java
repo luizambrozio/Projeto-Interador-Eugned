@@ -113,15 +113,19 @@ public class IncidenteDAO {
 		 */
 
 		public void inserir(Incidente incidente){
-			String query = "insert into Incidente (dataIncidente,dataSintoma,sintoma,idPaciente) values (?,?,?,?)";
+			String query = "insert into incidente (dataIncidente,dataSintoma,sintomas,idPaciente) values (?,?,?,?)";
 			try {
-				PreparedStatement pstmt = con.prepareStatement(query);
+				PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 				pstmt.setDate(1, new java.sql.Date(incidente.getDataIncidente().getTime()));
 				pstmt.setDate(2, new java.sql.Date(incidente.getDataSintoma().getTime()));
 				pstmt.setString(3,incidente.getSintomas() );
 				pstmt.setInt(4,incidente.getPaciente().getId());
-				pstmt.execute();
+				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
 				con.commit();
+				if (rs.next() ){
+					incidente.setId(rs.getInt(1));
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

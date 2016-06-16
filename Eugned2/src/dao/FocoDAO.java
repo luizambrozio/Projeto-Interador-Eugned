@@ -53,15 +53,16 @@ public class FocoDAO {
 		 * @return Lista de Objetos Focus
 		 */
 		public List<Foco> getListaFocosByData(Date dataIni, Date dataFim){
-			String query = "select * from Foco where dataFoco BETWEEN ? AND ?";
+			String query = "select * from foco where dataFoco BETWEEN ? AND ?";
 			if(dataFim == null) {
 				dataFim = dataIni;				
 			}
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(dataIni.getTime()));
-				pstmt.setDate(1, new java.sql.Date(dataFim.getTime()));
-				ResultSet rs = pstmt.executeQuery(query);
+				pstmt.setDate(2, new java.sql.Date(dataFim.getTime()));
+				ResultSet rs = pstmt.executeQuery(); 
+						//pstmt.executeQuery(query);
 				while (rs.next()){
 					Foco foco = new Foco();
 					foco.setId( rs.getInt("id") );

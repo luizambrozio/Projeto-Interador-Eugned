@@ -32,7 +32,7 @@ public class FocoController {
 		return new FocoDAO().getListaFocos();
 	}
 	
-	public List<Foco> getListaFocosByNome(Date dataIni, Date dataFim) throws FocoException{
+	public List<Foco> getListaFocosByData(Date dataIni, Date dataFim) throws FocoException{
 		if (dataIni == null || dataFim == null){
 			throw new FocoException("Informe um período para pesquisa");
 		}
