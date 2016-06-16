@@ -98,7 +98,7 @@ public class PrincipalUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ListaFocoUI listaFoco = new ListaFocoUI();
+				ListaFocoUI listaFoco = ListaFocoUI.getInstance();
 				listaFoco.setFocusable(true);
 				listaFoco.requestFocus();
 				frame.getContentPane().add(listaFoco,0);

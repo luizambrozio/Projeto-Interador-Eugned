@@ -1,10 +1,12 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import exception.FocoException;
+import util.MaskFields;
 
 public class FocoTableModel extends AbstractTableModel {
 	
@@ -50,7 +52,7 @@ public class FocoTableModel extends AbstractTableModel {
 		//Precisamos retornar o valor da coluna column e da linha row.
 		Foco foco = valores.get(row);
 		if (column == COL_DATA)
-			return foco.getDataFoco();
+			return (new SimpleDateFormat("dd/MM/yyyy").format(foco.getDataFoco()));
 		else 
 			if (column == COL_BAIRRO) 
 					return foco.getEndereco().getBairro();

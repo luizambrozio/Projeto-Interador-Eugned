@@ -66,6 +66,8 @@ public class CadastroFocoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroFocoUI(Foco foco) {
+		setTitle("Registrar Foco");
+		setClosable(true);
 		setBounds(100, 100, 544, 292);
 		getContentPane().setLayout(null);
 		
@@ -116,10 +118,11 @@ public class CadastroFocoUI extends JInternalFrame {
 		JButton button = new JButton("Salvar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(foco == null) {
-					Foco foco2 = new Foco();
-					try {
-						foco2.setDataFoco(formatData.parse(jtfDataFoco.getText()));
+				try {
+					if(foco == null) {
+						System.out.println("FOCO: Inserindo...");
+						Foco f = new Foco();
+						f.setDataFoco(formatData.parse(jtfDataFoco.getText()));
 						Endereco endereco = new Endereco();
 						endereco.setRua(jtfRuaFoco.getText());
 						endereco.setNumero(jtfNumeroFoco.getText());
@@ -127,25 +130,41 @@ public class CadastroFocoUI extends JInternalFrame {
 						endereco.setCep(jtfCep.getText());
 						endereco.setCidade(jtfCidadeFoco.getText());
 						endereco.setEstado(jtfEStadoFoco.getText());
-						foco2.setEndereco(endereco);
-						try {
-							new FocoController().inserir(foco2);
-							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-						} catch (FocoException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						new FocoDAO().inserir(foco);
-					} catch (ParseException e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage());
+						f.setEndereco(endereco);
+						
+						new FocoController().inserir(f);
+						JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+						ListaFocoUI.getInstance().atualizaLista();
+						dispose();
+					} else {
+						System.out.println("FOCO: Alterando...");
+						foco.setDataFoco(formatData.parse(jtfDataFoco.getText()));
+						Endereco endereco = foco.getEndereco();
+						endereco.setRua(jtfRuaFoco.getText());
+						endereco.setNumero(jtfNumeroFoco.getText());
+						endereco.setBairro(jtfBairroFoco.getText());
+						endereco.setCep(jtfCep.getText());
+						endereco.setCidade(jtfCidadeFoco.getText());
+						endereco.setEstado(jtfEStadoFoco.getText());
+						new FocoController().editar(foco);
+						ListaFocoUI.getInstance().atualizaLista();
+						dispose();
 					}
-					
+				} catch (ParseException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (FocoException e1) {
+					System.out.println("FOCO: Erro no salvamento: " + e1.getMessage());
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-				
 			}
 		});
 		
-		JButton button_1 = new JButton("Cancelar");
+		JButton jtbCancelarFoco = new JButton("Cancelar");
+		jtbCancelarFoco.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		jtfCidadeFoco = new JTextField();
 		jtfCidadeFoco.setColumns(10);
@@ -182,7 +201,7 @@ public class CadastroFocoUI extends JInternalFrame {
 							.addGap(120)
 							.addComponent(button, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(button_1)))
+							.addComponent(jtbCancelarFoco)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
@@ -208,7 +227,7 @@ public class CadastroFocoUI extends JInternalFrame {
 						.addComponent(jtfEStadoFoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(jtbCancelarFoco, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(button, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap(34, Short.MAX_VALUE))
 		);
@@ -238,6 +257,21 @@ public class CadastroFocoUI extends JInternalFrame {
 					.addContainerGap(39, Short.MAX_VALUE))
 		);
 		jpFoco.setLayout(gl_jpFoco);
+		
+		preencheDados(foco);
 
+	}
+
+	private void preencheDados(Foco foco) {
+		if(foco != null) {
+			jtfDataFoco.setText(formatData.format(foco.getDataFoco()));
+			jtfRuaFoco.setText(foco.getEndereco().getRua());
+			jtfNumeroFoco.setText(foco.getEndereco().getNumero());
+			jtfBairroFoco.setText(foco.getEndereco().getBairro());
+			jtfCep.setText(foco.getEndereco().getCep());
+			jtfCidadeFoco.setText(foco.getEndereco().getCidade());
+			jtfEStadoFoco.setText(foco.getEndereco().getEstado());
+		}
+		
 	}
 }
