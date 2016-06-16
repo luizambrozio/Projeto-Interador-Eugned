@@ -91,7 +91,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroPacienteUI cadPaciente = new CadastroPacienteUI();
+				CadastroPacienteUI cadPaciente = new CadastroPacienteUI(null);
 				cadPaciente.setFocusable(true);
 				cadPaciente.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadPaciente, 0);
