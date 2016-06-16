@@ -1,5 +1,7 @@
 package dao;
 
+import java.awt.PaintContext;
+
 /**
  * @author ambrozio
  */
@@ -49,44 +51,9 @@ public class PacienteEnderecoDAO {
 		return null;
 	}
 	
-	/**
-	 * Carrega todos os Pacientes que ocorreram em um período
-	 * @return Lista de Objetos Focus
-	 */
 	
 	/**
-	public List<PacienteEndereco> getListaPacientesByNome(String nome){
-		String query = "select * from paciente where nome like '%?%'";	
-		
-		
-		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nome);
-			ResultSet rs = pstmt.executeQuery(query);
-			Paciente paciente = null;
-			while (rs.next()){
-				paciente.setId(rs.getInt("id"));           
-				paciente.setCpf(rs.getString("cpf"));           
-				paciente.setRg(rs.getString("rg"));            
-				paciente.setEscolaridade(EnumEscolaridade.values()[rs.getInt("escolarida")]);  
-				paciente.setEstadoCivil(EnumEstadoCivil.values()[rs.getInt("estadoCivil")]);   
-				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")]);          
-				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")]);       
-				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));				
-				
-				listaPacientes.add(paciente);
-			}
-			return listaPacientes;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-*/
-	/**
-	 * Carrega um Paciente pelo Id
+	 * Carrega os enderecos pelo Id do paciente
 	 * @return Paciente
 	 */		
 	
@@ -101,6 +68,7 @@ public class PacienteEnderecoDAO {
 				pacienteEndereco.setId(rs.getInt("id"));           
 				pacienteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 				pacienteEndereco.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
+				pacienteEndereco.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
 				
 				listaPacienteEndereco.add(pacienteEndereco);
 			}
@@ -116,12 +84,13 @@ public class PacienteEnderecoDAO {
 
 	public void inserir(PacienteEndereco pacienteEndereco){		            
 		 
-		String query = "insert into paciente_endereco (idEndereco, idPaciente) values (?,?)";
+		String query = "insert into paciente_endereco (idEndereco, idPaciente, tipoEndereco ) values (?,?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
 			pstmt.setInt(1, pacienteEndereco.getEndereco().getId());
 			pstmt.setInt(2, pacienteEndereco.getPaciente().getId());
+			pstmt.setInt(3, pacienteEndereco.getTipo().getCodigo());
 			pstmt.execute();
 			con.commit();
 			
@@ -134,12 +103,14 @@ public class PacienteEnderecoDAO {
 	}
 	
 	public void editar(PacienteEndereco pacienteEndereco){
-		String query = "update paciente set idEndereco =?, idPaciente=?  where id=?";
+		String query = "update paciente set idEndereco =?, idPaciente=?, tipoEndereco=?   where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, pacienteEndereco.getEndereco().getId());
 			pstmt.setInt(2, pacienteEndereco.getPaciente().getId());
-			pstmt.setInt(3, pacienteEndereco.getId());
+			pstmt.setInt(3, pacienteEndereco.getTipo().getCodigo());
+			pstmt.setInt(4, pacienteEndereco.getId());
+			
 			pstmt.execute();
 			con.commit();
 		

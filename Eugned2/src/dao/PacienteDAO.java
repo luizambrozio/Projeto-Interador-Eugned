@@ -54,10 +54,7 @@ public class PacienteDAO {
 		return null;
 	}
 	
-	/**
-	 * Carrega todos os Pacientes que ocorreram em um período
-	 * @return Lista de Objetos Focus
-	 */
+	
 	public List<Paciente> getListaPacientesByNome(String nome){
 		String query = "select * from paciente where nome like '%?%'";	
 		

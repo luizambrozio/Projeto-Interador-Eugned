@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
-import ControllerLuiz.PacienteController;
 import controller.FocoController;
+import controller.PacienteController;
 import dao.FocoDAO;
 import dao.PacienteDAO;
 import dao.PacienteEnderecoDAO;
@@ -54,7 +54,6 @@ public class CadastroPacienteUI extends JInternalFrame {
 	private JTable jtListaPacienteEndereco;
 	private JComboBox jcbEstadoCivil;
 	private JComboBox jcbEscolaridade;
-	private JComboBox jcbEscolaridade_1;
 	private JComboBox jcbCor;
 	private JComboBox jcbSexo;
 	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
@@ -197,12 +196,12 @@ public class CadastroPacienteUI extends JInternalFrame {
 		
 		jcbEscolaridade = new JComboBox();
 		
-		jcbEscolaridade_1 = new JComboBox();
+		jcbEscolaridade = new JComboBox();
 		DefaultComboBoxModel<EnumEscolaridade> comboBoxModelEscolaridade = new DefaultComboBoxModel<>();
 		for (EnumEscolaridade e : EnumEscolaridade.values()) {
 			comboBoxModelEscolaridade.addElement(e);			
 		}
-		jcbEscolaridade_1.setModel(comboBoxModelEscolaridade);
+		jcbEscolaridade.setModel(comboBoxModelEscolaridade);
 		
 		JButton btnSalva = new JButton("Salva");
 		btnSalva.addActionListener(new ActionListener() {
@@ -240,15 +239,17 @@ public class CadastroPacienteUI extends JInternalFrame {
 		});
 		
 		JButton btnEditar = new JButton("Editar");
+		
+		JButton btnRemover = new JButton("Remover");
 				
 		GroupLayout gl_JPcadastroPaciente = new GroupLayout(JPcadastroPaciente);
 		gl_JPcadastroPaciente.setHorizontalGroup(
 			gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_JPcadastroPaciente.createSequentialGroup()
+					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 							.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 									.addComponent(jlCpf)
@@ -261,11 +262,11 @@ public class CadastroPacienteUI extends JInternalFrame {
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(jlEscolaridade)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jcbEscolaridade_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 									.addComponent(jlNome)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+									.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE))
 								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
 									.addComponent(jlEstadoCivil)
 									.addPreferredGap(ComponentPlacement.RELATED)
@@ -289,11 +290,13 @@ public class CadastroPacienteUI extends JInternalFrame {
 							.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(cboxGestante))
-						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+						.addGroup(Alignment.LEADING, gl_JPcadastroPaciente.createSequentialGroup()
 							.addComponent(jbNovoPaciente)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnEditar)
-							.addGap(56)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRemover)
+							.addGap(70)
 							.addComponent(btnSalva)
 							.addContainerGap())))
 		);
@@ -311,7 +314,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 						.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jlRg)
 						.addComponent(jlEscolaridade)
-						.addComponent(jcbEscolaridade_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
@@ -336,8 +339,9 @@ public class CadastroPacienteUI extends JInternalFrame {
 					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jbNovoPaciente)
 						.addComponent(btnEditar)
+						.addComponent(btnRemover)
 						.addComponent(btnSalva))
-					.addContainerGap(14, Short.MAX_VALUE))
+					.addContainerGap(18, Short.MAX_VALUE))
 		);
 		
 		JScrollPane jspListaPacienteEndereco = new JScrollPane();

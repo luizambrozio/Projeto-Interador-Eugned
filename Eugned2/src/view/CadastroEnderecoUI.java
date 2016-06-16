@@ -8,15 +8,31 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import controller.PacienteController;
+import dao.EnderecoDao;
+import dao.PacienteDAO;
+import dao.PacienteEnderecoDAO;
+import exception.EnderecoPacienteException;
+import exception.PacienteException;
+import model.Endereco;
+import model.EnumCorRaca;
+import model.EnumEscolaridade;
+import model.EnumEstadoCivil;
 import model.EnumSexo;
 import model.EnumTipoEndereco;
+import model.Paciente;
+import model.PacienteEndereco;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.awt.event.ActionEvent;
 
 public class CadastroEnderecoUI extends JInternalFrame {
 	private JTextField jtfRua;
@@ -26,6 +42,8 @@ public class CadastroEnderecoUI extends JInternalFrame {
 	private JTextField jtfEstado;
 	private JTextField jtfCidade;
 	private JComboBox jcbTipo;
+	private Endereco endereco;
+	private PacienteEndereco pacienteEndereco;
 
 	/**
 	 * Launch the application.
@@ -94,6 +112,34 @@ public class CadastroEnderecoUI extends JInternalFrame {
 		JButton jbCancelar = new JButton("Cancelar");
 		
 		JButton jbSalvar = new JButton("Salvar");
+		jbSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				Dao Endereco
+				if(endereco == null) {
+					endereco = new Endereco();
+					
+					if(pacienteEndereco == null){
+						pacienteEndereco = new PacienteEndereco();
+					
+					endereco.setRua(jtfRua.getText());
+					endereco.setNumero(jtfNum.getText());
+					endereco.setCep(jtfCep.getText());
+					endereco.setBairro(jtfBairro.getText());
+					endereco.setCidade(jtfCidade.getText());
+					endereco.setCidade(jtfCidade.getText());
+					pacienteEndereco.setTipo((EnumTipoEndereco) jcbTipo.getSelectedItem());
+					
+					new EnderecoDao().inserir(endereco);
+					new PacienteEnderecoDAO().inserir(pacienteEndereco);
+					JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
+					new EnderecoDao().inserir(endereco);
+					new PacienteEnderecoDAO().inserir(pacienteEndereco);
+					
+				}
+				}	
+				
+			}
+		});
 		
 		jtfEstado = new JTextField();
 		jtfEstado.setColumns(10);
