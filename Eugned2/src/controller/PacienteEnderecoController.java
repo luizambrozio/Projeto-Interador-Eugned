@@ -25,37 +25,5 @@ public class PacienteEnderecoController {
 		new FocoDAO().inserir(foco);
 	}
 	
-//	public List<Foco> getListaFocos(){
-//		return new FocoDAO().getListaFocos();
-	}
-//	
-//	public List<Foco> getListaFocosByNome(Date dataIni, Date dataFim) throws FocoException{
-//		if (dataIni == null || dataFim == null){
-//			throw new FocoException("Informe um período para pesquisa");
-//		}
-//		return new FocoDAO().getListaFocosByData(dataIni, dataFim);
-//	}
-//	
-//	public void editar(Foco foco) throws FocoException{
-//		if (foco == null){
-//			throw new FocoException("Foco inválido");
-//		}
-//		if (foco.getId() == 0){
-//			throw new FocoException("Foco inválido");
-//		}
-//		if (foco.getDataFoco() == null){
-//			throw new FocoException("Informe uma data");
-//		}
-//		if (foco.getEndereco() == null){
-//			throw new FocoException("Preencha o endereço");
-//		}
-//		new FocoDAO().editar(foco);
-//	}
-//	
-//	public void excluir(int id) throws FocoException{
-//		if (id == 0){
-//			throw new FocoException("Selecione um foco");
-//		}
-//		new FocoDAO().excluir(id);
 
 }

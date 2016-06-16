@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
 
 
 import dao.PacienteDAO;
-
+import model.Paciente;
 import model.PacienteTableModel;
 
 import javax.swing.JLabel;
@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -65,28 +66,6 @@ public class ListaPacienteUI extends JInternalFrame {
 		
 		JPanel jpListaPacientes = new JPanel();
 		jpListaPacientes.setBorder(new TitledBorder(null, "Lasta Pacientes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpListaPacientes, GroupLayout.PREFERRED_SIZE, 568, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(572, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpListaPacientes, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
-		JLabel jlBuscar = new JLabel("Buscar");
-		
-		jtfBuscarPaciente = new JTextField();
-		jtfBuscarPaciente.setColumns(10);
-		
-		JButton jbBuscar = new JButton("Buscar");
 		
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
@@ -99,23 +78,72 @@ public class ListaPacienteUI extends JInternalFrame {
 			}
 		});
 		
+		JButton btnEditar = new JButton("Editar");
+		
+		JButton btnExcluir = new JButton("Excluir");
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(12)
+							.addComponent(jbNovoPaciente)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnEditar)
+							.addGap(18)
+							.addComponent(btnExcluir))
+						.addComponent(jpListaPacientes, GroupLayout.PREFERRED_SIZE, 568, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jpListaPacientes, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbNovoPaciente)
+						.addComponent(btnEditar)
+						.addComponent(btnExcluir))
+					.addContainerGap(18, Short.MAX_VALUE))
+		);
+		
+		JLabel jlBuscar = new JLabel("Buscar");
+		
+		jtfBuscarPaciente = new JTextField();
+		jtfBuscarPaciente.setColumns(10);
+		
+		JButton jbBuscar = new JButton("Buscar");
+		jbBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//buscar paciente na lista
+				ArrayList<Paciente> listaPacientePesquisa = new ArrayList<Paciente>();
+				for ( Paciente c : new PacienteDAO().getListaPacientes()){
+					if (c.getNome().contains(jtfBuscarPaciente.getText())){
+						listaPacientePesquisa.add(c);
+					}
+				}
+				jtListaPaciente.setModel(new PacienteTableModel(listaPacientePesquisa));
+			}
+		});
+		
 		JScrollPane jspListaPaciente = new JScrollPane();
 		GroupLayout gl_jpListaPacientes = new GroupLayout(jpListaPacientes);
 		gl_jpListaPacientes.setHorizontalGroup(
 			gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpListaPacientes.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_jpListaPacientes.createSequentialGroup()
 							.addComponent(jlBuscar)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jtfBuscarPaciente, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(jbBuscar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jbNovoPaciente)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_jpListaPacientes.createSequentialGroup()
+							.addGap(77))
+						.addGroup(gl_jpListaPacientes.createSequentialGroup()
 							.addComponent(jspListaPaciente, GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
 							.addGap(21))))
 		);
@@ -126,8 +154,7 @@ public class ListaPacienteUI extends JInternalFrame {
 					.addGroup(gl_jpListaPacientes.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlBuscar)
 						.addComponent(jtfBuscarPaciente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jbBuscar)
-						.addComponent(jbNovoPaciente))
+						.addComponent(jbBuscar))
 					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
 					.addComponent(jspListaPaciente, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
