@@ -24,6 +24,8 @@ public class FocoController {
 		// TODO recuperado o id do endereço
 		new EnderecoDao().inserir(foco.getEndereco());
 		new FocoDAO().inserir(foco);
+		System.out.println("FOCO: Inserção OK!");
+
 	}
 	
 	public List<Foco> getListaFocos(){
@@ -50,13 +52,14 @@ public class FocoController {
 		if (foco.getEndereco() == null){
 			throw new FocoException("Preencha o endereço");
 		}
+		new EnderecoDao().editar(foco.getEndereco());
 		new FocoDAO().editar(foco);
 	}
 	
 	public void excluir(int id) throws FocoException{
 		if (id == 0){
 			throw new FocoException("Selecione um foco");
-		}
+		}		
 		new FocoDAO().excluir(id);
 	}	
 }

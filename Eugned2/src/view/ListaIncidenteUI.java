@@ -37,7 +37,7 @@ public class ListaIncidenteUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ListaIncidenteUI() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 333);
 		
 		JPanel jpListaIncidente = new JPanel();
 		jpListaIncidente.setBorder(new TitledBorder(null, "Incidente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -48,22 +48,30 @@ public class ListaIncidenteUI extends JInternalFrame {
 		jtfBuscaListaIncidente = new JTextField();
 		jtfBuscaListaIncidente.setColumns(10);
 		
-		JButton jbNovoListaPaciente = new JButton("Novo");
+		JButton jbNovoListaIncidente = new JButton("Novo");
 		
 		JPanel jpNomeListaPacienteIncidente = new JPanel();
+		
+		JButton jbAlterarListaPaciente = new JButton("Alterar");
+		
+		JButton jbExcluirListaIncidente = new JButton("Excluir");
 		GroupLayout gl_jpListaIncidente = new GroupLayout(jpListaIncidente);
 		gl_jpListaIncidente.setHorizontalGroup(
-			gl_jpListaIncidente.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_jpListaIncidente.createSequentialGroup()
+			gl_jpListaIncidente.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_jpListaIncidente.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_jpListaIncidente.createParallelGroup(Alignment.TRAILING)
-						.addComponent(jpNomeListaPacienteIncidente, GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+					.addGroup(gl_jpListaIncidente.createParallelGroup(Alignment.LEADING)
+						.addComponent(jpNomeListaPacienteIncidente, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
 						.addGroup(gl_jpListaIncidente.createSequentialGroup()
 							.addComponent(jlBuscaListaIncidente)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jtfBuscaListaIncidente, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-							.addComponent(jbNovoListaPaciente)))
+							.addComponent(jtfBuscaListaIncidente, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_jpListaIncidente.createSequentialGroup()
+							.addComponent(jbNovoListaIncidente)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbAlterarListaPaciente)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbExcluirListaIncidente)))
 					.addContainerGap())
 		);
 		gl_jpListaIncidente.setVerticalGroup(
@@ -72,11 +80,15 @@ public class ListaIncidenteUI extends JInternalFrame {
 					.addContainerGap()
 					.addGroup(gl_jpListaIncidente.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlBuscaListaIncidente)
-						.addComponent(jtfBuscaListaIncidente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jbNovoListaPaciente))
+						.addComponent(jtfBuscaListaIncidente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(jpNomeListaPacienteIncidente, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(15, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+					.addGroup(gl_jpListaIncidente.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbNovoListaIncidente)
+						.addComponent(jbAlterarListaPaciente)
+						.addComponent(jbExcluirListaIncidente))
+					.addContainerGap())
 		);
 		
 		JScrollPane jscrpNomeListaIncidente = new JScrollPane();
@@ -99,5 +111,4 @@ public class ListaIncidenteUI extends JInternalFrame {
 		jpListaIncidente.setLayout(gl_jpListaIncidente);
 
 	}
-
 }

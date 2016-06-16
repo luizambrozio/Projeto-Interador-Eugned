@@ -26,7 +26,7 @@ public class IncidenteEnderecoDAO {
 	public List<IncidenteEndereco> getListaincidenteEnderecos(){
 		try {
 			Statement stmt = con.createStatement();
-			String query = "select * from incidenteEndereco";
+			String query = "select * from incidente_endereco";
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()){
 				IncidenteEndereco incidenteEndereco = new IncidenteEndereco();
