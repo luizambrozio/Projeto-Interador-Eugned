@@ -138,8 +138,7 @@ public class PacienteDAO {
 			pstmt.setInt(6, paciente.getSexo().getCodigo());
 			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
 			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());
-			
+			pstmt.setFloat(9, paciente.getRendaFamiliar());			
 			pstmt.execute();
 			con.commit();
 		} catch (SQLException e) {

@@ -7,6 +7,10 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import model.EnumSexo;
+import model.EnumTipoEndereco;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -19,6 +23,9 @@ public class CadastroEnderecoUI extends JInternalFrame {
 	private JTextField jtfNum;
 	private JTextField jtfBairro;
 	private JTextField jtfCep;
+	private JTextField jtfEstado;
+	private JTextField jtfCidade;
+	private JComboBox jcbTipo;
 
 	/**
 	 * Launch the application.
@@ -40,7 +47,7 @@ public class CadastroEnderecoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroEnderecoUI() {
-		setBounds(100, 100, 461, 235);
+		setBounds(100, 100, 474, 235);
 		setClosable(true);
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Novo Endere\u00E7o", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -49,15 +56,15 @@ public class CadastroEnderecoUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 416, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 449, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(88, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(70, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JLabel jlRua = new JLabel("Rua:");
@@ -82,25 +89,33 @@ public class CadastroEnderecoUI extends JInternalFrame {
 		
 		JLabel jlEstado = new JLabel("Estado:");
 		
-		JComboBox jcbEstado = new JComboBox();
-		jcbEstado.setModel(new DefaultComboBoxModel(new String[] {"Santa Catarina"}));
-		jcbEstado.setToolTipText("");
-		
 		JLabel lblCidade = new JLabel("Cidade:");
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Florianópolis"}));
 		
 		JButton jbCancelar = new JButton("Cancelar");
 		
 		JButton jbSalvar = new JButton("Salvar");
+		
+		jtfEstado = new JTextField();
+		jtfEstado.setColumns(10);
+		
+		jtfCidade = new JTextField();
+		jtfCidade.setColumns(10);
+		
+		jcbTipo = new JComboBox();	
+		DefaultComboBoxModel<EnumTipoEndereco> comboBoxModelTipoEndereco = new DefaultComboBoxModel<>();
+		for (EnumTipoEndereco e : EnumTipoEndereco.values()) {
+			comboBoxModelTipoEndereco.addElement(e);			
+		}		
+		jcbTipo.setModel(comboBoxModelTipoEndereco);
+		
+		JLabel lblTipo = new JLabel("tipo");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(jlRua)
 							.addGap(4)
 							.addComponent(jtfRua, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
@@ -118,17 +133,23 @@ public class CadastroEnderecoUI extends JInternalFrame {
 							.addComponent(jtfCep, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(jlEstado)
-							.addGap(4)
-							.addComponent(jcbEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jtfEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(25)
 							.addComponent(lblCidade)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(jtfCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addComponent(jbSalvar)
 							.addGap(18)
 							.addComponent(jbCancelar)))
 					.addContainerGap())
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(184, Short.MAX_VALUE)
+					.addComponent(lblTipo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jcbTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(141))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -147,14 +168,18 @@ public class CadastroEnderecoUI extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jlEstado)
-						.addComponent(jcbEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblCidade)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(34)
+						.addComponent(jtfEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jtfCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jcbTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTipo))
+					.addGap(4)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jbCancelar)
 						.addComponent(jbSalvar))
-					.addContainerGap(19, Short.MAX_VALUE))
+					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);

@@ -35,7 +35,7 @@ public class MaskFields {
     }
     
     public MaskFormatter maskRg(JFormattedTextField textfield) throws ParseException{
-        MaskFormatter mask = new MaskFormatter("##.###.###-#");
+        MaskFormatter mask = new MaskFormatter("##.###.###");
         mask.setOverwriteMode(true);
         mask.setValidCharacters("0123456789");
         mask.setPlaceholderCharacter('_');

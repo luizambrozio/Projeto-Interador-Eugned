@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.EnumTipoEndereco;
 import model.PacienteEndereco;
 import util.ConnectionUtil;
 
@@ -36,6 +37,7 @@ public class PacienteEnderecoDAO {
 				pacienteEndereco.setId(rs.getInt("id"));           
 				pacienteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 				pacienteEndereco.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
+				pacienteEndereco.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")-1]);
 				
 				listaPacienteEndereco.add(pacienteEndereco);
 			}
