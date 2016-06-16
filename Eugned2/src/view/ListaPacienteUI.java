@@ -13,8 +13,13 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-
+import controller.FocoController;
+import controller.PacienteController;
 import dao.PacienteDAO;
+import exception.FocoException;
+import exception.PacienteException;
+import model.Foco;
+import model.FocoTableModel;
 import model.Paciente;
 import model.PacienteTableModel;
 
@@ -22,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -79,6 +85,18 @@ public class ListaPacienteUI extends JInternalFrame {
 		});
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//Editar Paciente				
+				Paciente p;
+				p = new PacienteTableModel(new PacienteController().getListaPacientes()).get(jtListaPaciente.getSelectedRow());
+				CadastroPacienteUI cadPacienteUi = new CadastroPacienteUI(p);
+				cadPacienteUi.setFocusable(true);
+				cadPacienteUi.requestFocus();
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadPacienteUi, 0);
+				cadPacienteUi.setVisible(true);
+			}
+		});
 		
 		JButton btnExcluir = new JButton("Excluir");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

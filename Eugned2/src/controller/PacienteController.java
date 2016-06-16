@@ -3,9 +3,11 @@ package controller;
 
 import java.util.List;
 
+import dao.FocoDAO;
 import dao.PacienteDAO;
 import exception.PacienteException;
 import model.EnumSexo;
+import model.Foco;
 import model.Paciente;
 
 
@@ -36,6 +38,10 @@ public class PacienteController {
 		}
 		
 		new PacienteDAO().inserir(paciente);
+	}
+	
+	public List<Paciente> getListaPacientes(){
+		return new PacienteDAO().getListaPacientes();
 	}
 
 }
