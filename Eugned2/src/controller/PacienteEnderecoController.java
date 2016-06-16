@@ -27,7 +27,7 @@ public class PacienteEnderecoController {
 	
 //	public List<Foco> getListaFocos(){
 //		return new FocoDAO().getListaFocos();
-	}
+//	}
 //	
 //	public List<Foco> getListaFocosByNome(Date dataIni, Date dataFim) throws FocoException{
 //		if (dataIni == null || dataFim == null){
