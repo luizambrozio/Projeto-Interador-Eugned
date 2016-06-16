@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
 
 public class CadastroIncidenteUI extends JInternalFrame {
 	private JTextField jtfBuscaNomePacienteIncidente;
@@ -38,7 +39,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public CadastroIncidenteUI() {
-		setBounds(100, 100, 554, 394);
+		setBounds(100, 100, 554, 416);
 		
 		JPanel jpCadastroIncidente = new JPanel();
 		jpCadastroIncidente.setBorder(new TitledBorder(null, "Cadastro Incidente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -62,13 +63,20 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		
 		JPanel jpSintomas = new JPanel();
 		jpSintomas.setBorder(new TitledBorder(null, "Sintomas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		JButton jbNovoCadastroIncidente = new JButton("Novo");
+		
+		JButton jbAlterarCadastroIncidente = new JButton("Alterar");
+		
+		JButton jbExcluirCadastroIncidente = new JButton("Excluir");
 		GroupLayout gl_jpCadastroIncidente = new GroupLayout(jpCadastroIncidente);
 		gl_jpCadastroIncidente.setHorizontalGroup(
 			gl_jpCadastroIncidente.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.LEADING)
-						.addComponent(jpEnderecoPacienteIncidente, GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+						.addComponent(jpSintomas, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jpEnderecoPacienteIncidente, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
 						.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.LEADING, false)
 							.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
 								.addComponent(jlNomePacienteIncidente)
@@ -83,7 +91,12 @@ public class CadastroIncidenteUI extends JInternalFrame {
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(jtfDataSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGap(40)))
-						.addComponent(jpSintomas, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
+							.addComponent(jbNovoCadastroIncidente)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbAlterarCadastroIncidente)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jbExcluirCadastroIncidente)))
 					.addContainerGap())
 		);
 		gl_jpCadastroIncidente.setVerticalGroup(
@@ -102,8 +115,13 @@ public class CadastroIncidenteUI extends JInternalFrame {
 					.addGap(18)
 					.addComponent(jpEnderecoPacienteIncidente, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(jpSintomas, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-					.addContainerGap())
+					.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jbNovoCadastroIncidente)
+						.addComponent(jbAlterarCadastroIncidente)
+						.addComponent(jbExcluirCadastroIncidente))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jpSintomas, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		GroupLayout gl_jpSintomas = new GroupLayout(jpSintomas);
 		gl_jpSintomas.setHorizontalGroup(
