@@ -30,6 +30,12 @@ public enum EnumEstadoCivil {
 		return descricao;
 	}
 	
+	public String toString() {
+		return descricao;
+	}
+	
+	
+	
 	
 	
 	

@@ -32,4 +32,8 @@ public enum EnumEscolaridade {
 		return descricao;
 	}
 	
+	public String toString() {
+		return descricao;
+	}
+	
 }

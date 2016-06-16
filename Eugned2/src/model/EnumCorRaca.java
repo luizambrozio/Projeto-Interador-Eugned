@@ -30,5 +30,9 @@ public enum EnumCorRaca {
 	public String getDescricao() {
 		return descricao;
 	}
+	
+	public String toString() {
+		return descricao;
+	}
 
 }
