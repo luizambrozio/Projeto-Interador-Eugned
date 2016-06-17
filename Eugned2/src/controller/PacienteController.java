@@ -3,6 +3,7 @@ package controller;
 
 import java.util.List;
 
+import dao.EnderecoDao;
 import dao.FocoDAO;
 import dao.PacienteDAO;
 import exception.FocoException;
@@ -46,7 +47,35 @@ public class PacienteController {
 			throw new PacienteException("Selecione um Paciente");
 		}		
 		new PacienteDAO().excluir(id);
-	}	
+	}
+	
+//Editar
+	public void editar(Paciente paciente) throws PacienteException{
+		if(paciente.getNome().equals(null)){
+			throw new PacienteException("nome Invalido");
+		}
+		if(paciente.getCpf().equals(null)){
+			throw new PacienteException();
+		}
+		if(paciente.getRg().equals(null)){
+			throw new PacienteException("RG invalido");
+		}
+		if(paciente.getDataNascimento().equals(null)){
+			throw new PacienteException("Data de Nascimento invalido");
+		}
+		if(paciente.getRendaFamiliar().equals(null)){
+			throw new PacienteException("Renda invalida");
+		}
+		if(paciente.getGestante().equals(true)){
+			if (paciente.getSexo().equals(EnumSexo.MASCULINO)) {
+				
+			}
+			throw new PacienteException("Homem não pode estar Gestante");
+		}
+		
+		new PacienteDAO().editar(paciente);
+	}
+	
 	
 	public List<Paciente> getListaPacientes(){
 		return new PacienteDAO().getListaPacientes();
