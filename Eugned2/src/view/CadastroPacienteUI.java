@@ -367,7 +367,24 @@ public class CadastroPacienteUI extends JInternalFrame {
 		//jpConsultaCliente.setLayout(gl_jpConsultaCliente);
 		getContentPane().setLayout(groupLayout);
 
+		preencheDados(paciente);
 
 
+	}
+
+	private void preencheDados(Paciente paciente) {
+		if(paciente!=null){
+			jtfNome.setText(paciente.getNome());
+			jtfCpf.setText(paciente.getCpf());
+			jtfRg.setText(paciente.getRg());
+			jtfDataNascimento.setText(formatData.format(paciente.getDataNascimento()));
+			jtfRenda.setText(""+paciente.getRendaFamiliar());
+			jcbCor.setSelectedItem(paciente.getCorRaca());
+			jcbEscolaridade.setSelectedItem(paciente.getEscolaridade());
+			jcbEstadoCivil.setSelectedItem(paciente.getEstadoCivil());
+			jcbSexo.setSelectedItem(paciente.getSexo());			
+			
+		}
+		
 	}
 }

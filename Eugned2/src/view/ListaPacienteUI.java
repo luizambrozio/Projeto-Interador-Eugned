@@ -45,6 +45,8 @@ public class ListaPacienteUI extends JInternalFrame {
 	
 	private JTextField jtfBuscarPaciente;
 	private JTable jtListaPaciente;
+	private static ListaPacienteUI instancia;
+	protected static ListaPacienteUI getInstancia;
 
 	/**
 	 * Launch the application.
@@ -53,7 +55,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaPacienteUI frame = new ListaPacienteUI();
+					ListaPacienteUI frame = ListaPacienteUI.getInstancia;
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -99,6 +101,25 @@ public class ListaPacienteUI extends JInternalFrame {
 		});
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//Excluir Paciente	
+				try {
+					System.out.println("FOCO: Excluindo");
+					Paciente p = 
+							new PacienteTableModel(
+									new PacienteController().getListaPacientes()
+									).get(jtListaPaciente.getSelectedRow());
+
+					new PacienteController().excluir(p.getId());
+					JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso");
+					atualizaLista();
+				} catch (FocoException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					}
+
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
