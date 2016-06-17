@@ -103,20 +103,19 @@ public class ListaPacienteUI extends JInternalFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//Excluir Paciente	
-				try {
-					System.out.println("FOCO: Excluindo");
-					Paciente p = 
-							new PacienteTableModel(
-									new PacienteController().getListaPacientes()
-									).get(jtListaPaciente.getSelectedRow());
+System.out.println("FOCO: Excluindo");
+				Paciente p = 
+						new PacienteTableModel(
+								new PacienteController().getListaPacientes()
+								).get(jtListaPaciente.getSelectedRow());
 
+				try {
 					new PacienteController().excluir(p.getId());
-					JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso");
-					atualizaLista();
-				} catch (FocoException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
-					}
+				} catch (PacienteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso");
 
 			}
 		});
