@@ -22,6 +22,10 @@ public class PacienteTableModel extends AbstractTableModel {
 	public PacienteTableModel() {
 		this.valores = new ArrayList<Paciente>();
 	}
+	
+	public getPaciente() {
+		return paciente;
+	}
 
 	@Override
 	public int getRowCount() {

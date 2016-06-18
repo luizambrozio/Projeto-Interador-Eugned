@@ -12,7 +12,8 @@ public class PacienteEnderecoTableModel extends AbstractTableModel {
 	private static final int COL_TIPO = 0;
 	private static final int COL_ENDERECO = 1;
 
-	private List<PacienteEndereco> valores;       
+	private List<PacienteEndereco> valores;
+	
 
 	//Esse � um construtor, que recebe a nossa lista de produtos
 	public PacienteEnderecoTableModel(List<PacienteEndereco> valores) {
@@ -32,7 +33,7 @@ public class PacienteEnderecoTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 3;
+		return 2;
 	}
 	
 	public String getColumnName(int column) {
@@ -47,7 +48,7 @@ public class PacienteEnderecoTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) { 
 		PacienteEndereco pacienteEndereco = valores.get(rowIndex);
 			if (columnIndex == COL_TIPO) 
-					return pacienteEndereco.getTipo().getDeclaringClass();
+					return pacienteEndereco.getTipo().getDescricao();
 			else 
 				if (columnIndex == COL_ENDERECO)
 										
@@ -59,19 +60,7 @@ public class PacienteEnderecoTableModel extends AbstractTableModel {
 		return ""; //Nunca deve ocorrer
 	}
 	
-//	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//		PacienteEndereco pacienteEndereco = valores.get(rowIndex);
-//		//Vamos alterar o valor da coluna columnIndex na linha rowIndex com o valor aValue passado no par�metro.
-//		//Note que vc poderia alterar 2 campos ao inv�s de um s�.
-////		if (columnIndex == COL_ID)
-////			paciente.setId(Integer.parseInt(aValue.toString()));
-////		else 
-//			if (columnIndex == COL_TIPO) 
-//				pacienteEndereco.setTipoEndereco(EnumTipoEndereco.valueOf(aValue.toString()));
-//			else 
-//				if (columnIndex == COL_ENDERECO) 
-//					pacienteEndereco.setCpf(aValue.toString());
-//	}
+
 
 	public Class<?> getColumnClass(int columnIndex) {
 		//Qual a classe das nossas colunas? Como estamos exibindo texto, � string.

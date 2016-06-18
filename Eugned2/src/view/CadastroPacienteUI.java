@@ -24,6 +24,7 @@ import model.EnumEscolaridade;
 import model.EnumEstadoCivil;
 import model.EnumSexo;
 import model.Foco;
+import model.FocoTableModel;
 import model.Paciente;
 import model.PacienteEnderecoTableModel;
 import model.PacienteTableModel;
@@ -54,10 +55,17 @@ public class CadastroPacienteUI extends JInternalFrame {
 	private JTable jtListaPacienteEndereco;
 	private JComboBox jcbEstadoCivil;
 	private JComboBox jcbEscolaridade;
-//	private JComboBox jcbEscolaridade_1;
+	//	private JComboBox jcbEscolaridade_1;
 	private JComboBox jcbCor;
 	private JComboBox jcbSexo;
 	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
+	private static CadastroPacienteUI instancia;
+	private Paciente paciente;
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
 
 	/**
 	 * Launch the application.
@@ -78,40 +86,41 @@ public class CadastroPacienteUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroPacienteUI(Paciente paciente) {
+	public CadastroPacienteUI(Paciente p) {
+		paciente = p;
 		setClosable(true);
 		setBounds(100, 100, 800, 600);	
 		JPanel JPcadastroPaciente = new JPanel();
 		JPcadastroPaciente.setBorder(new TitledBorder(null, "Paciente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+				groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(JPcadastroPaciente, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+						.addContainerGap()
+						.addComponent(JPcadastroPaciente, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+						.addContainerGap())
+				);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+				groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(JPcadastroPaciente, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		
+						.addContainerGap()
+						.addComponent(JPcadastroPaciente, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+						.addContainerGap())
+				);
+
 		JLabel jlNome = new JLabel("Nome:");
-		
+
 		JLabel jlCpf = new JLabel("CPF:");
-		
+
 		JLabel jlRg = new JLabel("RG:");
-		
+
 		JLabel jlEscolaridade = new JLabel("Escolaridade:");
-		
+
 		JLabel jlEstadoCivil = new JLabel("Estado Civil");
-		
+
 		jtfNome = new JTextField();
 		jtfNome.setColumns(10);
-		
+
 		jtfCpf = new JFormattedTextField();
 		try {
 			maskFields.maskCpf(jtfCpf);
@@ -120,7 +129,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 			e2.printStackTrace();
 		}
 		jtfCpf.setColumns(10);
-		
+
 		jtfRg = new JFormattedTextField();
 		try {
 			maskFields.maskRg(jtfRg);
@@ -129,42 +138,42 @@ public class CadastroPacienteUI extends JInternalFrame {
 			e.printStackTrace();
 		}
 		jtfRg.setColumns(10);
-		
-		
+
+
 		jcbEstadoCivil = new JComboBox();
 		DefaultComboBoxModel<EnumEstadoCivil> comboBoxModelEstadoCivil = new DefaultComboBoxModel<>();
 		for (EnumEstadoCivil e : EnumEstadoCivil.values()) {
 			comboBoxModelEstadoCivil.addElement(e);			
 		}
 		jcbEstadoCivil.setModel(comboBoxModelEstadoCivil);
-		
+
 		//Inserir valore do enum no combobox
-		
+
 		JLabel jlSexo = new JLabel("Sexo");
-		
+
 		jcbSexo = new JComboBox();
 		DefaultComboBoxModel<EnumSexo> comboBoxModelSexo = new DefaultComboBoxModel<>();
 		for (EnumSexo e : EnumSexo.values()) {
 			comboBoxModelSexo.addElement(e);			
 		}		
 		jcbSexo.setModel(comboBoxModelSexo);
-		
-		
-	
+
+
+
 		JLabel jlCor = new JLabel("Cor/Raca");		
-		
+
 		jcbCor = new JComboBox();
 		DefaultComboBoxModel<EnumCorRaca> comboBoxModelCor = new DefaultComboBoxModel<>();
 		for (EnumCorRaca e : EnumCorRaca.values()) {
 			comboBoxModelCor.addElement(e);			
 		}		
 		jcbCor.setModel(comboBoxModelCor);
-		
-		
-		
-		
+
+
+
+
 		JLabel jlDataNascimento = new JLabel("Data Nascimento");
-		
+
 		jtfDataNascimento = new JFormattedTextField();
 		try {
 			maskFields.maskData(jtfDataNascimento);
@@ -172,46 +181,46 @@ public class CadastroPacienteUI extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara");
 			e1.printStackTrace();
 		}		
-		
+
 		JLabel jlRenda = new JLabel("Renda");
-		
+
 		jtfRenda = new JTextField();
 		jtfRenda.setColumns(10);
-		
+
 		JCheckBox cboxGestante = new JCheckBox("Gestante");
-		
+
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI();
+				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI(paciente);
 				cadEndereco.setFocusable(true);
 				cadEndereco.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadEndereco, 0);
 				cadEndereco.setVisible(true);	
-				
-				
+
+
 			}
 		});
-		
+
 		JPanel panel = new JPanel();
-		
+
 		jcbEscolaridade = new JComboBox();
-		
+
 		jcbEscolaridade = new JComboBox();
 		DefaultComboBoxModel<EnumEscolaridade> comboBoxModelEscolaridade = new DefaultComboBoxModel<>();
 		for (EnumEscolaridade e : EnumEscolaridade.values()) {
 			comboBoxModelEscolaridade.addElement(e);			
 		}
 		jcbEscolaridade.setModel(comboBoxModelEscolaridade);
-		
+
 		JButton btnSalva = new JButton("Salva");
 		btnSalva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//salvar paciente				
+				//salvar paciente				
 				if(paciente == null) {
-					Paciente paciente = new Paciente();
+					paciente = new Paciente();
 					try {
-//Salvar paciente novo						
+						//Salvar paciente novo						
 						paciente.setNome(jtfNome.getText());
 						paciente.setCpf(jtfCpf.getText());           
 						paciente.setRg(jtfRg.getText());            
@@ -233,15 +242,15 @@ public class CadastroPacienteUI extends JInternalFrame {
 					} catch (ParseException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}
-					
+
 				}else{
-//Salvar do Editar
-					
+					//Salvar do Editar
+
 					paciente.setNome(jtfNome.getText());
 					paciente.setCpf(jtfCpf.getText());           
 					paciente.setRg(jtfRg.getText());            
 					paciente.setEscolaridade((EnumEscolaridade) jcbEscolaridade.getSelectedItem());
-//					System.out.println(paciente.getEscolaridade());
+					//					System.out.println(paciente.getEscolaridade());
 					paciente.setEstadoCivil((EnumEstadoCivil) jcbEstadoCivil.getSelectedItem());   
 					paciente.setSexo((EnumSexo) jcbSexo.getSelectedItem());          
 					paciente.setCorRaca((EnumCorRaca) jcbCor.getSelectedItem()); 
@@ -260,147 +269,147 @@ public class CadastroPacienteUI extends JInternalFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-//					new PacienteDAO().editar(paciente);
+					//					new PacienteDAO().editar(paciente);
 				} 
-//Fimm					
-				
-				
+				//Fimm					
+
+
 			}
 		});
-		
+
 		JButton btnEditar = new JButton("Editar");
-		
+
 		JButton btnRemover = new JButton("Remover");
-				
+
 		GroupLayout gl_JPcadastroPaciente = new GroupLayout(JPcadastroPaciente);
 		gl_JPcadastroPaciente.setHorizontalGroup(
-			gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
+				gl_JPcadastroPaciente.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
-						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-							.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+						.addContainerGap()
+						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
 								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-									.addComponent(jlCpf)
-									.addGap(18)
-									.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jlRg)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jlEscolaridade)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+														.addComponent(jlCpf)
+														.addGap(18)
+														.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(jlRg)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(jlEscolaridade)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+												.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+														.addComponent(jlNome)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+												.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+														.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+																		.addComponent(jlEstadoCivil)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(jcbEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.UNRELATED)
+																		.addComponent(jlSexo)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(jcbSexo, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(jlCor, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+																.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+																		.addComponent(jlDataNascimento)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(jtfDataNascimento, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)))
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(jlRenda)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+																		.addGap(12)
+																		.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+																.addComponent(jcbCor, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+														.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+																		.addGap(84)
+																		.addComponent(btnSalva))
+																.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+																		.addGap(18)
+																		.addComponent(cboxGestante)))
+														.addGap(19)))
+										.addContainerGap())
 								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-									.addComponent(jlNome)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(jtfNome, GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
-								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-									.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-											.addComponent(jlEstadoCivil)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jcbEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(jlSexo)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jcbSexo, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jlCor, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-											.addComponent(jlDataNascimento)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(jtfDataNascimento, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(jlRenda)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-											.addGap(12)
-											.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addComponent(jcbCor, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
-									.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-											.addGap(84)
-											.addComponent(btnSalva))
-										.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-											.addGap(18)
-											.addComponent(cboxGestante)))
-									.addGap(19)))
-							.addContainerGap())
-						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-							.addComponent(jbNovoPaciente)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnEditar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnRemover))))
-		);
+										.addComponent(jbNovoPaciente)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(btnEditar)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(btnRemover))))
+				);
 		gl_JPcadastroPaciente.setVerticalGroup(
-			gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+				gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlNome)
-						.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlCpf)
-						.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jlRg)
-						.addComponent(jlEscolaridade)
-						.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+						.addContainerGap()
 						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
-							.addComponent(jlEstadoCivil)
-							.addComponent(jcbEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(jlSexo)
-							.addComponent(jcbSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
-							.addGap(3)
-							.addComponent(jlCor))
-						.addComponent(jcbCor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jlDataNascimento)
-						.addComponent(jtfDataNascimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(jlRenda)
-						.addComponent(cboxGestante))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnSalva)
-					.addGap(8)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
-						.addComponent(jbNovoPaciente)
-						.addComponent(btnEditar)
-						.addComponent(btnRemover))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		
+								.addComponent(jlNome)
+								.addComponent(jtfNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jlCpf)
+								.addComponent(jtfCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jtfRg, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jlRg)
+								.addComponent(jlEscolaridade)
+								.addComponent(jcbEscolaridade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(18)
+						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
+										.addComponent(jlEstadoCivil)
+										.addComponent(jcbEstadoCivil, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(jlSexo)
+										.addComponent(jcbSexo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_JPcadastroPaciente.createSequentialGroup()
+										.addGap(3)
+										.addComponent(jlCor))
+								.addComponent(jcbCor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jlDataNascimento)
+								.addComponent(jtfDataNascimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jtfRenda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jlRenda)
+								.addComponent(cboxGestante))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnSalva)
+						.addGap(8)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_JPcadastroPaciente.createParallelGroup(Alignment.BASELINE)
+								.addComponent(jbNovoPaciente)
+								.addComponent(btnEditar)
+								.addComponent(btnRemover))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+
 		JScrollPane jspListaPacienteEndereco = new JScrollPane();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+				gl_panel.createParallelGroup(Alignment.LEADING)
 				.addComponent(jspListaPacienteEndereco, GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
-		);
+				);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+				gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(jspListaPacienteEndereco, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(45, Short.MAX_VALUE))
-		);
+						.addComponent(jspListaPacienteEndereco, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(45, Short.MAX_VALUE))
+				);
 		panel.setLayout(gl_panel);
 		JPcadastroPaciente.setLayout(gl_JPcadastroPaciente);
 		getContentPane().setLayout(groupLayout);
 		panel.setVisible(true);
-		
+
 		jtListaPacienteEndereco = new JTable();
-		jtListaPacienteEndereco.setModel(new PacienteEnderecoTableModel(new PacienteEnderecoDAO().getListaPacienteEndereco()));
+		jtListaPacienteEndereco.setModel(new PacienteEnderecoTableModel(new PacienteEnderecoDAO().getListaPacienteEnderecoById(p)));
 		jspListaPacienteEndereco.setViewportView(jtListaPacienteEndereco);
 		//jpConsultaCliente.setLayout(gl_jpConsultaCliente);
 		getContentPane().setLayout(groupLayout);
@@ -421,8 +430,8 @@ public class CadastroPacienteUI extends JInternalFrame {
 			jcbEscolaridade.setSelectedItem(paciente.getEscolaridade());
 			jcbEstadoCivil.setSelectedItem(paciente.getEstadoCivil());
 			jcbSexo.setSelectedItem(paciente.getSexo());			
-			
+
 		}
-		
+
 	}
 }

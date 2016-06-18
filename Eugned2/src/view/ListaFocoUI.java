@@ -138,9 +138,7 @@ public class ListaFocoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Foco f;
-					f = new FocoTableModel(
-							new FocoController().getListaFocos()
-							).get(jtListaFoco.getSelectedRow());
+					f = new FocoTableModel(new FocoController().getListaFocos()).get(jtListaFoco.getSelectedRow());
 					CadastroFocoUI cadFocoUi = new CadastroFocoUI(f);
 					cadFocoUi.setFocusable(true);
 					cadFocoUi.requestFocus();

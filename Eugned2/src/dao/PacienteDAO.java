@@ -123,7 +123,7 @@ public class PacienteDAO {
 		 
 		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar) values (?,?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			
 			pstmt.setString(1, paciente.getNome());
 			pstmt.setString(2, paciente.getCpf());
@@ -134,8 +134,14 @@ public class PacienteDAO {
 			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
 			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
 			pstmt.setFloat(9, paciente.getRendaFamiliar());			
-			pstmt.execute();
+			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
 			con.commit();
+			if (rs.next() ){
+				paciente.setId(rs.getInt(1));
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
