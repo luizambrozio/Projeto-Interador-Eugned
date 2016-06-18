@@ -159,7 +159,7 @@ public class PacienteEnderecoDAO {
 			String query = "select * from paciente_endereco where idPaciente = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);				
 			pstmt.setInt(1, paciente.getId());
-			ResultSet rs = pstmt.executeQuery(query);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
 				PacienteEndereco pacienteEnderecoId = new PacienteEndereco(); 
 				pacienteEnderecoId.setId(rs.getInt("id"));           
