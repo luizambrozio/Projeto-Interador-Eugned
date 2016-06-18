@@ -5,8 +5,16 @@ import java.util.List;
 
 import dao.EnderecoDao;
 import dao.FocoDAO;
+import dao.PacienteDAO;
+import dao.PacienteEnderecoDAO;
+import exception.EnderecoException;
+import exception.EnderecoPacienteException;
 import exception.FocoException;
+import exception.PacienteException;
+import model.Endereco;
 import model.Foco;
+import model.Paciente;
+import model.PacienteEndereco;
 
 public class PacienteEnderecoController {
 	
@@ -23,6 +31,17 @@ public class PacienteEnderecoController {
 		// TODO recuperado o id do endereço
 		new EnderecoDao().inserir(foco.getEndereco());
 		new FocoDAO().inserir(foco);
+	}
+	
+	public void excluir(int id) throws EnderecoPacienteException{
+		if (id == 0){
+			throw new EnderecoPacienteException("Selecione um Endereco");
+		}		
+		new EnderecoDao().excluir(id);
+	}
+	
+	public List<PacienteEndereco> getListaPacienteEnderecobyIdPe(){
+		return new PacienteEnderecoDAO().getListaPacienteEndereco();
 	}
 	
 

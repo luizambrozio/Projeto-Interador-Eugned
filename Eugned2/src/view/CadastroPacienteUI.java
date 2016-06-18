@@ -11,14 +11,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import controller.EnderecoController;
 import controller.FocoController;
 import controller.PacienteController;
+import controller.PacienteEnderecoController;
 import dao.FocoDAO;
 import dao.PacienteDAO;
 import dao.PacienteEnderecoDAO;
+import exception.EnderecoException;
 import exception.FocoException;
 import exception.PacienteException;
 import model.Endereco;
+import model.EnderecoTableModel;
 import model.EnumCorRaca;
 import model.EnumEscolaridade;
 import model.EnumEstadoCivil;
@@ -26,6 +30,7 @@ import model.EnumSexo;
 import model.Foco;
 import model.FocoTableModel;
 import model.Paciente;
+import model.PacienteEndereco;
 import model.PacienteEnderecoTableModel;
 import model.PacienteTableModel;
 import util.MaskFields;
@@ -280,6 +285,22 @@ public class CadastroPacienteUI extends JInternalFrame {
 		JButton btnEditar = new JButton("Editar");
 
 		JButton btnRemover = new JButton("Remover");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//Excluir Endereco				
+				System.out.println("Endereco: Excluindo");
+				
+				PacienteEndereco pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe()).get(jtListaPacienteEndereco.getSelectedRow());
+					
+					try {
+						new EnderecoController().excluir(pe.getEndereco().getId());
+					} catch (EnderecoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null, "Endereco excluído com sucesso");
+			}		
+		});
 
 		GroupLayout gl_JPcadastroPaciente = new GroupLayout(JPcadastroPaciente);
 		gl_JPcadastroPaciente.setHorizontalGroup(
@@ -409,7 +430,11 @@ public class CadastroPacienteUI extends JInternalFrame {
 		panel.setVisible(true);
 
 		jtListaPacienteEndereco = new JTable();
+		if(paciente!=null){
 		jtListaPacienteEndereco.setModel(new PacienteEnderecoTableModel(new PacienteEnderecoDAO().getListaPacienteEnderecoById(p)));
+		}else{
+			return;
+		}
 		jspListaPacienteEndereco.setViewportView(jtListaPacienteEndereco);
 		//jpConsultaCliente.setLayout(gl_jpConsultaCliente);
 		getContentPane().setLayout(groupLayout);

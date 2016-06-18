@@ -14,11 +14,13 @@ import java.util.List;
 import com.mysql.jdbc.JDBC4PreparedStatement;
 
 import model.Endereco;
+import model.PacienteEndereco;
 import util.ConnectionUtil;
 
 public class EnderecoDao {
 
 	private ArrayList<Endereco> listaEnderecos = new ArrayList<Endereco>();
+	private ArrayList<Endereco> listaEnderecoByIdPessoa = new ArrayList<Endereco>();
 	
 	private Connection con = ConnectionUtil.getConnection();
 	
@@ -91,6 +93,35 @@ public class EnderecoDao {
 				
 			}
 			return endereco;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Endereco> getEnderecoByIdPessoa(int pe){
+		String query = "select * from endereco where id = ?";
+		try {
+			Endereco endereco = null;
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pe);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				System.out.println("Entrou");
+				endereco = new Endereco();
+				endereco.setId( rs.getInt("id") );
+				endereco.setRua( rs.getString("rua") );
+				endereco.setNumero(rs.getString("numero"));
+				endereco.setBairro(rs.getString("bairro"));
+				endereco.setCep(rs.getString("cep"));
+				endereco.setCidade(rs.getString("cidade"));
+				endereco.setEstado(rs.getString("estado"));
+				
+				listaEnderecoByIdPessoa.add(endereco);
+				
+			}
+			return listaEnderecoByIdPessoa;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

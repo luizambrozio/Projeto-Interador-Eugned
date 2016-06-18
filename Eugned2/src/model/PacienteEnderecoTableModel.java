@@ -15,7 +15,7 @@ public class PacienteEnderecoTableModel extends AbstractTableModel {
 	private List<PacienteEndereco> valores;
 	
 
-	//Esse � um construtor, que recebe a nossa lista de produtos
+	//Esse � um construtor, que recebe a nossa lista de PacienteEndereco
 	public PacienteEnderecoTableModel(List<PacienteEndereco> valores) {
 		this.valores = new ArrayList<PacienteEndereco>(valores);
 	}

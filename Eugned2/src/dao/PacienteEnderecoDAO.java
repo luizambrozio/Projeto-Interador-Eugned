@@ -153,8 +153,8 @@ public class PacienteEnderecoDAO {
 	}
 
 
-	public List<PacienteEndereco> getListaPacienteEnderecoById(Paciente paciente) {		
-
+	public List<PacienteEndereco> getListaPacienteEnderecoById(Paciente paciente) {
+		
 		try {
 			String query = "select * from paciente_endereco where idPaciente = ?";
 			PreparedStatement pstmt = con.prepareStatement(query);				
@@ -176,6 +176,30 @@ public class PacienteEnderecoDAO {
 		}
 		return null;
 	}
+	
+//public List<PacienteEndereco> getListaPacienteEnderecoByIdPe() {
+//		
+//		try {
+//			String query = "select * from paciente_endereco where idPaciente = ?";
+//			PreparedStatement pstmt = con.prepareStatement(query);				
+//			pstmt.setInt(1, e.getId());
+//			ResultSet rs = pstmt.executeQuery();
+//			while (rs.next()){
+//				PacienteEndereco pacienteEnderecoId = new PacienteEndereco(); 
+//				pacienteEnderecoId.setId(rs.getInt("id"));           
+//				pacienteEnderecoId.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
+//				pacienteEnderecoId.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));					
+//				pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
+//
+//				listaPacienteEnderecoById.add(pacienteEnderecoId);
+//			}
+//			return listaPacienteEnderecoById;
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
 
 	public void setListaPacienteEnderecoById(ArrayList<PacienteEndereco> listaPacienteEnderecoById) {

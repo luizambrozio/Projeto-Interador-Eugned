@@ -139,7 +139,7 @@ public class CadastroEnderecoUI extends JInternalFrame {
 						new EnderecoDao().inserir(endereco);
 						new PacienteEnderecoDAO().inserir(pacienteEndereco);
 
-						JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
+						JOptionPane.showMessageDialog(null, "Endereco cadastrado com sucesso!");
 
 					}
 				}	
