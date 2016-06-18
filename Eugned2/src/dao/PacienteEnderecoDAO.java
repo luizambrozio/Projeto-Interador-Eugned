@@ -153,33 +153,33 @@ public class PacienteEnderecoDAO {
 	}
 
 
-	public ArrayList<PacienteEndereco> getListaPacienteEnderecoById(Paciente paciente) {
-		
+	public List<PacienteEndereco> getListaPacienteEnderecoById(Paciente paciente) {		
+
+		try {
 			String query = "select * from paciente_endereco where idPaciente = ?";
-			try {
-				PacienteEndereco pacienteEnderecoId = null; 
-				PreparedStatement pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, paciente.getId());
-				ResultSet rs = pstmt.executeQuery(query);
-				while (rs.next()){				
-					pacienteEnderecoId.setId(rs.getInt("id"));           
-					pacienteEnderecoId.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
-					pacienteEnderecoId.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
-					pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
+			PreparedStatement pstmt = con.prepareStatement(query);				
+			pstmt.setInt(1, paciente.getId());
+			ResultSet rs = pstmt.executeQuery(query);
+			while (rs.next()){
+				PacienteEndereco pacienteEnderecoId = new PacienteEndereco(); 
+				pacienteEnderecoId.setId(rs.getInt("id"));           
+				pacienteEnderecoId.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
+				pacienteEnderecoId.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));					
+				pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
 
-					listaPacienteEnderecoById.add(pacienteEnderecoId);
-				}
-				return listaPacienteEnderecoById;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				listaPacienteEnderecoById.add(pacienteEnderecoId);
 			}
-			return null;
+			return listaPacienteEnderecoById;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-
-		public void setListaPacienteEnderecoById(ArrayList<PacienteEndereco> listaPacienteEnderecoById) {
-			this.listaPacienteEnderecoById = listaPacienteEnderecoById;
-		}
-
+		return null;
 	}
+
+
+	public void setListaPacienteEnderecoById(ArrayList<PacienteEndereco> listaPacienteEnderecoById) {
+		this.listaPacienteEnderecoById = listaPacienteEnderecoById;
+	}
+
+}
