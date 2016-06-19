@@ -52,15 +52,15 @@ public class IncidenteDAO {
 		 * @return Lista de Objetos Incidente
 		 */
 		public List<Incidente> getListaIncidentesByData(Date dataIni, Date dataFim){
-			String query = "select * from Incidente where dataIncidente BETWEEN ? AND ?";
+			String query = "select * from incidente where dataIncidente BETWEEN ? AND ?";
 			if(dataFim == null) {
 				dataFim = dataIni;				
 			}
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(dataIni.getTime()));
-				pstmt.setDate(1, new java.sql.Date(dataFim.getTime()));
-				ResultSet rs = pstmt.executeQuery(query);
+				pstmt.setDate(2, new java.sql.Date(dataFim.getTime()));
+				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()){
 					Incidente incidente = new Incidente();
 					incidente.setId( rs.getInt("id") );
@@ -84,7 +84,7 @@ public class IncidenteDAO {
 		 * @return Incidente
 		 */		
 		public Incidente getIncidenteById(int id){
-			String query = "select * from Incidente where id = ?";
+			String query = "select * from incidente where id = ?";
 			try {
 				Incidente incidente = null; 
 				PreparedStatement pstmt = con.prepareStatement(query);
@@ -138,7 +138,7 @@ public class IncidenteDAO {
 		 * @return nada
 		 */
 		public void editar(Incidente incidente){
-			String query = "update Incidente set dataIncidente=?, dataSintoma=?,Sintoma=? where id=?";
+			String query = "update incidente set dataIncidente=?, dataSintoma=?,sintomas=?, idPaciente=? where id=?";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setDate(1, new java.sql.Date(incidente.getDataIncidente().getTime()));
@@ -162,7 +162,7 @@ public class IncidenteDAO {
 		 * @return nada
 		 */
 		public void excluir(int id){
-			String query = "delete from Incidente where id = ?";
+			String query = "delete from incidente where id = ?";
 			try {
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, id);

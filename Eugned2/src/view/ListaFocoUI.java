@@ -58,6 +58,7 @@ public class ListaFocoUI extends JInternalFrame {
 		});
 	}
 	
+	// Obrigatório
 	public static ListaFocoUI getInstance(){
 		if(instancia == null) {
 			instancia = new ListaFocoUI();
@@ -112,6 +113,7 @@ public class ListaFocoUI extends JInternalFrame {
 		}
 		jtfDataFim.setColumns(10);
 		
+		// Chama ação de FIltro
 		JButton jbBuscar = new JButton("Buscar");
 		jbBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -119,6 +121,7 @@ public class ListaFocoUI extends JInternalFrame {
 			}
 		});
 		
+		// Chama ação de Inserir
 		JButton jbNovoFoco = new JButton("Novo");
 		jbNovoFoco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +135,7 @@ public class ListaFocoUI extends JInternalFrame {
 
 		JScrollPane jspListaFoco = new JScrollPane();
 		
-		
+		// Chama ação de Editar
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,6 +159,7 @@ public class ListaFocoUI extends JInternalFrame {
 			}
 		});
 		
+		// Chama Ação de Excluir
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -180,6 +184,7 @@ public class ListaFocoUI extends JInternalFrame {
 			}
 		});
 		
+		// Chama Ação de Limpar Filtro
 		JButton jbtLimparFiltro = new JButton("Limpar");
 		jbtLimparFiltro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

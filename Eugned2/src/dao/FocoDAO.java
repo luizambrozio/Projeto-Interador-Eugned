@@ -62,7 +62,6 @@ public class FocoDAO {
 				pstmt.setDate(1, new java.sql.Date(dataIni.getTime()));
 				pstmt.setDate(2, new java.sql.Date(dataFim.getTime()));
 				ResultSet rs = pstmt.executeQuery(); 
-						//pstmt.executeQuery(query);
 				while (rs.next()){
 					Foco foco = new Foco();
 					foco.setId( rs.getInt("id") );

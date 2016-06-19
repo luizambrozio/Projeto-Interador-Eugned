@@ -91,6 +91,18 @@ public class PrincipalUI {
 		mnCadastro.add(mntmPaciente);
 		
 		JMenuItem mntmIncidente = new JMenuItem("Incidente");
+		mntmIncidente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListaIncidenteUI listaIncidenteUI = ListaIncidenteUI.getInstance();
+				listaIncidenteUI.setFocusable(true);
+				listaIncidenteUI.requestFocus();
+				frame.getContentPane().add(listaIncidenteUI,0);
+				listaIncidenteUI.setVisible(true);
+				
+			}
+		});
 		mnCadastro.add(mntmIncidente);
 		
 		JMenuItem mntmFoco = new JMenuItem("Foco");
