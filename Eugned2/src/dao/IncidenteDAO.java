@@ -89,7 +89,7 @@ public class IncidenteDAO {
 				Incidente incidente = null; 
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, id);
-				ResultSet rs = pstmt.executeQuery(query);
+				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()){
 					incidente = new Incidente();
 					incidente.setId( rs.getInt("id") );

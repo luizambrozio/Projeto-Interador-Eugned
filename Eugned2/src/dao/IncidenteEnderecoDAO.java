@@ -65,20 +65,22 @@ public class IncidenteEnderecoDAO {
 		return null;
  	}
 
-	public IncidenteEndereco getEnderecosIncidentes(Incidente incidente){
+	public List<IncidenteEndereco> getEnderecosIncidentes(Incidente incidente){
 		String query = "select * from incidente_endereco where idIncidente = ?";
+		List<IncidenteEndereco> listIncidentesEnderecos = new ArrayList<>();
 		try {
 			IncidenteEndereco incidenteEndereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, incidente.getId());
-			ResultSet rs = pstmt.executeQuery(query);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
 				System.out.println("Entrou");
 				incidenteEndereco = new IncidenteEndereco();
 				incidenteEndereco.setIncidente(new IncidenteDAO().getIncidenteById( rs.getInt("idIncidente")));
 				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
+				listIncidentesEnderecos.add(incidenteEndereco);
 			}
-			return incidenteEndereco;
+			return listIncidentesEnderecos;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
