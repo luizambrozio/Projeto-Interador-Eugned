@@ -46,6 +46,12 @@ public class CadastroEnderecoUI extends JInternalFrame {
 	private PacienteEndereco pacienteEndereco;
 	private Paciente paciente;
 
+
+//	public Endereco getEndereco() {
+//		return endereco;
+//	}
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +59,7 @@ public class CadastroEnderecoUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroEnderecoUI frame = new CadastroEnderecoUI(null);
+					CadastroEnderecoUI frame = new CadastroEnderecoUI(null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,9 +71,11 @@ public class CadastroEnderecoUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroEnderecoUI(Paciente p) {
+	public CadastroEnderecoUI(Paciente p, Endereco en, PacienteEndereco pe) {
 		paciente = p;
-		
+		endereco = en;
+		pacienteEndereco = pe;
+
 		setBounds(100, 100, 474, 235);
 		setClosable(true);
 		JPanel panel = new JPanel();
@@ -117,12 +125,9 @@ public class CadastroEnderecoUI extends JInternalFrame {
 		JButton jbSalvar = new JButton("Salvar");
 		jbSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Salvar Endereco
-
-
+//Salvar Endereco
 				if(endereco == null) {
 					endereco = new Endereco();
-
 					if(pacienteEndereco == null){
 						pacienteEndereco = new PacienteEndereco();
 						endereco.setRua(jtfRua.getText());
@@ -134,15 +139,30 @@ public class CadastroEnderecoUI extends JInternalFrame {
 						pacienteEndereco.setTipo((EnumTipoEndereco) jcbTipo.getSelectedItem());
 						pacienteEndereco.setEndereco(endereco);
 						pacienteEndereco.setPaciente(paciente);
-
-
+						
 						new EnderecoDao().inserir(endereco);
 						new PacienteEnderecoDAO().inserir(pacienteEndereco);
 
 						JOptionPane.showMessageDialog(null, "Endereco cadastrado com sucesso!");
 
 					}
-				}	
+				}else{
+					endereco.setRua(jtfRua.getText());
+					endereco.setNumero(jtfNum.getText());
+					endereco.setCep(jtfCep.getText());
+					endereco.setBairro(jtfBairro.getText());
+					endereco.setCidade(jtfCidade.getText());
+					endereco.setEstado(jtfEstado.getText());
+					pacienteEndereco.setTipo((EnumTipoEndereco) jcbTipo.getSelectedItem());
+					pacienteEndereco.setEndereco(endereco);
+					pacienteEndereco.setPaciente(paciente);
+					
+					new EnderecoDao().editar(endereco);
+					new PacienteEnderecoDAO().editar(pacienteEndereco);
+
+					JOptionPane.showMessageDialog(null, "Endereco Alterado com sucesso!");
+
+				}
 
 			}
 		});
@@ -236,8 +256,21 @@ public class CadastroEnderecoUI extends JInternalFrame {
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
 
-
+		preencheDados(endereco, pacienteEndereco);
 
 	}
 
+	private void preencheDados(Endereco endereco, PacienteEndereco pacienteEndereco) {
+		if(endereco!=null){
+			if(pacienteEndereco!=null){
+				jtfBairro.setText(endereco.getBairro());
+				jtfCep.setText(endereco.getCep());
+				jtfCidade.setText(endereco.getCidade());
+				jtfEstado.setText(endereco.getEstado());
+				jtfNum.setText(endereco.getNumero());
+				jcbTipo.setSelectedItem(pacienteEndereco.getTipo());
+				jtfRua.setText(endereco.getRua());
+			}
+		}
+	}
 }

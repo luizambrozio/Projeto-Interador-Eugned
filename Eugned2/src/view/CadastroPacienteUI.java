@@ -27,6 +27,7 @@ import model.EnumCorRaca;
 import model.EnumEscolaridade;
 import model.EnumEstadoCivil;
 import model.EnumSexo;
+import model.EnumTipoEndereco;
 import model.Foco;
 import model.FocoTableModel;
 import model.Paciente;
@@ -66,9 +67,15 @@ public class CadastroPacienteUI extends JInternalFrame {
 	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
 	private static CadastroPacienteUI instancia;
 	private Paciente paciente;
+	private Endereco endereco;
+	
 
 	public Paciente getPaciente() {
 		return paciente;
+	}
+	
+	public Endereco getEndereco(){
+		return endereco;
 	}
 
 
@@ -197,7 +204,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI(paciente);
+				CadastroEnderecoUI cadEndereco = new CadastroEnderecoUI(paciente, null, null);
 				cadEndereco.setFocusable(true);
 				cadEndereco.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadEndereco, 0);
@@ -283,6 +290,21 @@ public class CadastroPacienteUI extends JInternalFrame {
 		});
 
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//Editar paciente				
+				PacienteEndereco pe;				
+				pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe()).get(jtListaPacienteEndereco.getSelectedRow());
+				endereco = pe.getEndereco();
+				CadastroEnderecoUI cadEnderecoUi = new CadastroEnderecoUI(paciente, endereco, pe);
+				cadEnderecoUi.setFocusable(true);
+				cadEnderecoUi.requestFocus();
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadEnderecoUi, 0);
+				cadEnderecoUi.setVisible(true);
+				
+				
+			}
+		});
 
 		JButton btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {

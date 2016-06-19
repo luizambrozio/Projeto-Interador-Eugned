@@ -89,7 +89,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Editar Paciente				
+//Editar Paciente				
 				Paciente p;
 				p = new PacienteTableModel(new PacienteController().getListaPacientes()).get(jtListaPaciente.getSelectedRow());
 				CadastroPacienteUI cadPacienteUi = new CadastroPacienteUI(p);
