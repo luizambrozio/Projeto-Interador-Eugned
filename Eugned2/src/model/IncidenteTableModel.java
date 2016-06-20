@@ -14,7 +14,7 @@ public class IncidenteTableModel extends AbstractTableModel {
 	private static final int COL_DATA_INCIDENTE = 0;
 	private static final int COL_DATA_SINTOMA = 1;
 	private static final int COL_SINTOMA = 2;
-	private static final int COL_IDPACIENTE = 3;
+	private static final int COL_PACIENTE = 3;
 
 	// List que recebe o resultados do IncidenteDao para ser manipulado e exibido na jTable
 	private List<Incidente> valores;
@@ -46,7 +46,7 @@ public class IncidenteTableModel extends AbstractTableModel {
 		if (column == COL_DATA_INCIDENTE) return "DataIncidente";
 		if (column == COL_DATA_SINTOMA) return "DataSintoma";
 		if (column == COL_SINTOMA) return "Sintoma";
-		if (column == COL_IDPACIENTE) return "idPaciente";
+		if (column == COL_PACIENTE) return "Paciente";
 		return ""; //Nunca deve ocorrer
 	}
 
@@ -62,15 +62,15 @@ public class IncidenteTableModel extends AbstractTableModel {
 				if (column == COL_SINTOMA) 
 					return 	incidente.getSintomas();
 				else 
-					if (column == COL_IDPACIENTE)
-						return incidente.getPaciente();
+					if (column == COL_PACIENTE)
+						return incidente.getPaciente().getNome();
 							
 		return ""; //Nunca deve ocorrer
 	}
 	 
 	public Incidente get(int row) throws IncidenteException {
 		if (row < 0){
-			throw new IncidenteException("Selecione um cliente");
+			throw new IncidenteException("Selecione um Paciente");
 		}
 		return valores.get(row);
 	}

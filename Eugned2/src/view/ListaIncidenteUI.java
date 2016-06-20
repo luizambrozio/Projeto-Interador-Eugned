@@ -140,11 +140,11 @@ public class ListaIncidenteUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Incidente f;
-					f = new IncidenteTableModel(
+					Incidente i;
+					i = new IncidenteTableModel(
 							new IncidenteController().getListaIncidentes()
 							).get(jtListaIncidente.getSelectedRow());
-					CadastroIncidenteUI cadIncidenteUi = new CadastroIncidenteUI(f);
+					CadastroIncidenteUI cadIncidenteUi = new CadastroIncidenteUI(i);
 					cadIncidenteUi.setFocusable(true);
 					cadIncidenteUi.requestFocus();
 					PrincipalUI.getInstance().getFrame().getContentPane().add(cadIncidenteUi, 0);

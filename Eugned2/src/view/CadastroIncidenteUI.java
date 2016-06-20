@@ -26,6 +26,7 @@ import exception.IncidenteException;
 import model.Endereco;
 import model.Foco;
 import model.Incidente;
+import model.IncidenteEndereco;
 import model.IncidenteEnderecoTableModel;
 import model.IncidenteTableModel;
 import model.Paciente;
@@ -115,11 +116,65 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		JPanel jpSintomas = new JPanel();
 		jpSintomas.setBorder(new TitledBorder(null, "Sintomas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
-		JButton jbNovoCadastroIncidente = new JButton("Novo");
+		JButton jbNovoEnderecoIncidente = new JButton("Novo");
+		jbNovoEnderecoIncidente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = new CadastroEnderecoIncidenteUI(null);
+				cadastroEnderecoIncidenteUI.setFocusable(true);
+				cadastroEnderecoIncidenteUI.requestFocus();
+				// Seta o incidente para que o endereço saiba para qual incidente registrar.
+				cadastroEnderecoIncidenteUI.setIncidente(incidente);
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadastroEnderecoIncidenteUI,0);
+				cadastroEnderecoIncidenteUI.setVisible(true);
+				
+			}
+		});
 
-		JButton jbAlterarCadastroIncidente = new JButton("Alterar");
+		JButton jbAlterarEnderecoIncidente = new JButton("Alterar");
+		jbAlterarEnderecoIncidente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IncidenteEndereco ie;
+				try {
+					ie = new IncidenteEnderecoTableModel(
+							new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)
+							).get(jtListaIncidenteEnderecos.getSelectedRow());
+					CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = new CadastroEnderecoIncidenteUI(ie);
+					cadastroEnderecoIncidenteUI.setFocusable(true);
+					cadastroEnderecoIncidenteUI.requestFocus();
+					// Seta o incidente para que o endereço saiba para qual incidente registrar.
+					cadastroEnderecoIncidenteUI.setIncidente(incidente);
+					PrincipalUI.getInstance().getFrame().getContentPane().add(cadastroEnderecoIncidenteUI,0);
+					cadastroEnderecoIncidenteUI.setVisible(true);
+				} catch (IncidenteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
-		JButton jbExcluirCadastroIncidente = new JButton("Excluir");
+		JButton jbExcluirEnderecoIncidente = new JButton("Excluir");
+		jbExcluirEnderecoIncidente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					System.out.println("Incidente Endereço: Excluindo");
+					IncidenteEndereco ie = 
+							new IncidenteEnderecoTableModel(
+									new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)
+									).get(jtListaIncidenteEnderecos.getSelectedRow());
+
+					new IncidenteEnderecoDAO().excluir(ie.getId());
+					JOptionPane.showMessageDialog(null, "Incidente excluído com sucesso");
+					atualizaLista();
+					//jtListaIncidente.setModel(
+					//		new IncidenteTableModel(
+					//				new IncidenteController().getListaIncidentes()));
+				} catch (IncidenteException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+
+				
+			}
+		});
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -145,13 +200,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 						incidente.setDataIncidente(formatData.parse(jtfDataIncidente.getText()));
 						incidente.setDataSintoma(formatData.parse(jtfDataIncidente.getText()));
 						incidente.setSintomas(jtaSintomas.getText());						
-						//						Endereco endereco = foco.getEndereco();
-						//						endereco.setRua(jtfRuaFoco.getText());
-						//						endereco.setNumero(jtfNumeroFoco.getText());
-						//						endereco.setBairro(jtfBairroFoco.getText());
-						//						endereco.setCep(jtfCep.getText());
-						//						endereco.setCidade(jtfCidadeFoco.getText());
-						//						endereco.setEstado(jtfEStadoFoco.getText());
+
 						new IncidenteController().editar(incidente);
 						ListaIncidenteUI.getInstance().atualizaLista();
 						// dispose();
@@ -186,11 +235,11 @@ public class CadastroIncidenteUI extends JInternalFrame {
 												.addComponent(jtfDataSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addGap(40)))
 								.addGroup(gl_jpCadastroIncidente.createSequentialGroup()
-										.addComponent(jbNovoCadastroIncidente)
+										.addComponent(jbNovoEnderecoIncidente)
 										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(jbAlterarCadastroIncidente)
+										.addComponent(jbAlterarEnderecoIncidente)
 										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(jbExcluirCadastroIncidente))
+										.addComponent(jbExcluirEnderecoIncidente))
 								.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.TRAILING, false)
 										.addComponent(jpEnderecosDoIncidente, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
 										.addComponent(btnSalvar)
@@ -218,9 +267,9 @@ public class CadastroIncidenteUI extends JInternalFrame {
 						.addComponent(jpEnderecosDoIncidente, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(gl_jpCadastroIncidente.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jbNovoCadastroIncidente)
-								.addComponent(jbAlterarCadastroIncidente)
-								.addComponent(jbExcluirCadastroIncidente))
+								.addComponent(jbNovoEnderecoIncidente)
+								.addComponent(jbAlterarEnderecoIncidente)
+								.addComponent(jbExcluirEnderecoIncidente))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				);
 

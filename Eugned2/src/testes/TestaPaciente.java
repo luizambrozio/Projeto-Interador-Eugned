@@ -21,14 +21,23 @@ public class TestaPaciente {
 		//testaListaPaciente();
 		//testaInserir();
 		//testaEditar();
-		
+		testaBuscaPorNome();
 		//testaListaPaciente();
 		//System.out.println("Excluindo");
-		testaExcluir();
-		testaListaPaciente();
+		//testaExcluir();
+		//testaListaPaciente();
 		
 	}
 	
+	private static void testaBuscaPorNome() {
+		String nome =  "Wagner";
+		System.out.println("Pacinte: " + nome);
+		for (Paciente paciente : new PacienteDAO().getListaPacientesByNome(nome)) {
+			System.out.println(paciente.getId() + " - " + paciente.getNome());
+		};
+		
+	}
+
 	public static void testaInserir() {
 		
 		              
