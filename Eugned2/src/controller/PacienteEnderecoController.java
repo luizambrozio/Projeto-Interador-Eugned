@@ -44,5 +44,9 @@ public class PacienteEnderecoController {
 		return new PacienteEnderecoDAO().getListaPacienteEndereco();
 	}
 	
+	public List<PacienteEndereco> getListaPacienteEnderecobyIdPe2(Paciente paciente){
+		return new PacienteEnderecoDAO().getListaPacienteEnderecoById(paciente);
+	}
+	
 
 }

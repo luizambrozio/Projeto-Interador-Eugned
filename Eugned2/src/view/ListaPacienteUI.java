@@ -13,14 +13,19 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import controller.EnderecoController;
 import controller.FocoController;
 import controller.PacienteController;
+import controller.PacienteEnderecoController;
 import dao.PacienteDAO;
+import exception.EnderecoException;
 import exception.FocoException;
 import exception.PacienteException;
+import model.Endereco;
 import model.Foco;
 import model.FocoTableModel;
 import model.Paciente;
+import model.PacienteEndereco;
 import model.PacienteTableModel;
 
 import javax.swing.JLabel;
@@ -36,6 +41,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -104,9 +110,19 @@ public class ListaPacienteUI extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Paciente: Excluindo");
+				
 				Paciente p = new PacienteTableModel(new PacienteController().getListaPacientes()).get(jtListaPaciente.getSelectedRow());
-
+				List<PacienteEndereco> listEnderedeco = new ArrayList<>();
+				listEnderedeco= new PacienteEnderecoController().getListaPacienteEnderecobyIdPe2(p);
 				try {
+					for (PacienteEndereco endereco : listEnderedeco) {
+						try {
+							new EnderecoController().excluir(endereco.getEndereco().getId());
+						} catch (EnderecoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}						
+					}
 					new PacienteController().excluir(p.getId());
 				} catch (PacienteException e1) {
 					// TODO Auto-generated catch block
