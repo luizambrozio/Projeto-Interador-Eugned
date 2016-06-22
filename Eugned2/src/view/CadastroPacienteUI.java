@@ -94,7 +94,10 @@ public class CadastroPacienteUI extends JInternalFrame {
 			}
 		});
 	}
-
+	
+		
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -246,11 +249,13 @@ public class CadastroPacienteUI extends JInternalFrame {
 						try {
 							new PacienteController().inserir(paciente);
 							JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
+							ListaPacienteUI.getInstacia().atualizaLista();
+							dispose();
 						} catch (PacienteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						new PacienteDAO().inserir(paciente);
+						
 					} catch (ParseException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}

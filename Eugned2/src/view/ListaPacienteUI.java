@@ -52,7 +52,7 @@ public class ListaPacienteUI extends JInternalFrame {
 	private JTextField jtfBuscarPaciente;
 	private JTable jtListaPaciente;
 	private static ListaPacienteUI instancia;
-	protected static ListaPacienteUI getInstancia;
+
 
 	/**
 	 * Launch the application.
@@ -61,13 +61,20 @@ public class ListaPacienteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaPacienteUI frame = ListaPacienteUI.getInstancia;
+					ListaPacienteUI frame = getInstacia();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public static ListaPacienteUI getInstacia(){
+		if(instancia==null){
+			instancia = new ListaPacienteUI();
+		}
+		return instancia;
 	}
 
 	/**
@@ -212,10 +219,14 @@ public class ListaPacienteUI extends JInternalFrame {
 				);
 
 		jtListaPaciente = new JTable();
-		jtListaPaciente.setModel(new PacienteTableModel(new PacienteDAO().getListaPacientes()));
+		atualizaLista();
 		jspListaPaciente.setViewportView(jtListaPaciente);		
 		jpListaPacientes.setLayout(gl_jpListaPacientes);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	public void atualizaLista() {
+		jtListaPaciente.setModel(new PacienteTableModel(new PacienteDAO().getListaPacientes()));
 	}
 }
