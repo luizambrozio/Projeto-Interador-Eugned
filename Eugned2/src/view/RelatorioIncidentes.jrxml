@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioIncidentes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c5ec2bbb-9520-4361-91f5-5f5e6965a4d9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     incidente.`dataIncidente` AS incidente_dataIncidente,
+     incidente.`dataSintoma` AS incidente_dataSintoma,
+     incidente.`sintomas` AS incidente_sintomas,
+     endereco.`rua` AS endereco_rua,
+     endereco.`numero` AS endereco_numero,
+     endereco.`bairro` AS endereco_bairro,
+     endereco.`cep` AS endereco_cep,
+     endereco.`cidade` AS endereco_cidade,
+     endereco.`estado` AS endereco_estado,
+     paciente.`nome` AS paciente_nome
+FROM
+     `incidente` incidente INNER JOIN `incidente_endereco` incidente_endereco ON incidente.`id` = incidente_endereco.`idIncidente`
+     INNER JOIN `endereco` endereco ON incidente_endereco.`idEndereco` = endereco.`id`
+     INNER JOIN `paciente` paciente ON incidente.`idPaciente` = paciente.`id`]]>
+	</queryString>
+	<field name="incidente_dataIncidente" class="java.sql.Date"/>
+	<field name="incidente_dataSintoma" class="java.sql.Date"/>
+	<field name="incidente_sintomas" class="java.lang.String"/>
+	<field name="endereco_rua" class="java.lang.String"/>
+	<field name="endereco_numero" class="java.lang.String"/>
+	<field name="endereco_bairro" class="java.lang.String"/>
+	<field name="endereco_cep" class="java.lang.String"/>
+	<field name="endereco_cidade" class="java.lang.String"/>
+	<field name="endereco_estado" class="java.lang.String"/>
+	<field name="paciente_nome" class="java.lang.String"/>
+	<group name="endereco_estado">
+		<groupExpression><![CDATA[$F{endereco_estado}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="41184c47-fcb1-4e75-8deb-db0fe0acedcd"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{endereco_bairro} + " - " + $F{endereco_cidade} +" " +$F{endereco_estado}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="302a3f39-e3d1-44c3-9aba-a18f15db40a4"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="endereco_cidade">
+		<groupExpression><![CDATA[$F{endereco_cidade}]]></groupExpression>
+	</group>
+	<group name="endereco_bairro">
+		<groupExpression><![CDATA[$F{endereco_bairro}]]></groupExpression>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="709c0dfa-8c56-43b9-a044-592cffd52275"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="08cf268d-f335-4638-96c5-a6719c04fb1d"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Eugned]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="0c2c6a0f-4eb4-4467-a479-c050d42dc575"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório de Incidentes]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="42468502-75a2-44cd-84ad-c6b2caa46b45"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f68e6553-37fe-4f1e-9117-cd2cc333adfe"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="92" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7e25da6f-e3d1-4962-9529-548965fd33db"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Sint]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="184" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e44fe01f-8c91-4cbc-997c-ae62da962533"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sintomas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="276" y="0" width="279" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e48c5b09-7383-4615-9082-555ae1ed9a82"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rua]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="52286c39-7d29-4b34-b99e-9a53f97d11f6"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="92" height="20" uuid="ccd4d84b-7ee9-4ad5-9176-61879a8eaba7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{incidente_dataIncidente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="92" y="0" width="92" height="20" uuid="f9488871-e7d7-4901-8d99-1dc472fb872d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{incidente_dataSintoma}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="184" y="0" width="92" height="20" uuid="0855f52d-c0dc-48d6-928c-55c49603de68"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{incidente_sintomas}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="276" y="0" width="279" height="20" uuid="b48fa201-431f-4498-97f8-76b6c99727cb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{endereco_rua} + " - " + $F{endereco_numero} + " - CEP " + $F{endereco_cep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="cb14fbbc-d31c-4cc6-8dbd-ca5af4e5ec2b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página"+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="1a3b5ebe-67d8-4731-b1cc-5f31421f788d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="a92e49f5-c0cb-4544-9ede-deef2f65f89c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

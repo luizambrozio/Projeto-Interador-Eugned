@@ -1,7 +1,10 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.HashMap;
 
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
@@ -9,6 +12,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import util.ConnectionUtil;
 import util.MaskFields;
 
 import javax.swing.JRadioButton;
@@ -93,6 +101,24 @@ public class RelatorioIncidenteUI extends JInternalFrame {
 		JButton jbcalendarFim = new JButton(".");
 		
 		JButton jbImprimir = new JButton("Imprimir");
+		jbImprimir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HashMap hm = new HashMap<>();
+				try {
+					// /home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/
+				    
+					// JasperPrint jp =  JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+					JasperPrint jp =  JasperFillManager.fillReport("view.RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+					JasperViewer.viewReport(jp, false);
+				} catch (JRException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
 		JButton jbVoltar = new JButton("Voltar");
 		GroupLayout gl_panel = new GroupLayout(panel);
