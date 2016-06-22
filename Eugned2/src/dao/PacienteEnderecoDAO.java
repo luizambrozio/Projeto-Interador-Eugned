@@ -97,8 +97,6 @@ public class PacienteEnderecoDAO {
 			pstmt.execute();
 			con.commit();
 
-			pstmt.execute();
-			con.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
