@@ -136,7 +136,7 @@ public class ListaPacienteUI extends JInternalFrame {
 					e1.printStackTrace();
 				}
 				JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso");
-
+				atualizaLista();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

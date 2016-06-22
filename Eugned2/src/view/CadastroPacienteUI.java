@@ -86,7 +86,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroPacienteUI frame = new CadastroPacienteUI(null);
+					CadastroPacienteUI frame = getInstacia();
 					frame.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,7 +95,12 @@ public class CadastroPacienteUI extends JInternalFrame {
 		});
 	}
 	
-		
+	public static CadastroPacienteUI getInstacia(){
+		if(instancia==null){
+			instancia = new CadastroPacienteUI(Paciente p);
+		}
+		return instancia;
+	}
 	
 	
 	/**
@@ -250,7 +255,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 							new PacienteController().inserir(paciente);
 							JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
 							ListaPacienteUI.getInstacia().atualizaLista();
-							dispose();
+//							dispose();
 						} catch (PacienteException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -282,6 +287,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 					try {
 						new PacienteController().editar(paciente);
 						JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
+						ListaPacienteUI.getInstacia().atualizaLista();
 					} catch (PacienteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -297,9 +303,9 @@ public class CadastroPacienteUI extends JInternalFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//Editar paciente				
+//Editar Endereco				
 				PacienteEndereco pe;				
-				pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe()).get(jtListaPacienteEndereco.getSelectedRow());
+				pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe2(p)).get(jtListaPacienteEndereco.getSelectedRow());				
 				endereco = pe.getEndereco();
 				CadastroEnderecoUI cadEnderecoUi = new CadastroEnderecoUI(paciente, endereco, pe);
 				cadEnderecoUi.setFocusable(true);
@@ -326,6 +332,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 						e1.printStackTrace();
 					}
 					JOptionPane.showMessageDialog(null, "Endereco excluído com sucesso");
+					AtualizaListaEnderedebyId(p);
 			}		
 		});
 
@@ -458,7 +465,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 
 		jtListaPacienteEndereco = new JTable();
 		if(paciente!=null){
-		jtListaPacienteEndereco.setModel(new PacienteEnderecoTableModel(new PacienteEnderecoDAO().getListaPacienteEnderecoById(p)));
+		AtualizaListaEnderedebyId(p);
 		}else{
 			return;
 		}
@@ -469,6 +476,10 @@ public class CadastroPacienteUI extends JInternalFrame {
 		preencheDados(paciente);
 
 
+	}
+
+	public void AtualizaListaEnderedebyId(Paciente p) {
+		jtListaPacienteEndereco.setModel(new PacienteEnderecoTableModel(new PacienteEnderecoDAO().getListaPacienteEnderecoById(p)));
 	}
 
 	private void preencheDados(Paciente paciente) {
