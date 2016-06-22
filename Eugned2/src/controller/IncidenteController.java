@@ -5,8 +5,10 @@ import java.util.List;
 
 import dao.EnderecoDao;
 import dao.IncidenteDAO;
+import dao.IncidenteEnderecoDAO;
 import exception.IncidenteException;
 import model.Incidente;
+import model.IncidenteEndereco;
 
 // teste
 public class IncidenteController {
@@ -37,6 +39,7 @@ public class IncidenteController {
 	public List<Incidente> getListaIncidentes(){
 		return new IncidenteDAO().getListaIncidentes();
 	}
+	
 	
 	public List<Incidente> getListaIncidentesByData(Date dataIni, Date dataFim) throws IncidenteException{
 		if (dataIni == null || dataFim == null){
@@ -76,4 +79,9 @@ public class IncidenteController {
 		}		
 		new IncidenteDAO().excluir(id);
 	}	
+
+	public List<IncidenteEndereco> getListaIncidentesEnderecos(Incidente incidente){
+		return new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente);
+	}
+
 }

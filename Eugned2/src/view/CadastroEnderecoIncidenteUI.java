@@ -145,6 +145,7 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 
 						new IncidenteEnderecoDAO().inserir(i);
 						JOptionPane.showMessageDialog(null, "Endereço do incidente salvo com sucesso!");
+						dispose();
 
 					} 
 				} else {
@@ -157,6 +158,7 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 					new EnderecoDao().editar(endereco);
 					//new IncidenteEnderecoDAO().editar(incidenteEndereco);
 					JOptionPane.showMessageDialog(null, "Endereço do incidente salvo com sucesso!");
+					dispose();
 				}
 			}	
 

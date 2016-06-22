@@ -66,16 +66,18 @@ public class IncidenteEnderecoDAO {
  	}
 
 	public List<IncidenteEndereco> getEnderecosIncidentes(Incidente incidente){
+		System.out.println("incidente"+incidente.getId());
 		String query = "select * from incidente_endereco where idIncidente = ?";
 		List<IncidenteEndereco> listIncidentesEnderecos = new ArrayList<>();
 		try {
-			IncidenteEndereco incidenteEndereco = null;
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, incidente.getId());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
+				IncidenteEndereco incidenteEndereco = new IncidenteEndereco();
 				System.out.println("Entrou");
-				incidenteEndereco = new IncidenteEndereco();
+				//incidenteEndereco = new IncidenteEndereco();
+				incidenteEndereco.setId(rs.getInt("id"));
 				incidenteEndereco.setIncidente(new IncidenteDAO().getIncidenteById( rs.getInt("idIncidente")));
 				incidenteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 				listIncidentesEnderecos.add(incidenteEndereco);
@@ -120,6 +122,7 @@ public class IncidenteEnderecoDAO {
 	}
 	
 	public void excluir(int id){
+		System.out.println("excluir incidente_endereço: "+ id);
 		String query = "delete from incidente_endereco where id = ?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);

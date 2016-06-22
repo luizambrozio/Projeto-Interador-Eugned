@@ -67,7 +67,7 @@ public class IncidenteEnderecoTableModel extends AbstractTableModel {
 	 
 	public IncidenteEndereco get(int row) throws IncidenteException {
 		if (row < 0){
-			throw new IncidenteException("Selecione um cliente");
+			throw new IncidenteException("Selecione um endereço de incidente");
 		}
 		return valores.get(row);
 	}

@@ -69,7 +69,7 @@ public class FocoTableModel extends AbstractTableModel {
 	//Isso elimina a necessidade de chamar o getValueAt() nas telas. 
 	public Foco get(int row) throws FocoException {
 		if (row < 0){
-			throw new FocoException("Selecione um cliente");
+			throw new FocoException("Selecione um foco");
 		}
 		return valores.get(row);
 	}

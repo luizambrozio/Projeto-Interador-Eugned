@@ -157,12 +157,14 @@ public class CadastroIncidenteUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					System.out.println("Incidente Endereço: Excluindo");
-					IncidenteEndereco ie = 
-							new IncidenteEnderecoTableModel(
-									new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)
-									).get(jtListaIncidenteEnderecos.getSelectedRow());
+					IncidenteEndereco ieExclui = new IncidenteEnderecoTableModel(
+							new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)
+							).get(jtListaIncidenteEnderecos.getSelectedRow());
+					
+					System.out.println("Incidente: " + ieExclui.getId());
+					System.out.println("Linha Selecionado: " + jtListaIncidenteEnderecos.getSelectedRow());
 
-					new IncidenteEnderecoDAO().excluir(ie.getId());
+					new IncidenteEnderecoDAO().excluir(ieExclui.getId());
 					JOptionPane.showMessageDialog(null, "Incidente excluído com sucesso");
 					atualizaLista();
 					//jtListaIncidente.setModel(
@@ -336,7 +338,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 	public void atualizaLista() {
 		jtListaIncidenteEnderecos.setModel(
 				new IncidenteEnderecoTableModel(
-						new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)));
+						new IncidenteController().getListaIncidentesEnderecos(incidente)));
 		// new IncidenteController().getListaIncidentes()
 	}
 
