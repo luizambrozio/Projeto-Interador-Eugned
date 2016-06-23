@@ -325,7 +325,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 				//Excluir Endereco				
 				System.out.println("Endereco: Excluindo");
 
-				PacienteEndereco pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe()).get(jtListaPacienteEndereco.getSelectedRow());
+				PacienteEndereco pe = new PacienteEnderecoTableModel(new PacienteEnderecoController().getListaPacienteEnderecobyIdPe(paciente)).get(jtListaPacienteEndereco.getSelectedRow());
 
 				try {
 					new EnderecoController().excluir(pe.getEndereco().getId());
