@@ -59,4 +59,14 @@ public class MaskFields {
         return mask;
     }
 
+    public MaskFormatter maskCEP(JFormattedTextField textfield) throws ParseException{
+        MaskFormatter mask = new MaskFormatter("#####-###");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
+        mask.setPlaceholderCharacter('_');
+        mask.install(textfield);
+        return mask;
+    }
+
+    
 }

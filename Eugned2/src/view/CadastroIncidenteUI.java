@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Event;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -41,6 +43,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JTable;
 
 public class CadastroIncidenteUI extends JInternalFrame {
+	private static CadastroIncidenteUI instancia;
 	private JTextField jtfBuscaNomePacienteIncidente;
 	private JFormattedTextField jtfDataIncidente;
 	private JFormattedTextField jtfDataSintoma;
@@ -57,7 +60,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroIncidenteUI frame = new CadastroIncidenteUI(null);
+					CadastroIncidenteUI frame = new CadastroIncidenteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -66,15 +69,18 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		});
 	}
 
+	public static CadastroIncidenteUI getInstance() {
+		if(instancia == null) {
+			instancia =  new CadastroIncidenteUI();
+		}
+		return instancia;
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public CadastroIncidenteUI(Incidente i) {
-		if(i != null) {
-			incidente = i;
-		} else {
-			incidente = new Incidente();
-		}
+	public CadastroIncidenteUI() {
 		setTitle("Registra Incidente");
 		setClosable(true);
 		setBounds(100, 100, 565, 475);
@@ -119,14 +125,16 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		JButton jbNovoEnderecoIncidente = new JButton("Novo");
 		jbNovoEnderecoIncidente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = new CadastroEnderecoIncidenteUI(null);
+				CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = CadastroEnderecoIncidenteUI.getInstace();
+				// Passa null porque é inserção
+				cadastroEnderecoIncidenteUI.setIncidenteEndereco(null);
 				cadastroEnderecoIncidenteUI.setFocusable(true);
 				cadastroEnderecoIncidenteUI.requestFocus();
 				// Seta o incidente para que o endereço saiba para qual incidente registrar.
 				cadastroEnderecoIncidenteUI.setIncidente(incidente);
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadastroEnderecoIncidenteUI,0);
 				cadastroEnderecoIncidenteUI.setVisible(true);
-				
+			
 			}
 		});
 
@@ -138,7 +146,8 @@ public class CadastroIncidenteUI extends JInternalFrame {
 					ie = new IncidenteEnderecoTableModel(
 							new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente)
 							).get(jtListaIncidenteEnderecos.getSelectedRow());
-					CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = new CadastroEnderecoIncidenteUI(ie);
+					CadastroEnderecoIncidenteUI cadastroEnderecoIncidenteUI = CadastroEnderecoIncidenteUI.getInstace();
+					cadastroEnderecoIncidenteUI.setIncidenteEndereco(ie);
 					cadastroEnderecoIncidenteUI.setFocusable(true);
 					cadastroEnderecoIncidenteUI.requestFocus();
 					// Seta o incidente para que o endereço saiba para qual incidente registrar.
@@ -205,6 +214,7 @@ public class CadastroIncidenteUI extends JInternalFrame {
 
 						new IncidenteController().editar(incidente);
 						ListaIncidenteUI.getInstance().atualizaLista();
+						CadastroIncidenteUI.getInstance().show();
 						// dispose();
 					}
 				} catch (ParseException e1) {
@@ -317,7 +327,9 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		jpCadastroIncidente.setLayout(gl_jpCadastroIncidente);
 		getContentPane().add(jpCadastroIncidente);
 
-		preencheDados(i);
+		preencheDados(incidente);
+		
+		
 
 	}
 	/**
@@ -325,14 +337,19 @@ public class CadastroIncidenteUI extends JInternalFrame {
 	 * @param incidente
 	 */
 	private void preencheDados(Incidente incidente) {
+		System.out.println(incidente);
 		if(incidente != null) {
 			jtfBuscaNomePacienteIncidente.setText(incidente.getPaciente().getNome());
 			jtfDataIncidente.setText(new SimpleDateFormat("dd/MM/yyyy").format(incidente.getDataIncidente()));
 			jtfDataSintoma.setText(new SimpleDateFormat("dd/MM/yyyy").format(incidente.getDataSintoma()));
 			jtaSintomas.setText(incidente.getSintomas());
-			atualizaLista();
-
+		} else {
+			jtfBuscaNomePacienteIncidente.setText("");
+			jtfDataIncidente.setText("");
+			jtfDataSintoma.setText("");
+			jtaSintomas.setText("");
 		}
+		atualizaLista();
 	}
 
 	public void atualizaLista() {
@@ -340,6 +357,15 @@ public class CadastroIncidenteUI extends JInternalFrame {
 				new IncidenteEnderecoTableModel(
 						new IncidenteController().getListaIncidentesEnderecos(incidente)));
 		// new IncidenteController().getListaIncidentes()
+	}
+
+	public Incidente getIncidente() {
+		return incidente;
+	}
+
+	public void setIncidente(Incidente incidente) {
+		this.incidente = incidente;
+		preencheDados(incidente);
 	}
 
 

@@ -125,11 +125,13 @@ public class ListaIncidenteUI extends JInternalFrame {
 		JButton jbNovoIncidente = new JButton("Novo");
 		jbNovoIncidente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroIncidenteUI cadIncidente = new CadastroIncidenteUI(null);
-				cadIncidente.setFocusable(true);
-				cadIncidente.requestFocus();
-				PrincipalUI.getInstance().getFrame().getContentPane().add(cadIncidente, 0);
-				cadIncidente.setVisible(true);	
+				CadastroIncidenteUI cadIncidenteUi = CadastroIncidenteUI.getInstance();
+				// Setar o Incidente para alterar
+				cadIncidenteUi.setIncidente(null);
+				cadIncidenteUi.setFocusable(true);
+				cadIncidenteUi.requestFocus();
+				PrincipalUI.getInstance().getFrame().getContentPane().add(cadIncidenteUi, 0);
+				cadIncidenteUi.setVisible(true);	
 			}
 		});
 
@@ -144,12 +146,13 @@ public class ListaIncidenteUI extends JInternalFrame {
 					i = new IncidenteTableModel(
 							new IncidenteController().getListaIncidentes()
 							).get(jtListaIncidente.getSelectedRow());
-					CadastroIncidenteUI cadIncidenteUi = new CadastroIncidenteUI(i);
+					CadastroIncidenteUI cadIncidenteUi = CadastroIncidenteUI.getInstance();
+					// Setar o Incidente para alterar
+					cadIncidenteUi.setIncidente(i);
 					cadIncidenteUi.setFocusable(true);
 					cadIncidenteUi.requestFocus();
 					PrincipalUI.getInstance().getFrame().getContentPane().add(cadIncidenteUi, 0);
-					cadIncidenteUi.setVisible(true);
-					
+					cadIncidenteUi.setVisible(true);					
 				} catch (IncidenteException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}

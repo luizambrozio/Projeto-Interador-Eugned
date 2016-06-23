@@ -25,12 +25,14 @@ import model.Incidente;
 import model.IncidenteEndereco;
 import model.Paciente;
 import model.PacienteEndereco;
+import util.MaskFields;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -41,13 +43,15 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 	private JTextField jtfRua;
 	private JTextField jtfNum;
 	private JTextField jtfBairro;
-	private JTextField jtfCep;
+	private JFormattedTextField jtfCep;
 	private JTextField jtfEstado;
 	private JTextField jtfCidade;
 	private JComboBox jcbTipo;
 	private IncidenteEndereco incidenteEndereco;
 	private Incidente incidente;
 	private Endereco endereco;
+	private MaskFields maskFields = new MaskFields();
+	private static CadastroEnderecoIncidenteUI instacia;
 
 	/**
 	 * Launch the application.
@@ -56,7 +60,7 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroEnderecoIncidenteUI frame = new CadastroEnderecoIncidenteUI(null);
+					CadastroEnderecoIncidenteUI frame = new CadastroEnderecoIncidenteUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,16 +69,17 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 		});
 	}
 
+	public static CadastroEnderecoIncidenteUI getInstace() {
+		if(instacia == null) {
+			instacia = new CadastroEnderecoIncidenteUI();
+		}
+		return instacia;
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public CadastroEnderecoIncidenteUI(IncidenteEndereco ie) {
-		if(ie != null) {
-			incidenteEndereco = ie;
-			endereco = ie.getEndereco();
-			incidente = ie.getIncidente();
-		}
-
+	public CadastroEnderecoIncidenteUI() {
 		setBounds(100, 100, 474, 235);
 		setClosable(true);
 		JPanel panel = new JPanel();
@@ -112,7 +117,13 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 
 		JLabel jlCep = new JLabel("CEP:");
 
-		jtfCep = new JTextField();
+		jtfCep = new JFormattedTextField();
+		try {
+			maskFields.maskCEP(jtfCep);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Impossível aplicar máscara de cep");
+			e1.printStackTrace();
+		}
 		jtfCep.setColumns(10);
 
 		JLabel jlEstado = new JLabel("Estado:");
@@ -125,30 +136,28 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 		jbSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//				Dao Endereco
-				if(ie == null){
-					if(endereco == null) {
-						endereco = new Endereco();
+				if(incidenteEndereco == null){
+					endereco = new Endereco();
 
-						IncidenteEndereco i = new IncidenteEndereco();
+					incidenteEndereco = new IncidenteEndereco();
 
-						endereco.setRua(jtfRua.getText());
-						endereco.setNumero(jtfNum.getText());
-						endereco.setCep(jtfCep.getText());
-						endereco.setBairro(jtfBairro.getText());
-						endereco.setCidade(jtfCidade.getText());
-						endereco.setEstado(jtfEstado.getText());
-						//incidenteEndereco.setTipo((EnumTipoEndereco) jcbTipo.getSelectedItem());
+					endereco.setRua(jtfRua.getText());
+					endereco.setNumero(jtfNum.getText());
+					endereco.setCep(jtfCep.getText());
+					endereco.setBairro(jtfBairro.getText());
+					endereco.setCidade(jtfCidade.getText());
+					endereco.setEstado(jtfEstado.getText());
+					//incidenteEndereco.setTipo((EnumTipoEndereco) jcbTipo.getSelectedItem());
 
-						new EnderecoDao().inserir(endereco);
-						i.setEndereco(endereco);
-						i.setIncidente(incidente);
+					new EnderecoDao().inserir(endereco);
+					incidenteEndereco.setEndereco(endereco);
+					incidenteEndereco.setIncidente(incidente);
 
-						new IncidenteEnderecoDAO().inserir(i);
-						JOptionPane.showMessageDialog(null, "Endereço do incidente salvo com sucesso!");
-						dispose();
+					new IncidenteEnderecoDAO().inserir(incidenteEndereco);
+					JOptionPane.showMessageDialog(null, "Endereço do incidente salvo com sucesso!");
 
-					} 
 				} else {
+					endereco = incidenteEndereco.getEndereco();
 					endereco.setRua(jtfRua.getText());
 					endereco.setNumero(jtfNum.getText());
 					endereco.setCep(jtfCep.getText());
@@ -158,8 +167,9 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 					new EnderecoDao().editar(endereco);
 					//new IncidenteEnderecoDAO().editar(incidenteEndereco);
 					JOptionPane.showMessageDialog(null, "Endereço do incidente salvo com sucesso!");
-					dispose();
 				}
+				CadastroIncidenteUI.getInstance().atualizaLista();
+				dispose();
 			}	
 
 		});
@@ -265,6 +275,13 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 			jtfCep.setText(incidenteEndereco.getEndereco().getCep());
 			jtfCidade.setText(incidenteEndereco.getEndereco().getCidade());
 			jtfEstado.setText(incidenteEndereco.getEndereco().getEstado());
+		} else {
+			jtfRua.setText("");
+			jtfNum.setText("");
+			jtfBairro.setText("");
+			jtfCep.setText("");
+			jtfCidade.setText("");
+			jtfEstado.setText("");
 		}
 
 
@@ -276,6 +293,15 @@ public class CadastroEnderecoIncidenteUI extends JInternalFrame {
 
 	public void setIncidente(Incidente incidente) {
 		this.incidente = incidente;
+	}
+
+	public IncidenteEndereco getIncidenteEndereco() {
+		return incidenteEndereco;
+	}
+
+	public void setIncidenteEndereco(IncidenteEndereco incidenteEndereco) {
+		this.incidenteEndereco = incidenteEndereco;
+		preencheDados();
 	}
 
 }

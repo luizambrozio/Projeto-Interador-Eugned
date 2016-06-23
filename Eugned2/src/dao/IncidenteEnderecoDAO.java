@@ -71,6 +71,7 @@ public class IncidenteEnderecoDAO {
 		List<IncidenteEndereco> listIncidentesEnderecos = new ArrayList<>();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
+			
 			pstmt.setInt(1, incidente.getId());
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){

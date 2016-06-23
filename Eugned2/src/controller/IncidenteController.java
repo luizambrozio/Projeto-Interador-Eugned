@@ -81,7 +81,11 @@ public class IncidenteController {
 	}	
 
 	public List<IncidenteEndereco> getListaIncidentesEnderecos(Incidente incidente){
-		return new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente);
+		if(incidente!= null) {
+			return new IncidenteEnderecoDAO().getEnderecosIncidentes(incidente);
+		} else {
+			return new IncidenteEnderecoDAO().getEnderecosIncidentes(new Incidente());
+		}
 	}
 
 }

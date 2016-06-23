@@ -55,7 +55,7 @@ public class RelatorioIncidenteUI extends JInternalFrame {
 		setClosable(true);
 		setBounds(100, 100, 552, 238);
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Relat\u00F3rio Incidentes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "Relatório Incidentes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -109,8 +109,7 @@ public class RelatorioIncidenteUI extends JInternalFrame {
 				try {
 					// /home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/
 				    
-					// JasperPrint jp =  JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
-					JasperPrint jp =  JasperFillManager.fillReport("view.RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+					JasperPrint jp =  JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
 					JasperViewer.viewReport(jp, false);
 				} catch (JRException e1) {
 					// TODO Auto-generated catch block
