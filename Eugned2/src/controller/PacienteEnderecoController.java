@@ -44,8 +44,13 @@ public class PacienteEnderecoController {
 		return new PacienteEnderecoDAO().getListaPacienteEndereco();
 	}
 	
-	public List<PacienteEndereco> getListaPacienteEnderecobyIdPe2(Paciente paciente){
-		return new PacienteEnderecoDAO().getListaPacienteEnderecoById(paciente);
+	public List<PacienteEndereco> getListaPacienteEnderecobyIdPe(Paciente paciente){
+		if(paciente!=null){
+			return new PacienteEnderecoDAO().getListaPacienteEnderecoById(paciente);
+		}else{
+			return new PacienteEnderecoDAO().getListaPacienteEnderecoById(new Paciente());
+
+		}
 	}
 	
 

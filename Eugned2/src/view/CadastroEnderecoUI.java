@@ -144,7 +144,7 @@ public class CadastroEnderecoUI extends JInternalFrame {
 						new PacienteEnderecoDAO().inserir(pacienteEndereco);
 
 						JOptionPane.showMessageDialog(null, "Endereco cadastrado com sucesso!");
-						CadastroPacienteUI.getInstacia().AtualizaListaEnderedebyId(paciente);
+						CadastroPacienteUI.getInstace().atualizaLista();
 						dispose();
 
 					}
@@ -163,7 +163,7 @@ public class CadastroEnderecoUI extends JInternalFrame {
 					new PacienteEnderecoDAO().editar(pacienteEndereco);
 
 					JOptionPane.showMessageDialog(null, "Endereco Alterado com sucesso!");
-					CadastroPacienteUI.getInstacia().AtualizaListaEnderedebyId(paciente);
+					CadastroPacienteUI.getInstace().atualizaLista();
 					dispose();
 
 				}

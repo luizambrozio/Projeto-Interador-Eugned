@@ -42,7 +42,8 @@ public class PacienteDAO {
 				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
 				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
 				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));		
+				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));
+				paciente.setGestante(rs.getInt("gestante")==1);
 				
 				listaPacientes.add(paciente);
 			}
@@ -74,7 +75,8 @@ public class PacienteDAO {
 				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
 				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
 				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));						
+				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));
+				paciente.setGestante(rs.getInt("gestante")==1);
 				
 				listaPacientes.add(paciente);
 			}
@@ -108,7 +110,9 @@ public class PacienteDAO {
 			paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
 			paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
 			paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-			paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));					
+			paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));
+			paciente.setGestante(rs.getInt("gestante")==1);
+			
 				
 			return paciente;
 		} catch (SQLException e) {
@@ -121,7 +125,7 @@ public class PacienteDAO {
 
 	public void inserir(Paciente paciente){		            
 		 
-		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar) values (?,?,?,?,?,?,?,?,?)";
+		String query = "insert into paciente (nome, cpf, rg, escolaridade, estadoCivil, sexo, corRaca, dataNascimento, rendaFamiliar, gestante) values (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			
@@ -133,7 +137,8 @@ public class PacienteDAO {
 			pstmt.setInt(6, paciente.getSexo().getCodigo());
 			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
 			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
-			pstmt.setFloat(9, paciente.getRendaFamiliar());			
+			pstmt.setFloat(9, paciente.getRendaFamiliar());
+			pstmt.setInt(10, paciente.getGestante() ? 1 : 0);
 			pstmt.executeUpdate();
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -149,7 +154,7 @@ public class PacienteDAO {
 	}
 	
 	public void editar(Paciente paciente){
-		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, rendaFamiliar=? where id=?";
+		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, gestante=?, rendaFamiliar=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			System.out.println(paciente.toString());
@@ -163,7 +168,8 @@ public class PacienteDAO {
 			pstmt.setInt(7, paciente.getCorRaca().getCodigo());
 			pstmt.setDate(8, new java.sql.Date(paciente.getDataNascimento().getTime()));
 			pstmt.setFloat(9, paciente.getRendaFamiliar());
-			pstmt.setInt(10, paciente.getId());
+			pstmt.setInt(10, paciente.getGestante() ? 1 : 0);
+			pstmt.setInt(11, paciente.getId());
 			
 			pstmt.executeUpdate();
 			con.commit();

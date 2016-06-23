@@ -91,7 +91,8 @@ public class ListaPacienteUI extends JInternalFrame {
 		JButton jbNovoPaciente = new JButton("Novo");
 		jbNovoPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CadastroPacienteUI cadPaciente = new CadastroPacienteUI(null);
+				CadastroPacienteUI cadPaciente = CadastroPacienteUI.getInstace();
+				cadPaciente.setPaciente(null);
 				cadPaciente.setFocusable(true);
 				cadPaciente.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadPaciente, 0);
@@ -105,7 +106,8 @@ public class ListaPacienteUI extends JInternalFrame {
 //Editar Paciente				
 				Paciente p;
 				p = new PacienteTableModel(new PacienteController().getListaPacientes()).get(jtListaPaciente.getSelectedRow());
-				CadastroPacienteUI cadPacienteUi = new CadastroPacienteUI(p);
+				CadastroPacienteUI cadPacienteUi = CadastroPacienteUI.getInstace();
+				cadPacienteUi.setPaciente(p);
 				cadPacienteUi.setFocusable(true);
 				cadPacienteUi.requestFocus();
 				PrincipalUI.getInstance().getFrame().getContentPane().add(cadPacienteUi, 0);
@@ -120,7 +122,7 @@ public class ListaPacienteUI extends JInternalFrame {
 				
 				Paciente p = new PacienteTableModel(new PacienteController().getListaPacientes()).get(jtListaPaciente.getSelectedRow());
 				List<PacienteEndereco> listEnderedeco = new ArrayList<>();
-				listEnderedeco= new PacienteEnderecoController().getListaPacienteEnderecobyIdPe2(p);
+				listEnderedeco= new PacienteEnderecoController().getListaPacienteEnderecobyIdPe(p);
 				try {
 					for (PacienteEndereco endereco : listEnderedeco) {
 						try {

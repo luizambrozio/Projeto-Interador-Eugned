@@ -34,9 +34,10 @@ public class PacienteController {
 		}
 		if(paciente.getGestante().equals(true)){
 			if (paciente.getSexo().equals(EnumSexo.MASCULINO)) {
+				throw new PacienteException("Homem não pode estar Gestante");
 				
 			}
-			throw new PacienteException("Homem não pode estar Gestante");
+			
 		}
 		
 		new PacienteDAO().inserir(paciente);
@@ -68,9 +69,9 @@ public class PacienteController {
 		}
 		if(paciente.getGestante().equals(true)){
 			if (paciente.getSexo().equals(EnumSexo.MASCULINO)) {
-				
+				throw new PacienteException("Homem não pode estar Gestante");
 			}
-			throw new PacienteException("Homem não pode estar Gestante");
+			
 		}
 		
 		new PacienteDAO().editar(paciente);
