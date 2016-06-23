@@ -297,8 +297,8 @@ public class CadastroPacienteUI extends JInternalFrame {
 						ListaPacienteUI.getInstacia().atualizaLista();
 						CadastroPacienteUI.getInstace().show();						
 					} catch (PacienteException e1) {
-						JOptionPane.showMessageDialog(null, "Homen não pode estar Gestante");
-//						e1.printStackTrace();
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 					//					new PacienteDAO().editar(paciente);
 				} 
