@@ -163,7 +163,7 @@ public class PacienteEnderecoDAO {
 				pacienteEnderecoId.setId(rs.getInt("id"));           
 				pacienteEnderecoId.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
 				pacienteEnderecoId.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));					
-				pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
+				pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")-1]);
 
 				listaPacienteEnderecoById.add(pacienteEnderecoId);
 			}

@@ -32,11 +32,8 @@ public class PacienteController {
 		if(paciente.getRendaFamiliar().equals(null)){
 			throw new PacienteException("Renda invalida");
 		}
-		if(paciente.getGestante().equals(true)){
-			if (paciente.getSexo().equals(EnumSexo.MASCULINO)) {
-				throw new PacienteException("Homem não pode estar Gestante");
-				
-			}
+		if(paciente.getGestante().equals(true) && paciente.getSexo().equals(EnumSexo.MASCULINO)){
+			throw new PacienteException("Homem não pode estar Gestante");
 			
 		}
 		
@@ -67,10 +64,9 @@ public class PacienteController {
 		if(paciente.getRendaFamiliar().equals(null)){
 			throw new PacienteException("Renda invalida");
 		}
-		if(paciente.getGestante().equals(true)){
-			if (paciente.getSexo().equals(EnumSexo.MASCULINO)) {
-				throw new PacienteException("Homem não pode estar Gestante");
-			}
+		if(paciente.getGestante().equals(true) && paciente.getSexo().equals(EnumSexo.MASCULINO)){
+			throw new PacienteException("Homem não pode estar Gestante");
+		
 			
 		}
 		
