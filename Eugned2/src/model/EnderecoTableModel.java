@@ -12,15 +12,15 @@ public class EnderecoTableModel extends AbstractTableModel {
 	private static final int COL_NOME = 0;
 	private static final int COL_CPF = 1;
 
-	private List<Paciente> valores;       
+	private List<Endereco> valores;       
 
 	//Esse � um construtor, que recebe a nossa lista de produtos
-	public EnderecoTableModel(List<Paciente> valores) {
-		this.valores = new ArrayList<Paciente>(valores);
+	public EnderecoTableModel(List<Endereco> valores) {
+		this.valores = new ArrayList<Endereco>(valores);
 	}
 	
 	public EnderecoTableModel() {
-		this.valores = new ArrayList<Paciente>();
+		this.valores = new ArrayList<Endereco>();
 	}
 
 	@Override
@@ -45,27 +45,27 @@ public class EnderecoTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) { 
-		Paciente paciente = valores.get(rowIndex);
+		Endereco endereco = valores.get(rowIndex);
 			if (columnIndex == COL_NOME) 
-					return paciente.getNome();
+					return endereco.getBairro();
 			else 
 				if (columnIndex == COL_CPF) 
-					return paciente.getCpf();
+					return endereco.getCep();
 		return ""; //Nunca deve ocorrer
 	}
 	
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Paciente paciente = valores.get(rowIndex);
+		Endereco endereco = valores.get(rowIndex);
 		//Vamos alterar o valor da coluna columnIndex na linha rowIndex com o valor aValue passado no par�metro.
 		//Note que vc poderia alterar 2 campos ao inv�s de um s�.
 //		if (columnIndex == COL_ID)
-//			paciente.setId(Integer.parseInt(aValue.toString()));
+//			endereco.setId(Integer.parseInt(aValue.toString()));
 //		else 
 			if (columnIndex == COL_NOME) 
-				paciente.setNome(aValue.toString());
+				endereco.setBairro(aValue.toString());
 			else 
 				if (columnIndex == COL_CPF) 
-					paciente.setCpf(aValue.toString());
+					endereco.setCep(aValue.toString());
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
@@ -79,7 +79,7 @@ public class EnderecoTableModel extends AbstractTableModel {
 	}
 	//J� que esse tableModel � de clientes, vamos fazer um get que retorne um objeto cliente inteiro.
 	//Isso elimina a necessidade de chamar o getValueAt() nas telas. 
-	public Paciente get(int row) {
+	public Endereco get(int row) {
 		return valores.get(row);
 	}
 }
