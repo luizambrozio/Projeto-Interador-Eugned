@@ -22,24 +22,45 @@ FROM
 	<group name="paciente_nome">
 		<groupExpression><![CDATA[$F{paciente_nome}]]></groupExpression>
 		<groupHeader>
-			<band height="33">
-				<staticText>
-					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="499916e4-91a9-477c-a9dd-8c9c4f02b9ed"/>
-					<textElement>
-						<font size="12"/>
-					</textElement>
-					<text><![CDATA[paciente_nome]]></text>
-				</staticText>
+			<band height="24">
 				<textField>
-					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="5d35f020-7953-425f-a911-eb750bd7f1ea"/>
+					<reportElement mode="Opaque" x="3" y="0" width="112" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5d35f020-7953-425f-a911-eb750bd7f1ea"/>
 					<textElement>
-						<font size="24" isBold="true"/>
+						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{paciente_nome}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="eae3584c-1352-44a5-b4e3-3f7e868e76dd"/>
+					<reportElement x="-20" y="23" width="595" height="1" forecolor="#666666" uuid="eae3584c-1352-44a5-b4e3-3f7e868e76dd"/>
 				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="117" y="0" width="94" height="20" uuid="42a7bbd5-ddae-48c2-a655-f2c44ce6977c"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{paciente_endereco_tipoEndereco}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="212" y="1" width="66" height="20" uuid="d768a500-ef9d-4a21-8b14-4a67f5380599"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{endereco_numero}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="278" y="1" width="138" height="20" uuid="46eb53de-709e-47f3-b012-9aa1582518d7"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{endereco_bairro}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="418" y="1" width="137" height="20" uuid="cf87aa6b-4fb8-4072-a140-96743bf0a4ba"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{endereco_rua}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -58,14 +79,14 @@ FROM
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Relatório Paciente]]></text>
+					<text><![CDATA[Paciente]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="c6acff93-b50e-4645-b1f7-d63c46805285"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Add a description here]]></text>
+					<text><![CDATA[relatorio paciente]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -79,70 +100,42 @@ FROM
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e1a0955e-1f9d-415b-b106-30e7007662e4"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a4cc9f4a-707d-46e9-a01c-9a28828cacf8"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="115" y="0" width="96" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a4cc9f4a-707d-46e9-a01c-9a28828cacf8"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[paciente_endereco_tipoEndereco]]></text>
+				<text><![CDATA[Endereço]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="138" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e998bf74-e171-4285-a1b4-19e196e12929"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="212" y="0" width="65" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e998bf74-e171-4285-a1b4-19e196e12929"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[endereco_numero]]></text>
+				<text><![CDATA[Nº]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="276" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f88a4aa8-cbe5-406d-87ad-6a02380c14d4"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="278" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f88a4aa8-cbe5-406d-87ad-6a02380c14d4"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[endereco_bairro]]></text>
+				<text><![CDATA[Bairo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="414" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="10ac1ac2-223e-44e4-bc9a-a25bb9849845"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="417" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="10ac1ac2-223e-44e4-bc9a-a25bb9849845"/>
+				<textElement textAlignment="Left">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[endereco_rua]]></text>
+				<text><![CDATA[Rua]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="115" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="499916e4-91a9-477c-a9dd-8c9c4f02b9ed"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="20">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="26a16862-6386-47b3-9f3e-3df809432706"/>
-			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="138" height="20" uuid="42a7bbd5-ddae-48c2-a655-f2c44ce6977c"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{paciente_endereco_tipoEndereco}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="138" y="0" width="138" height="20" uuid="d768a500-ef9d-4a21-8b14-4a67f5380599"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{endereco_numero}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="276" y="0" width="138" height="20" uuid="46eb53de-709e-47f3-b012-9aa1582518d7"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{endereco_bairro}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="414" y="0" width="138" height="20" uuid="cf87aa6b-4fb8-4072-a140-96743bf0a4ba"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{endereco_rua}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
 	<columnFooter>
 		<band/>
 	</columnFooter>
