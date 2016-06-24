@@ -12,6 +12,7 @@ public class Testa_Foco {
 	public static void main(String[] args) {
 		// Testando Entidade Foco e Endereco
 		// testaInserir();
+//		çv,dl,kdmvv
 		testaListar();
 
 	}
