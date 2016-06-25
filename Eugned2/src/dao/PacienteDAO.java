@@ -57,15 +57,15 @@ public class PacienteDAO {
 	
 	
 	public List<Paciente> getListaPacientesByNome(String nome){
-		String query = "select * from paciente where nome like ?";	
+		String query = "select * from paciente where nome like '%?%'";	
 		
 		
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, "%"+nome+"%");
-			ResultSet rs = pstmt.executeQuery();
+			pstmt.setString(1, nome);
+			ResultSet rs = pstmt.executeQuery(query);
+			Paciente paciente = null;
 			while (rs.next()){
-				Paciente paciente = new Paciente();
 				paciente.setId(rs.getInt("id"));
 				paciente.setNome(rs.getString("nome"));
 				paciente.setCpf(rs.getString("cpf"));           

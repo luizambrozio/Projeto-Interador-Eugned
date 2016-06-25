@@ -95,12 +95,11 @@ public class PrincipalUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ListaIncidenteUI listaIncidenteUI = ListaIncidenteUI.getInstance();
-				listaIncidenteUI.setFocusable(true);
-				listaIncidenteUI.requestFocus();
-				frame.getContentPane().add(listaIncidenteUI,0);
-				listaIncidenteUI.setVisible(true);
-				
+				ListaIncidenteUI incidenteUI = ListaIncidenteUI.getInstance();
+				incidenteUI.setFocusable(true);
+				incidenteUI.requestFocus();
+				frame.getContentPane().add(incidenteUI,0);
+				incidenteUI.setVisible(true);
 			}
 		});
 		mnCadastro.add(mntmIncidente);
