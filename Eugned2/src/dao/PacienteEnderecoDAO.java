@@ -71,7 +71,7 @@ public class PacienteEnderecoDAO {
 				pacienteEndereco.setId(rs.getInt("id"));           
 				pacienteEndereco.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));
 				pacienteEndereco.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
-				pacienteEndereco.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
+				pacienteEndereco.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")-1]);
 
 				listaPacienteEndereco.add(pacienteEndereco);
 			}
@@ -104,7 +104,7 @@ public class PacienteEnderecoDAO {
 	}
 
 	public void editar(PacienteEndereco pacienteEndereco){
-		String query = "update paciente set idEndereco =?, idPaciente=?, tipoEndereco=?   where id=?";
+		String query = "update paciente_endereco set idEndereco =?, idPaciente=?, tipoEndereco=?   where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, pacienteEndereco.getEndereco().getId());
@@ -174,30 +174,6 @@ public class PacienteEnderecoDAO {
 		}
 		return null;
 	}
-	
-//public List<PacienteEndereco> getListaPacienteEnderecoByIdPe() {
-//		
-//		try {
-//			String query = "select * from paciente_endereco where idPaciente = ?";
-//			PreparedStatement pstmt = con.prepareStatement(query);				
-//			pstmt.setInt(1, e.getId());
-//			ResultSet rs = pstmt.executeQuery();
-//			while (rs.next()){
-//				PacienteEndereco pacienteEnderecoId = new PacienteEndereco(); 
-//				pacienteEnderecoId.setId(rs.getInt("id"));           
-//				pacienteEnderecoId.setPaciente(new PacienteDAO().getPacienteById(rs.getInt("idPaciente")));
-//				pacienteEnderecoId.setEndereco(new EnderecoDao().getEnderecoById(rs.getInt("idEndereco")));					
-//				pacienteEnderecoId.setTipo(EnumTipoEndereco.values()[rs.getInt("tipoEndereco")]);
-//
-//				listaPacienteEnderecoById.add(pacienteEnderecoId);
-//			}
-//			return listaPacienteEnderecoById;
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 
 
 	public void setListaPacienteEnderecoById(ArrayList<PacienteEndereco> listaPacienteEnderecoById) {
