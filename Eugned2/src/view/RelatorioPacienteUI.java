@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.text.ParseException;
+import java.util.HashMap;
 
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
@@ -9,6 +10,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import util.ConnectionUtil;
 import util.MaskFields;
 
 import javax.swing.JRadioButton;
@@ -18,6 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RelatorioPacienteUI extends JInternalFrame {
 	private JFormattedTextField jtdataInicialP;
@@ -45,7 +53,7 @@ public class RelatorioPacienteUI extends JInternalFrame {
 	 */
 	public RelatorioPacienteUI() {
 		setClosable(true);
-		setBounds(100, 100, 552, 238);
+		setBounds(100, 100, 486, 197);
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Relat\u00F3rio Pacientes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -53,20 +61,16 @@ public class RelatorioPacienteUI extends JInternalFrame {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 457, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(73, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(68, Short.MAX_VALUE))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		
-		JRadioButton rdbtnTodos = new JRadioButton("Todos");
-		
-		JRadioButton rdbtnDiaginosticadoEmUm = new JRadioButton("Diaginosticados em um periodo");
 		
 		JLabel lblInformeOPeriodo = new JLabel("Informe o periodo");
 		
@@ -93,63 +97,60 @@ public class RelatorioPacienteUI extends JInternalFrame {
 		JButton jbcalendarFim = new JButton(".");
 		
 		JButton jbImprimir = new JButton("Imprimir");
+		jbImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				HashMap hm = new HashMap<>();
+				
+				try {
+					JasperPrint	jp = JasperFillManager.fillReport("/home/ambrozio/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioPaciente2.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+					JasperViewer.viewReport(jp, false);
+				} catch (JRException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
 		JButton jbVoltar = new JButton("Voltar");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(rdbtnTodos)
-								.addComponent(rdbtnDiaginosticadoEmUm)))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addGap(31)
-									.addComponent(lblInformeOPeriodo)
-									.addGap(3)
-									.addComponent(jtdataInicialP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(jbCalendarioFim)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-									.addContainerGap(234, Short.MAX_VALUE)
-									.addComponent(jbImprimir)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGap(20)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(jbVoltar)
-									.addGap(18))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(jtdatafimP, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-									.addGap(46)))
-							.addComponent(jbcalendarFim)
-							.addGap(25)))
-					.addContainerGap())
+					.addContainerGap()
+					.addComponent(lblInformeOPeriodo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jtdataInicialP, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jbCalendarioFim)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jtdatafimP, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jbcalendarFim)
+					.addContainerGap(77, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(238, Short.MAX_VALUE)
+					.addComponent(jbImprimir)
+					.addGap(18)
+					.addComponent(jbVoltar)
+					.addGap(84))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(rdbtnTodos)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(rdbtnDiaginosticadoEmUm)
-					.addGap(18)
+					.addGap(28)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblInformeOPeriodo)
 						.addComponent(jtdataInicialP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jbCalendarioFim)
 						.addComponent(jtdatafimP, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jbcalendarFim))
-					.addGap(18)
+					.addGap(29)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(jbImprimir)
 						.addComponent(jbVoltar))
-					.addContainerGap(26, Short.MAX_VALUE))
+					.addContainerGap(59, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
