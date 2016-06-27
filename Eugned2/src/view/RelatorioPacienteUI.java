@@ -103,7 +103,7 @@ public class RelatorioPacienteUI extends JInternalFrame {
 				HashMap hm = new HashMap<>();
 				
 				try {
-					JasperPrint	jp = JasperFillManager.fillReport("/home/ambrozio/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioPaciente2.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+					JasperPrint	jp = JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioPaciente2.jasper", new HashMap<>(),ConnectionUtil.getConnection());
 					JasperViewer.viewReport(jp, false);
 				} catch (JRException e1) {
 					// TODO Auto-generated catch block

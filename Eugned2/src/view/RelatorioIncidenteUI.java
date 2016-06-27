@@ -4,7 +4,10 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
@@ -31,6 +34,7 @@ public class RelatorioIncidenteUI extends JInternalFrame {
 	private JFormattedTextField jtdataInicialP;
 	private JFormattedTextField jtdatafimP;
 	private MaskFields maskFields = new MaskFields();
+	private SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
 
 	/**
 	 * Launch the application.
@@ -105,14 +109,28 @@ public class RelatorioIncidenteUI extends JInternalFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				HashMap hm = new HashMap<>();
+				Map hm = new HashMap<>();
+				
 				try {
+					
+					Date dataInicial = new Date();
+					Date dataFinal = new Date();
+					if(rdbtnTodos.isSelected()) {
+						hm.put("paramFiltrar", false);
+					} else {
+						hm.put("paramFiltrar", true);				    	
+						dataFinal = formatData.parse(jtdatafimP.getText());
+						dataInicial = formatData.parse(jtdataInicialP.getText());
+					}
 					// /home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/
-				    
-					JasperPrint jp =  JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioIncidentes.jasper", new HashMap<>(),ConnectionUtil.getConnection());
+				    hm.put("paramDataInicial", dataInicial);
+				    hm.put("paramDataFinal", dataFinal);
+					JasperPrint jp =  JasperFillManager.fillReport("/home/wagmattei/git/Projeto-Interador-Eugned/Eugned2/src/view/RelatorioIncidentes.jasper", hm,ConnectionUtil.getConnection());
 					JasperViewer.viewReport(jp, false);
+				} catch (ParseException e2) {
+					JOptionPane.showMessageDialog(null, "Data inválida");
 				} catch (JRException e1) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Problemas ao Carregar o Relatório.");
 					e1.printStackTrace();
 				}
 				

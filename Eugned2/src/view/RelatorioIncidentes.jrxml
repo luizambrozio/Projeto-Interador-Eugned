@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioIncidentes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c5ec2bbb-9520-4361-91f5-5f5e6965a4d9">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="99"/>
+	<property name="ireport.x" value="241"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramDataInicial" class="java.util.Date"/>
+	<parameter name="paramDataFinal" class="java.util.Date"/>
+	<parameter name="paramFiltrar" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[SELECT
      incidente.`dataIncidente` AS incidente_dataIncidente,
@@ -18,7 +21,10 @@
 FROM
      `incidente` incidente INNER JOIN `incidente_endereco` incidente_endereco ON incidente.`id` = incidente_endereco.`idIncidente`
      INNER JOIN `endereco` endereco ON incidente_endereco.`idEndereco` = endereco.`id`
-     INNER JOIN `paciente` paciente ON incidente.`idPaciente` = paciente.`id`]]>
+     INNER JOIN `paciente` paciente ON incidente.`idPaciente` = paciente.`id`
+WHERE
+	$P{paramFiltrar} = False OR (
+	incidente.`dataIncidente` BETWEEN $P{paramDataInicial} AND $P{paramDataFinal} )]]>
 	</queryString>
 	<field name="incidente_dataIncidente" class="java.sql.Date"/>
 	<field name="incidente_dataSintoma" class="java.sql.Date"/>
@@ -98,6 +104,14 @@ FROM
 					</textElement>
 					<text><![CDATA[Relatório de Incidentes]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="254" y="23" width="100" height="20" uuid="b27c54ff-d427-409e-aedf-cf44a1f3d113"/>
+					<textFieldExpression><![CDATA[$P{paramDataInicial}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="254" y="43" width="100" height="20" uuid="014c86b4-743d-47ec-827c-538252345c92"/>
+					<textFieldExpression><![CDATA[$P{paramDataFinal}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
