@@ -138,6 +138,17 @@ public class PrincipalUI {
 		mnRelatorios.add(mntmRelatrioIncidente);
 		
 		JMenuItem mntmRelatorioFoco = new JMenuItem("Relatórios Focos");
+		mntmRelatorioFoco.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RelatorioFocoUI focoUI = new RelatorioFocoUI();
+				focoUI.setFocusable(true);
+				focoUI.requestFocus();
+				frame.getContentPane().add(focoUI,0);
+				focoUI.setVisible(true);				
+			}
+		});
 		mnRelatorios.add(mntmRelatorioFoco);
 		
 		JMenuItem mntmRelatrioPaciente = new JMenuItem("Relatório Paciente");

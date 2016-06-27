@@ -1,4 +1,12 @@
 package exception;
+/**
+ * 
+ * @author Wagner
+ * @version 1
+ * 
+ * Lança as excessões do foco
+ *
+ */
 
 public class FocoException extends Exception {
 

@@ -1,5 +1,11 @@
 package view;
-
+/**
+ * @author Wagner
+ * @version 1
+ * 
+ * Janela que exibe os registros de focos e permite ao usuário inserir, alterar, excluir um foco.
+ * 
+ */
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,7 +64,10 @@ public class ListaFocoUI extends JInternalFrame {
 		});
 	}
 	
-	// Obrigatório
+	/**
+	 * Sigleton da janela de Lista Foco
+	 * @return instância de ListaFocosUI
+	 */
 	public static ListaFocoUI getInstance(){
 		if(instancia == null) {
 			instancia = new ListaFocoUI();
@@ -265,6 +274,9 @@ public class ListaFocoUI extends JInternalFrame {
 
 	}
 
+	/**
+	 * metodo responsável por atualizar a lista de focos.
+	 */
 	public void atualizaLista() {
 		System.out.println(jtfDataIniFocos.getText());
 		if(jtfDataIniFocos.getText().equals("__/__/____") || jtfDataFim.getText().equals("__/__/____")) {

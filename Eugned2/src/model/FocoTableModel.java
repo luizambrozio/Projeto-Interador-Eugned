@@ -1,5 +1,14 @@
 package model;
 
+/**
+ * 
+ * @author wagmattei
+ * 
+ * @version 1
+ * Classe que exibe os dados do Foco na lista
+ * 
+ */
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 

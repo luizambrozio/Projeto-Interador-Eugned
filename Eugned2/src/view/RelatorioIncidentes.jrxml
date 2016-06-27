@@ -104,14 +104,6 @@ WHERE
 					</textElement>
 					<text><![CDATA[Relatório de Incidentes]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="254" y="23" width="100" height="20" uuid="b27c54ff-d427-409e-aedf-cf44a1f3d113"/>
-					<textFieldExpression><![CDATA[$P{paramDataInicial}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="254" y="43" width="100" height="20" uuid="014c86b4-743d-47ec-827c-538252345c92"/>
-					<textFieldExpression><![CDATA[$P{paramDataFinal}]]></textFieldExpression>
-				</textField>
 			</frame>
 		</band>
 	</title>

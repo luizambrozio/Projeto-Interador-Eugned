@@ -1,5 +1,11 @@
 package view;
-
+/**
+ * @author Wagner
+ * @version 1
+ * 
+ * Janela responsávelo pelo registro das informações do foco.
+ * 
+ */
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
@@ -262,6 +268,10 @@ public class CadastroFocoUI extends JInternalFrame {
 
 	}
 
+	/**
+	 * metodo responsável por preencher os dados no formulário de focos.
+	 * @param foco - objeto com os dados do foco
+	 */
 	private void preencheDados(Foco foco) {
 		if(foco != null) {
 			jtfDataFoco.setText(formatData.format(foco.getDataFoco()));
