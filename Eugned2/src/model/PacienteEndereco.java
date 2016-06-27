@@ -1,3 +1,6 @@
+/**
+ * @author ambrozio
+ */
 package model;
 
 public class PacienteEndereco {

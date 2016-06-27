@@ -1,3 +1,6 @@
+/**
+ * @author ambrozio
+ */
 package exception;
 
 public class EnderecoPacienteException extends Exception {

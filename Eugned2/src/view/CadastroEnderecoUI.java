@@ -1,3 +1,6 @@
+/**
+ * @author ambrozio
+ */
 package view;
 
 import java.awt.EventQueue;

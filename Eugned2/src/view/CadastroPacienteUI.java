@@ -1,3 +1,6 @@
+/**
+ * @author ambrozio
+ */
 package view;
 
 import java.awt.EventQueue;
@@ -295,7 +298,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 //						e1.printStackTrace();
 					}
-					//					new PacienteDAO().editar(paciente);
+//										new PacienteDAO().editar(paciente);
 				} 
 				//Fimm					
 

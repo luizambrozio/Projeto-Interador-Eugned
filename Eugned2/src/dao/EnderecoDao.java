@@ -1,6 +1,7 @@
 package dao;
 /**
  * @author wagmattei
+ * @author ambrozio
  */
 
 import java.sql.Connection;

@@ -1,3 +1,6 @@
+/**
+ * @author ambrozio
+ */
 package dao;
 
 import java.awt.PaintContext;
