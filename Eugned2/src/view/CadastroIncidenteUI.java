@@ -190,6 +190,9 @@ public class CadastroIncidenteUI extends JInternalFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(incidente==null) {
+					incidente =  new Incidente();
+				}
 				try {
 					if(incidente.getId() == 0) {
 						System.out.println("Incidente: Inserindo...");

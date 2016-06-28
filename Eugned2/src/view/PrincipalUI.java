@@ -81,7 +81,7 @@ public class PrincipalUI {
 		JMenuItem mntmPaciente = new JMenuItem("Paciente");
 		mntmPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaPacienteUI listPaciente = ListaPacienteUI.getInstacia();
+				ListaPacienteUI listPaciente = ListaPacienteUI.getInstace();
 				listPaciente.setFocusable(true);
 				listPaciente.requestFocus();
 				frame.getContentPane().add(listPaciente, 0);

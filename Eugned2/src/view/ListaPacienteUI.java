@@ -61,7 +61,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaPacienteUI frame = getInstacia();
+					ListaPacienteUI frame = getInstace();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +70,7 @@ public class ListaPacienteUI extends JInternalFrame {
 		});
 	}
 	
-	public static ListaPacienteUI getInstacia(){
+	public static ListaPacienteUI getInstace(){
 		if(instancia==null){
 			instancia = new ListaPacienteUI();
 		}

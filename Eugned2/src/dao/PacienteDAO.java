@@ -60,15 +60,15 @@ public class PacienteDAO {
 	
 	
 	public List<Paciente> getListaPacientesByNome(String nome){
-		String query = "select * from paciente where nome like '%?%'";	
+		String query = "select * from paciente where nome like ?";	
 		
 		
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, nome);
-			ResultSet rs = pstmt.executeQuery(query);
-			Paciente paciente = null;
+			pstmt.setString(1, "%"+nome+"%");
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
+				Paciente paciente = new Paciente();
 				paciente.setId(rs.getInt("id"));
 				paciente.setNome(rs.getString("nome"));
 				paciente.setCpf(rs.getString("cpf"));           
@@ -78,8 +78,7 @@ public class PacienteDAO {
 				paciente.setSexo(EnumSexo.values()[rs.getInt("sexo")-1]);          
 				paciente.setCorRaca(EnumCorRaca.values()[rs.getInt("corRaca")-1]); 
 				paciente.setDataNascimento(rs.getDate("dataNascimento"));  
-				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));
-				paciente.setGestante(rs.getInt("gestante")==1);
+				paciente.setRendaFamiliar(rs.getFloat("rendaFamiliar"));						
 				
 				listaPacientes.add(paciente);
 			}
@@ -157,7 +156,7 @@ public class PacienteDAO {
 	}
 	
 	public void editar(Paciente paciente){
-		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, gestante=?, rendaFamiliar=? where id=?";
+		String query = "update paciente set nome=?, cpf=?, rg=?, escolaridade=?, estadoCivil=?, sexo=?, corRaca=?, dataNascimento=?, rendaFamiliar=?, gestante=? where id=?";
 		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			System.out.println(paciente.toString());

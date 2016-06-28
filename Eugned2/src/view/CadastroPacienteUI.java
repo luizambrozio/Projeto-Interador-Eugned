@@ -257,7 +257,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 						try {
 							new PacienteController().inserir(paciente);
 							JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
-							ListaPacienteUI.getInstacia().atualizaLista();
+							ListaPacienteUI.getInstace().atualizaLista();
 							CadastroPacienteUI.getInstace().show();
 							//							dispose();
 						} catch (PacienteException e1) {
@@ -292,7 +292,7 @@ public class CadastroPacienteUI extends JInternalFrame {
 					try {
 						new PacienteController().editar(paciente);
 						JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!");
-						ListaPacienteUI.getInstacia().atualizaLista();
+						ListaPacienteUI.getInstace().atualizaLista();
 						CadastroPacienteUI.getInstace().show();						
 					} catch (PacienteException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
